@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Building2, MessageSquare, Calendar, Handshake, TrendingUp, ChevronRight, ArrowUpRight } from "lucide-react";
-import { companies, consultations, events, matchingPairs, newsItems, statTrends } from "@/data/mock";
+import { ArrowRight, Building2, MessageSquare, Calendar, TrendingUp, ChevronRight, ArrowUpRight } from "lucide-react";
+import { companies, consultations, events, newsItems, statTrends } from "@/data/mock";
 import FadeIn from "@/components/motion/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/motion/StaggerContainer";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
@@ -136,40 +136,6 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-        </section>
-      </FadeIn>
-
-      {/* Matching */}
-      <FadeIn delay={0.1}>
-        <section>
-          <div className="section-header">
-            <h2 className="h2">おすすめマッチング</h2>
-            <Link href="/matching" className="text-[14px] font-semibold text-black-400 hover:text-black-900 transition-colors">
-              すべて見る →
-            </Link>
-          </div>
-          <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" stagger={0.08}>
-            {matchingPairs.map((pair) => (
-              <StaggerItem key={pair.id}>
-                <div className="card card-hover group h-full">
-                  <span className="badge-red mb-4 inline-block">{pair.theme}</span>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex-1 text-center">
-                      <div className="avatar-md mx-auto mb-2">{pair.companyA.name.charAt(0)}</div>
-                      <p className="text-[13px] font-semibold text-black-900 truncate">{pair.companyA.name}</p>
-                    </div>
-                    <span className="text-[20px] text-black-200 font-light">&times;</span>
-                    <div className="flex-1 text-center">
-                      <div className="avatar-md mx-auto mb-2">{pair.companyB.name.charAt(0)}</div>
-                      <p className="text-[13px] font-semibold text-black-900 truncate">{pair.companyB.name}</p>
-                    </div>
-                  </div>
-                  <p className="body-sm line-clamp-2 mb-3">{pair.reason}</p>
-                  <p className="text-[13px] font-semibold text-black-900">{pair.expectedCollaboration}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
         </section>
       </FadeIn>
 
