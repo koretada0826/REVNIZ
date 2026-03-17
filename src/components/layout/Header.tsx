@@ -8,7 +8,6 @@ import { useState } from "react";
 const nav = [
   { name: "企業を探す", href: "/companies", icon: Building2 },
   { name: "相談を探す", href: "/board", icon: MessageSquare },
-  { name: "おすすめ", href: "/matching", icon: Handshake },
   { name: "イベント", href: "/events", icon: Calendar },
   { name: "事例", href: "/cases", icon: Trophy },
 ];

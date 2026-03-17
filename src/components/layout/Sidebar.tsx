@@ -8,7 +8,6 @@ const mainItems = [
   { name: "ダッシュボード", href: "/", icon: LayoutDashboard },
   { name: "スポンサー一覧", href: "/companies", icon: Building2 },
   { name: "相談掲示板", href: "/board", icon: MessageSquare, badge: 4 },
-  { name: "おすすめ", href: "/matching", icon: Handshake },
   { name: "イベント", href: "/events", icon: Calendar, badge: 2 },
 ];
 
