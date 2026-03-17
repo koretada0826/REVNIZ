@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Search, SlidersHorizontal, MapPin, Briefcase, Grid3X3, List, Heart, X } from "lucide-react";
+import FadeIn from "@/components/motion/FadeIn";
+import StaggerContainer, { StaggerItem } from "@/components/motion/StaggerContainer";
+import { toast } from "sonner";
 import { companies } from "@/data/mock";
 
 const industries = ["すべて", "IT・テクノロジー", "食品・飲料", "広告・クリエイティブ", "建設・不動産", "人材・HR", "マーケティング"];
@@ -22,11 +25,11 @@ export default function CompaniesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="mb-4">
+      <FadeIn><div className="mb-4">
         <p className="label">Companies</p>
         <h1 className="h1">スポンサー企業一覧</h1>
         <p className="body mt-3">何ができる会社か、何を求めている会社かを比較し、接点候補を見つける</p>
-      </div>
+      </div></FadeIn>
 
       <div className="flex gap-3">
         <div className="flex-1 relative">
@@ -68,7 +71,7 @@ export default function CompaniesPage() {
             <div key={c.id} className="card card-hover group">
               <div className="flex items-start justify-between mb-5">
                 <div className="avatar-md">{c.name.charAt(0)}</div>
-                <button className="btn-icon w-9 h-9 text-black-200 hover:text-red hover:bg-red-50 rounded-md"><Heart className="w-4 h-4" /></button>
+                <button onClick={() => toast.success(`${c.name}をお気に入りに追加しました`)} className="btn-icon w-9 h-9 text-black-200 hover:text-red hover:bg-red-50 rounded-md"><Heart className="w-4 h-4" /></button>
               </div>
               <h3 className="font-bold text-black-900 text-[16px] mb-1 group-hover:text-red transition-colors">{c.name}</h3>
               <p className="text-[14px] text-black-400 mb-4">{c.tagline}</p>

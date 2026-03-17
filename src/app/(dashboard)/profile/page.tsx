@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { Save, Upload, Plus, X, Check } from "lucide-react";
+import { toast } from "sonner";
+import FadeIn from "@/components/motion/FadeIn";
+import AnimatedNumber from "@/components/ui/AnimatedNumber";
 
 export default function ProfilePage() {
   const [canProvide, setCanProvide] = useState(["DXコンサルティング", "システム開発", "データ活用支援"]);
@@ -13,7 +16,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <FadeIn><div className="max-w-2xl mx-auto space-y-6">
       <div>
         <p className="label">Profile</p>
         <h1 className="h1">自社プロフィール編集</h1>
@@ -25,7 +28,7 @@ export default function ProfilePage() {
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <span className="label mb-0">プロフィール充足率</span>
-            <span className="text-[28px] font-bold text-black-900 leading-none tracking-tight">75<span className="text-[16px] text-black-400">%</span></span>
+            <span className="text-[28px] font-bold text-black-900 leading-none tracking-tight"><AnimatedNumber value={75} suffix="%" /></span>
           </div>
           <div className="progress-bar h-2 mb-3">
             <div className="progress-fill bg-red w-3/4" />
@@ -95,10 +98,10 @@ export default function ProfilePage() {
         </div>
 
         <div className="flex gap-3 pt-3">
-          <button type="button" className="btn-red text-[15px] px-8 py-3.5"><Save className="w-5 h-5 mr-2" /> 保存する</button>
+          <button type="button" onClick={() => toast.success("プロフィールを保存しました")} className="btn-red text-[15px] px-8 py-3.5"><Save className="w-5 h-5 mr-2" /> 保存する</button>
           <button type="button" className="btn-outline btn-sm">下書き保存</button>
         </div>
       </form>
-    </div>
+    </div></FadeIn>
   );
 }

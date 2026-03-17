@@ -257,3 +257,11 @@ export const newsItems: NewsItem[] = [
     createdAt: "2026-03-01",
   },
 ];
+
+// Sparkline trend data (7 days)
+export const statTrends = {
+  companies: [18, 19, 20, 21, 22, 23, 24],
+  meetings: [2, 3, 4, 5, 4, 6, 8],
+  consultations: [5, 7, 6, 8, 9, 10, 12],
+  events: [1, 1, 2, 2, 2, 3, 3],
+};

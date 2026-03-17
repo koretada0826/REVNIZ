@@ -2,20 +2,22 @@
 
 import Link from "next/link";
 import { Plus, MessageSquare, Clock, TrendingUp, ChevronRight, MapPin } from "lucide-react";
+import { toast } from "sonner";
 import { consultations } from "@/data/mock";
+import FadeIn from "@/components/motion/FadeIn";
 
 const categories = ["すべて", "販路拡大", "採用", "DX", "イベント"];
 
 export default function BoardPage() {
   return (
-    <div className="space-y-6">
+    <FadeIn><div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <p className="label">Board</p>
           <h1 className="h1">相談・案件掲示板</h1>
           <p className="body mt-3">困っていること、探していることを投稿し、接点のきっかけを作る</p>
         </div>
-        <button className="btn-red shrink-0 text-[15px] px-6 py-3"><Plus className="w-5 h-5 mr-2" /> 相談を投稿する</button>
+        <button onClick={() => toast("投稿フォームを準備中です")} className="btn-red shrink-0 text-[15px] px-6 py-3"><Plus className="w-5 h-5 mr-2" /> 相談を投稿する</button>
       </div>
 
       <div className="flex gap-0 border-b border-line">
@@ -60,6 +62,6 @@ export default function BoardPage() {
           </div>
         ))}
       </div>
-    </div>
+    </div></FadeIn>
   );
 }

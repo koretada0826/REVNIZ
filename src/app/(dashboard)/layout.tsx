@@ -1,6 +1,7 @@
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,6 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </main>
       </div>
       <Footer />
+      <Toaster position="top-right" toastOptions={{ className: "font-sans text-[14px]" }} />
     </div>
   );
 }
