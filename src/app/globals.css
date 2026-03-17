@@ -12,60 +12,78 @@
     text-rendering: optimizeLegibility;
   }
   body { @apply bg-bg text-black-900; }
-  ::selection { background: rgba(200,16,46,0.1); }
+  ::selection { background: rgba(10,10,10,0.08); }
   * { border-color: #EBEBEB; }
 }
 
 /* ============ CARDS ============ */
 @layer components {
   .card {
-    @apply bg-white rounded-md border border-line p-6 shadow-sm transition-all duration-300;
+    @apply bg-white rounded-lg border border-line p-6 shadow-card;
+  }
+  .card-hover {
+    @apply transition-shadow duration-200;
   }
   .card-hover:hover {
-    @apply shadow-lg border-line-dark -translate-y-0.5;
+    @apply shadow-md border-line-dark;
   }
   .card-flush {
-    @apply bg-white rounded-md border border-line shadow-sm overflow-hidden;
+    @apply bg-white rounded-lg border border-line shadow-card overflow-hidden;
   }
   .card-black {
-    @apply bg-black-900 rounded-md text-white overflow-hidden;
+    @apply bg-black-900 rounded-lg text-white overflow-hidden;
   }
   .card-red {
-    @apply bg-white rounded-md border-2 border-red/15 p-6 shadow-red;
+    @apply bg-white rounded-lg border border-red/15 p-6 relative overflow-hidden;
+  }
+  .card-red::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-[3px] bg-red;
+  }
+  .card-elevated {
+    @apply bg-white rounded-lg border border-line p-6 shadow-md;
+  }
+  .card-interactive {
+    @apply bg-white rounded-lg border border-line p-6 shadow-card transition-shadow duration-200 cursor-pointer;
+  }
+  .card-interactive:hover {
+    @apply shadow-md border-line-dark;
+  }
+  .card-interactive:active {
+    @apply shadow-card;
   }
 }
 
 /* ============ BUTTONS ============ */
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center font-semibold transition-all duration-150
-           select-none cursor-pointer rounded
-           focus:outline-none focus-visible:ring-2 focus-visible:ring-red/20 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center font-semibold transition-colors duration-150
+           select-none cursor-pointer rounded-md
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-black-200 focus-visible:ring-offset-2;
   }
   .btn-black {
     @apply btn px-5 py-2.5 text-[13px] tracking-wide
-           bg-black-900 text-white hover:bg-black-700 active:bg-black-800;
+           bg-black-900 text-white hover:bg-black-700;
   }
   .btn-red {
     @apply btn px-5 py-2.5 text-[13px] tracking-wide
-           bg-red text-white hover:bg-red-700 active:bg-red-800
-           shadow-xs hover:shadow-red;
+           bg-red text-white hover:bg-red-700;
   }
   .btn-outline {
     @apply btn px-5 py-2.5 text-[13px] tracking-wide
            border border-black-200 text-black-900 bg-white
-           hover:bg-black-900 hover:text-white hover:border-black-900;
+           hover:bg-black-50 hover:border-black-300;
   }
   .btn-ghost {
     @apply btn px-3.5 py-2 text-[13px] text-muted
-           hover:text-black-900 hover:bg-black-50;
+           hover:text-black-900 hover:bg-black-50 rounded-md;
   }
   .btn-sm {
     @apply btn text-[12px] px-3.5 py-1.5 tracking-wide;
   }
   .btn-icon {
-    @apply inline-flex items-center justify-center w-9 h-9 rounded text-muted
-           hover:text-black-900 hover:bg-black-50 transition-all;
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-md text-muted
+           hover:text-black-900 hover:bg-black-50 transition-colors;
   }
 }
 
@@ -74,8 +92,8 @@
   .input {
     @apply w-full rounded-md px-4 py-3 bg-white border border-line text-black-900 text-[14px]
            placeholder:text-black-300
-           focus:outline-none focus:border-black-900 focus:shadow-ring
-           transition-all duration-150;
+           focus:outline-none focus:border-black-400 focus:ring-1 focus:ring-black-100
+           transition-colors duration-150;
   }
   .input-lg { @apply input py-3.5 text-[15px]; }
 }
@@ -83,7 +101,7 @@
 /* ============ BADGES ============ */
 @layer components {
   .badge {
-    @apply inline-flex items-center rounded-sm px-2 py-[3px]
+    @apply inline-flex items-center rounded px-2 py-[3px]
            text-[10px] font-bold tracking-[0.06em] uppercase leading-none;
   }
   .badge-red { @apply badge bg-red-50 text-red-700; }
@@ -91,15 +109,24 @@
   .badge-muted { @apply badge bg-black-50 text-black-500; }
   .badge-outline { @apply badge bg-white text-black-500 border border-line; }
   .badge-green { @apply badge bg-emerald-50 text-emerald-700; }
+  .badge-amber { @apply badge bg-amber-50 text-amber-700; }
+  .badge-blue { @apply badge bg-blue-50 text-blue-700; }
+  .badge-dot {
+    @apply inline-flex items-center gap-1.5 text-[11px] font-medium text-black-500;
+  }
+  .badge-dot::before {
+    content: '';
+    @apply w-1.5 h-1.5 rounded-full bg-current shrink-0;
+  }
 }
 
 /* ============ TYPOGRAPHY ============ */
 @layer components {
-  .h1 { font-size: 2rem; line-height: 1.1; letter-spacing: -0.03em; @apply font-bold text-black-900; }
-  .h2 { font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.025em; @apply font-bold text-black-900; }
-  .h3 { font-size: 1.125rem; line-height: 1.3; letter-spacing: -0.015em; @apply font-semibold text-black-900; }
-  .label { @apply text-[10px] font-bold tracking-[0.2em] uppercase text-red block mb-1.5; }
-  .label-muted { @apply text-[10px] font-bold tracking-[0.15em] uppercase text-muted block mb-1.5; }
+  .h1 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; @apply font-bold text-black-900; }
+  .h2 { font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.015em; @apply font-bold text-black-900; }
+  .h3 { font-size: 1rem; line-height: 1.35; letter-spacing: -0.01em; @apply font-semibold text-black-900; }
+  .label { @apply text-[10px] font-bold tracking-[0.15em] uppercase text-black-400 block mb-1; }
+  .label-muted { @apply text-[10px] font-bold tracking-[0.12em] uppercase text-black-300 block mb-1.5; }
   .body { @apply text-[14px] text-black-500 leading-relaxed; }
   .body-sm { @apply text-[13px] text-black-400 leading-relaxed; }
   .caption { @apply text-[11px] text-black-300; }
@@ -108,12 +135,60 @@
 /* ============ TAGS ============ */
 @layer components {
   .tag {
-    @apply inline-flex items-center rounded-full px-3 py-1.5 text-[12px] font-medium
-           bg-white border border-line text-muted hover:border-black-300 hover:text-black-900 cursor-pointer transition-all;
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[12px] font-medium
+           bg-white border border-line text-muted hover:border-black-300 hover:text-black-700 cursor-pointer transition-colors duration-150;
   }
   .tag-active {
-    @apply inline-flex items-center rounded-full px-3 py-1.5 text-[12px] font-semibold
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[12px] font-semibold
            bg-black-900 text-white border border-black-900 cursor-pointer;
+  }
+}
+
+/* ============ SECTION HEADER ============ */
+@layer components {
+  .section-header {
+    @apply flex items-end justify-between mb-5;
+  }
+  .section-title {
+    @apply flex items-center gap-2;
+  }
+}
+
+/* ============ STAT CARD ============ */
+@layer components {
+  .stat-value {
+    @apply text-[28px] font-bold text-black-900 tracking-tight leading-none tabular-nums;
+  }
+  .stat-label {
+    @apply text-[11px] text-black-300 font-medium tracking-wide mt-1;
+  }
+}
+
+/* ============ PROGRESS BAR ============ */
+@layer components {
+  .progress-bar {
+    @apply h-1.5 rounded-full bg-black-100 overflow-hidden;
+  }
+  .progress-fill {
+    @apply h-full rounded-full;
+  }
+}
+
+/* ============ AVATAR ============ */
+@layer components {
+  .avatar {
+    @apply rounded-lg bg-black-50 flex items-center justify-center shrink-0 border border-line font-bold text-black-900;
+  }
+  .avatar-sm { @apply avatar w-9 h-9 text-[12px]; }
+  .avatar-md { @apply avatar w-12 h-12 text-[14px]; }
+  .avatar-lg { @apply avatar w-16 h-16 text-[18px]; }
+  .avatar-xl { @apply avatar w-20 h-20 text-[22px]; }
+}
+
+/* ============ DIVIDER ============ */
+@layer components {
+  .divider {
+    @apply h-px bg-line;
   }
 }
 
@@ -121,9 +196,6 @@
 @layer utilities {
   .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  }
 }
 
 /* Scrollbar */
@@ -132,5 +204,5 @@
 ::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #B3B3B3; }
 
-:focus-visible { outline: 2px solid rgba(200,16,46,0.4); outline-offset: 2px; }
+:focus-visible { outline: 2px solid #D9D9D9; outline-offset: 2px; }
 html { scroll-behavior: smooth; }
