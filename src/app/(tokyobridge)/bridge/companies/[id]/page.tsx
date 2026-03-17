@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, Building2, User, CheckCircle2, MessageSquare, CalendarDays } from "lucide-react";
 import { tokyoCompanies, bridgeEvents } from "@/data/bridge-mock";
 
@@ -12,8 +9,11 @@ const typeLabels: Record<string, string> = {
   advisor: "顧問",
 };
 
-export default function CompanyDetailPage() {
-  const params = useParams();
+export function generateStaticParams() {
+  return tokyoCompanies.map((c) => ({ id: c.id }));
+}
+
+export default function CompanyDetailPage({ params }: { params: { id: string } }) {
   const co = tokyoCompanies.find((x) => x.id === params.id);
   if (!co) return <div className="text-center py-20"><p className="body">企業が見つかりません</p></div>;
 

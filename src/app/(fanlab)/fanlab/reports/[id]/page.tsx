@@ -1,12 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, CalendarDays, Users, BarChart3, TrendingUp, Lightbulb } from "lucide-react";
 import { reports } from "@/data/fanlab-mock";
 
-export default function ReportDetailPage() {
-  const params = useParams();
+export function generateStaticParams() {
+  return reports.map((r) => ({ id: r.id }));
+}
+
+export default function ReportDetailPage({ params }: { params: { id: string } }) {
   const r = reports.find((x) => x.id === params.id);
   if (!r) return <div className="text-center py-20"><p className="body">レポートが見つかりません</p></div>;
 

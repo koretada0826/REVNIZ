@@ -1,12 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, ArrowRight, MapPin, CheckCircle2 } from "lucide-react";
 import { verificationMenus, caseStudies } from "@/data/fanlab-mock";
 
-export default function MenuDetailPage() {
-  const params = useParams();
+export function generateStaticParams() {
+  return verificationMenus.map((m) => ({ id: m.id }));
+}
+
+export default function MenuDetailPage({ params }: { params: { id: string } }) {
   const m = verificationMenus.find((x) => x.id === params.id);
   if (!m) return <div className="text-center py-20"><p className="body">メニューが見つかりません</p><Link href="/fanlab/menus" className="btn-black mt-4">一覧に戻る</Link></div>;
 

@@ -1,12 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, MapPin, Globe, Briefcase, Heart, Calendar, ExternalLink, MessageSquare, Users, Handshake, Send, TrendingUp, Shield } from "lucide-react";
 import { companies } from "@/data/mock";
 
-export default function CompanyDetailPage() {
-  const params = useParams();
+export function generateStaticParams() {
+  return companies.map((c) => ({ id: c.id }));
+}
+
+export default function CompanyDetailPage({ params }: { params: { id: string } }) {
   const c = companies.find((x) => x.id === params.id);
   if (!c) return <div className="text-center py-20"><p className="body">企業が見つかりません</p><Link href="/companies" className="btn-black mt-4">一覧に戻る</Link></div>;
 
@@ -25,7 +25,6 @@ export default function CompanyDetailPage() {
                 <h1 className="h1">{c.name}</h1>
                 <p className="text-[16px] text-black-400 mt-2">{c.tagline}</p>
               </div>
-              <button className="btn-icon border border-line text-black-200 hover:text-red hover:bg-red-50 rounded-md"><Heart className="w-5 h-5" /></button>
             </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5">
               {[

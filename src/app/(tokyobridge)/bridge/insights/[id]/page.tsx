@@ -1,12 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, Building2, CalendarDays, ArrowRight } from "lucide-react";
 import { insights, tokyoCompanies } from "@/data/bridge-mock";
 
-export default function InsightDetailPage() {
-  const params = useParams();
+export function generateStaticParams() {
+  return insights.map((i) => ({ id: i.id }));
+}
+
+export default function InsightDetailPage({ params }: { params: { id: string } }) {
   const ins = insights.find((x) => x.id === params.id);
   if (!ins) return <div className="text-center py-20"><p className="body">インサイトが見つかりません</p></div>;
 

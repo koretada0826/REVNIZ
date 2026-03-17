@@ -1,15 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, CalendarDays, Users, MapPin, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { bridgeEvents } from "@/data/bridge-mock";
 
 const formatLabels: Record<string, string> = { online: "オンライン", offline: "オフライン", hybrid: "ハイブリッド" };
 const formatColors: Record<string, string> = { online: "bg-indigo-50 text-indigo-700", offline: "bg-amber-50 text-amber-700", hybrid: "bg-emerald-50 text-emerald-700" };
 
-export default function EventDetailPage() {
-  const params = useParams();
+export function generateStaticParams() {
+  return bridgeEvents.map((e) => ({ id: e.id }));
+}
+
+export default function EventDetailPage({ params }: { params: { id: string } }) {
   const ev = bridgeEvents.find((x) => x.id === params.id);
   if (!ev) return <div className="text-center py-20"><p className="body">イベントが見つかりません</p></div>;
 
