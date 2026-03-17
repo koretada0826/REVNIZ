@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Lock, Mail, Shield, Users, TrendingUp } from "lucide-react";
+import LottieAnimation from "@/components/lottie/LottieAnimation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -31,10 +32,13 @@ export default function LoginPage() {
               スポンサーで<br />あることが、<br />
               <span className="text-red-400">次の取引</span>に<br />つながる。
             </h1>
-            <p className="text-black-400 text-[17px] leading-relaxed max-w-sm">
+            <p className="text-black-400 text-[17px] leading-relaxed max-w-sm mb-12">
               互いの事業を知り、信頼あるつながりをつくり、
               面談や協業へ進むための会員制プラットフォーム。
             </p>
+            <div className="w-36 h-36 opacity-20">
+              <LottieAnimation src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189571e83a25/eJEhyGiYLw.lottie" className="w-full h-full" />
+            </div>
           </div>
 
           <div className="flex gap-12">

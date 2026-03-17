@@ -1,13 +1,20 @@
 import { Trophy, Quote, Handshake, MessageSquare, TrendingUp } from "lucide-react";
 import { successCases } from "@/data/mock";
+import LottieAnimation from "@/components/lottie/LottieAnimation";
+import FadeIn from "@/components/motion/FadeIn";
 
 export default function CasesPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="label">Success Cases</p>
-        <h1 className="h1">成功事例</h1>
-        <p className="body mt-3">Sponsor Connectで実際に生まれた商談や連携の事例</p>
+    <FadeIn><div className="space-y-6">
+      <div className="flex items-start justify-between gap-6">
+        <div>
+          <p className="label">Success Cases</p>
+          <h1 className="h1">成功事例</h1>
+          <p className="body mt-3">Sponsor Connectで実際に生まれた商談や連携の事例</p>
+        </div>
+        <div className="hidden lg:block w-24 h-24 shrink-0 opacity-15">
+          <LottieAnimation src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189571e83a25/eJEhyGiYLw.lottie" className="w-full h-full" />
+        </div>
       </div>
 
       <div className="space-y-5">
@@ -48,6 +55,6 @@ export default function CasesPage() {
           </div>
         ))}
       </div>
-    </div>
+    </div></FadeIn>
   );
 }

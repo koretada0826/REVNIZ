@@ -1,9 +1,10 @@
 import { ChevronRight } from "lucide-react";
 import { newsItems } from "@/data/mock";
+import FadeIn from "@/components/motion/FadeIn";
 
 export default function NewsPage() {
   return (
-    <div className="space-y-6">
+    <FadeIn><div className="space-y-6">
       <div>
         <p className="label">News</p>
         <h1 className="h1">お知らせ</h1>
@@ -22,6 +23,6 @@ export default function NewsPage() {
           </div>
         ))}
       </div>
-    </div>
+    </div></FadeIn>
   );
 }

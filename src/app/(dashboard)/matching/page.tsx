@@ -3,16 +3,23 @@
 import Link from "next/link";
 import { ArrowRight, Handshake } from "lucide-react";
 import { matchingPairs } from "@/data/mock";
+import LottieAnimation from "@/components/lottie/LottieAnimation";
+import FadeIn from "@/components/motion/FadeIn";
 
 const themes = ["すべて", "東京×鹿児島", "DX", "採用", "販路拡大"];
 
 export default function MatchingPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="label">Matching</p>
-        <h1 className="h1">おすすめマッチング</h1>
-        <p className="body mt-3 max-w-lg">運営が相性の良い企業の組み合わせを提案。「何を探せばいいか分からない」を解決します。</p>
+    <FadeIn><div className="space-y-6">
+      <div className="flex items-start justify-between gap-6">
+        <div>
+          <p className="label">Matching</p>
+          <h1 className="h1">おすすめマッチング</h1>
+          <p className="body mt-3 max-w-lg">運営が相性の良い企業の組み合わせを提案。「何を探せばいいか分からない」を解決します。</p>
+        </div>
+        <div className="hidden lg:block w-24 h-24 shrink-0 opacity-15">
+          <LottieAnimation src="https://lottie.host/a5ff4ccc-e416-4c60-a3f8-907045383e40/ZhBkMGlLTJ.lottie" className="w-full h-full" />
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">{themes.map((t, i) => <button key={t} className={i === 0 ? "tag-active" : "tag"}>{t}</button>)}</div>
@@ -70,6 +77,6 @@ export default function MatchingPage() {
           </div>
         ))}
       </div>
-    </div>
+    </div></FadeIn>
   );
 }

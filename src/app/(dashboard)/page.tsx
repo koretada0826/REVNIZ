@@ -7,6 +7,7 @@ import FadeIn from "@/components/motion/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/motion/StaggerContainer";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
 import SparkLine from "@/components/charts/SparkLine";
+import LottieAnimation from "@/components/lottie/LottieAnimation";
 
 export default function DashboardPage() {
   return (
@@ -14,21 +15,28 @@ export default function DashboardPage() {
       {/* Hero */}
       <FadeIn>
         <section className="card-black px-8 py-12 sm:px-12 sm:py-16">
-          <p className="text-[11px] font-bold text-white/40 tracking-[0.2em] uppercase mb-6">Sponsor Connect</p>
-          <h1 className="text-[2rem] sm:text-[2.8rem] font-bold text-white leading-[1.08] tracking-tight mb-4">
-            スポンサー同士が、<br />
-            <span className="text-red-400">次のビジネス</span>につながる。
-          </h1>
-          <p className="text-black-400 text-[16px] leading-relaxed mb-8 max-w-lg">
-            企業を探し、つながり、協業へ。<br className="hidden sm:block" />レブナイズスポンサーだからこそ生まれる信頼ある接点を。
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/companies" className="btn-red text-[15px] px-8 py-3.5">
-              <Building2 className="w-5 h-5 mr-2" /> 企業を探す
-            </Link>
-            <Link href="/board" className="btn rounded-md px-8 py-3.5 text-[15px] border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-colors">
-              <MessageSquare className="w-5 h-5 mr-2" /> 相談を投稿する
-            </Link>
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8">
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-bold text-white/40 tracking-[0.2em] uppercase mb-6">Sponsor Connect</p>
+              <h1 className="text-[2rem] sm:text-[2.8rem] font-bold text-white leading-[1.08] tracking-tight mb-4">
+                スポンサー同士が、<br />
+                <span className="text-red-400">次のビジネス</span>につながる。
+              </h1>
+              <p className="text-black-400 text-[16px] leading-relaxed mb-8 max-w-lg">
+                企業を探し、つながり、協業へ。<br className="hidden sm:block" />レブナイズスポンサーだからこそ生まれる信頼ある接点を。
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/companies" className="btn-red text-[15px] px-8 py-3.5">
+                  <Building2 className="w-5 h-5 mr-2" /> 企業を探す
+                </Link>
+                <Link href="/board" className="btn rounded-md px-8 py-3.5 text-[15px] border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-colors">
+                  <MessageSquare className="w-5 h-5 mr-2" /> 相談を投稿する
+                </Link>
+              </div>
+            </div>
+            <div className="hidden lg:block w-48 h-48 shrink-0 opacity-20">
+              <LottieAnimation src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189571e83a25/eJEhyGiYLw.lottie" className="w-full h-full" />
+            </div>
           </div>
         </section>
       </FadeIn>

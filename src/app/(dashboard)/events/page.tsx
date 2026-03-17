@@ -2,14 +2,21 @@
 
 import { Calendar, MapPin, Users, ArrowRight } from "lucide-react";
 import { events } from "@/data/mock";
+import LottieAnimation from "@/components/lottie/LottieAnimation";
+import FadeIn from "@/components/motion/FadeIn";
 
 export default function EventsPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="label">Events</p>
-        <h1 className="h1">イベント一覧</h1>
-        <p className="body mt-3">オンラインの接点をリアルな交流や商談につなげる</p>
+    <FadeIn><div className="space-y-6">
+      <div className="flex items-start justify-between gap-6">
+        <div>
+          <p className="label">Events</p>
+          <h1 className="h1">イベント一覧</h1>
+          <p className="body mt-3">オンラインの接点をリアルな交流や商談につなげる</p>
+        </div>
+        <div className="hidden lg:block w-24 h-24 shrink-0 opacity-15">
+          <LottieAnimation src="https://lottie.host/e9f2d4c9-bbfe-4810-a508-7e2dd0cdb3c5/oq8sYNfxKu.lottie" className="w-full h-full" />
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -55,6 +62,6 @@ export default function EventsPage() {
           );
         })}
       </div>
-    </div>
+    </div></FadeIn>
   );
 }
