@@ -11,46 +11,46 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  body { @apply bg-bg text-black-900; }
-  ::selection { background: rgba(10,10,10,0.08); }
-  * { border-color: #EBEBEB; }
+  body { @apply bg-bg text-white; }
+  ::selection { background: rgba(255,255,255,0.15); }
+  * { border-color: #333; }
 }
 
 /* ============ CARDS ============ */
 @layer components {
   .card {
-    @apply bg-white rounded-lg border border-line p-6 shadow-card;
+    @apply bg-surface rounded-lg border border-line p-6;
   }
   .card-hover {
-    @apply transition-shadow duration-200;
+    @apply transition-all duration-200;
   }
   .card-hover:hover {
-    @apply shadow-md border-line-dark;
+    @apply border-line-dark;
   }
   .card-flush {
-    @apply bg-white rounded-lg border border-line shadow-card overflow-hidden;
+    @apply bg-surface rounded-lg border border-line overflow-hidden;
   }
   .card-black {
     @apply bg-black-900 rounded-lg text-white overflow-hidden;
   }
   .card-red {
-    @apply bg-white rounded-lg border border-red/15 p-6 relative overflow-hidden;
+    @apply bg-surface rounded-lg border border-red/30 p-6 relative overflow-hidden;
   }
   .card-red::before {
     content: '';
     @apply absolute top-0 left-0 w-full h-[3px] bg-red;
   }
   .card-elevated {
-    @apply bg-white rounded-lg border border-line p-6 shadow-md;
+    @apply bg-surface rounded-lg border border-line p-6;
   }
   .card-interactive {
-    @apply bg-white rounded-lg border border-line p-6 shadow-card transition-shadow duration-200 cursor-pointer;
+    @apply bg-surface rounded-lg border border-line p-6 transition-all duration-200 cursor-pointer;
   }
   .card-interactive:hover {
-    @apply shadow-md border-line-dark;
+    @apply border-line-dark;
   }
   .card-interactive:active {
-    @apply shadow-card;
+    @apply border-line;
   }
 }
 
@@ -63,7 +63,7 @@
   }
   .btn-black {
     @apply btn px-6 py-3 text-[14px] tracking-wide
-           bg-black-900 text-white hover:bg-black-700;
+           bg-white text-black-900 hover:bg-black-100;
   }
   .btn-red {
     @apply btn px-6 py-3 text-[14px] tracking-wide
@@ -71,28 +71,28 @@
   }
   .btn-outline {
     @apply btn px-6 py-3 text-[14px] tracking-wide
-           border border-black-200 text-black-900 bg-white
-           hover:bg-black-50 hover:border-black-300;
+           border border-line-dark text-white bg-transparent
+           hover:bg-white/10 hover:border-white/40;
   }
   .btn-ghost {
     @apply btn px-3.5 py-2 text-[13px] text-muted
-           hover:text-black-900 hover:bg-black-50 rounded-md;
+           hover:text-white hover:bg-white/10 rounded-md;
   }
   .btn-sm {
     @apply btn text-[13px] px-4 py-2 tracking-wide;
   }
   .btn-icon {
     @apply inline-flex items-center justify-center w-10 h-10 rounded-md text-muted
-           hover:text-black-900 hover:bg-black-50 transition-colors;
+           hover:text-white hover:bg-white/10 transition-colors;
   }
 }
 
 /* ============ INPUTS ============ */
 @layer components {
   .input {
-    @apply w-full rounded-md px-4 py-3 bg-white border border-line text-black-900 text-[14px]
-           placeholder:text-black-300
-           focus:outline-none focus:border-black-400 focus:ring-1 focus:ring-black-100
+    @apply w-full rounded-md px-4 py-3 bg-surface border border-line text-white text-[14px]
+           placeholder:text-black-400
+           focus:outline-none focus:border-line-dark focus:ring-1 focus:ring-black-600
            transition-colors duration-150;
   }
   .input-lg { @apply input py-4 text-[15px]; }
@@ -104,15 +104,15 @@
     @apply inline-flex items-center rounded px-2.5 py-1
            text-[11px] font-bold tracking-[0.04em] uppercase leading-none;
   }
-  .badge-red { @apply badge bg-red-50 text-red-700; }
-  .badge-dark { @apply badge bg-black-900 text-white; }
-  .badge-muted { @apply badge bg-black-50 text-black-500; }
-  .badge-outline { @apply badge bg-white text-black-500 border border-line; }
-  .badge-green { @apply badge bg-emerald-50 text-emerald-700; }
-  .badge-amber { @apply badge bg-amber-50 text-amber-700; }
-  .badge-blue { @apply badge bg-blue-50 text-blue-700; }
+  .badge-red { @apply badge bg-red/20 text-red-400; }
+  .badge-dark { @apply badge bg-white/10 text-white; }
+  .badge-muted { @apply badge bg-white/10 text-black-300; }
+  .badge-outline { @apply badge bg-transparent text-black-300 border border-line; }
+  .badge-green { @apply badge bg-emerald-900/30 text-emerald-400; }
+  .badge-amber { @apply badge bg-amber-900/30 text-amber-400; }
+  .badge-blue { @apply badge bg-blue-900/30 text-blue-400; }
   .badge-dot {
-    @apply inline-flex items-center gap-1.5 text-[11px] font-medium text-black-500;
+    @apply inline-flex items-center gap-1.5 text-[11px] font-medium text-black-300;
   }
   .badge-dot::before {
     content: '';
@@ -122,25 +122,25 @@
 
 /* ============ TYPOGRAPHY ============ */
 @layer components {
-  .h1 { font-size: 2.25rem; line-height: 1.1; letter-spacing: -0.03em; @apply font-bold text-black-900; }
-  .h2 { font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.02em; @apply font-bold text-black-900; }
-  .h3 { font-size: 1.125rem; line-height: 1.3; letter-spacing: -0.01em; @apply font-semibold text-black-900; }
+  .h1 { font-size: 2.25rem; line-height: 1.1; letter-spacing: -0.03em; @apply font-bold text-white; }
+  .h2 { font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.02em; @apply font-bold text-white; }
+  .h3 { font-size: 1.125rem; line-height: 1.3; letter-spacing: -0.01em; @apply font-semibold text-white; }
   .label { @apply text-[11px] font-bold tracking-[0.12em] uppercase text-black-400 block mb-2; }
-  .label-muted { @apply text-[11px] font-bold tracking-[0.1em] uppercase text-black-300 block mb-2; }
-  .body { @apply text-[15px] text-black-500 leading-relaxed; }
+  .label-muted { @apply text-[11px] font-bold tracking-[0.1em] uppercase text-black-400 block mb-2; }
+  .body { @apply text-[15px] text-black-300 leading-relaxed; }
   .body-sm { @apply text-[14px] text-black-400 leading-relaxed; }
-  .caption { @apply text-[12px] text-black-300; }
+  .caption { @apply text-[12px] text-black-400; }
 }
 
 /* ============ TAGS ============ */
 @layer components {
   .tag {
     @apply inline-flex items-center rounded-full px-4 py-1.5 text-[13px] font-medium
-           bg-white border border-line text-muted hover:border-black-300 hover:text-black-700 cursor-pointer transition-colors duration-150;
+           bg-transparent border border-line text-muted hover:border-line-dark hover:text-white cursor-pointer transition-colors duration-150;
   }
   .tag-active {
     @apply inline-flex items-center rounded-full px-4 py-1.5 text-[13px] font-semibold
-           bg-black-900 text-white border border-black-900 cursor-pointer;
+           bg-white text-black-900 border border-white cursor-pointer;
   }
 }
 
@@ -154,17 +154,17 @@
 /* ============ STAT CARD ============ */
 @layer components {
   .stat-value {
-    @apply text-[36px] font-bold text-black-900 tracking-tight leading-none tabular-nums;
+    @apply text-[36px] font-bold text-white tracking-tight leading-none tabular-nums;
   }
   .stat-label {
-    @apply text-[13px] text-black-400 font-medium mt-2;
+    @apply text-[13px] text-black-300 font-medium mt-2;
   }
 }
 
 /* ============ PROGRESS BAR ============ */
 @layer components {
   .progress-bar {
-    @apply h-1.5 rounded-full bg-black-100 overflow-hidden;
+    @apply h-1.5 rounded-full bg-black-700 overflow-hidden;
   }
   .progress-fill {
     @apply h-full rounded-full;
@@ -174,7 +174,7 @@
 /* ============ AVATAR ============ */
 @layer components {
   .avatar {
-    @apply rounded-lg bg-black-50 flex items-center justify-center shrink-0 border border-line font-bold text-black-900;
+    @apply rounded-lg bg-black-700 flex items-center justify-center shrink-0 border border-line font-bold text-white;
   }
   .avatar-sm { @apply avatar w-10 h-10 text-[13px]; }
   .avatar-md { @apply avatar w-14 h-14 text-[16px]; }
@@ -198,8 +198,8 @@
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #B3B3B3; }
+::-webkit-scrollbar-thumb { background: #545454; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #666; }
 
-:focus-visible { outline: 2px solid #D9D9D9; outline-offset: 2px; }
+:focus-visible { outline: 2px solid #545454; outline-offset: 2px; }
 html { scroll-behavior: smooth; }

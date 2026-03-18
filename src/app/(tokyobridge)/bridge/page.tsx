@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Lightbulb, Building2, CalendarDays, MessageSquarePlus, BookOpen } from "lucide-react";
 import { insights, tokyoCompanies, bridgeEvents, collabThemes, bridgeCases } from "@/data/bridge-mock";
+import { RotatingSponsors } from "@/components/tokyobridge/RotatingSponsors";
 
 export default function BridgeDashboard() {
   return (
@@ -85,6 +86,19 @@ export default function BridgeDashboard() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* スポンサー企業 (Rotating 3D Ring) */}
+      <section className="py-2">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-7 h-7 rounded bg-indigo-50 flex items-center justify-center">
+            <Building2 className="w-3.5 h-3.5 text-indigo-500" />
+          </div>
+          <h2 className="h3 text-[15px]">鹿児島 × 東京 パートナーシップ</h2>
+        </div>
+        <div className="card-black !bg-transparent !p-0 overflow-visible">
+          <RotatingSponsors />
         </div>
       </section>
 

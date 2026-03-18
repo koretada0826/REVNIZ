@@ -1,0 +1,379 @@
+/* NBA.com Hero - Pixel-perfect mirror from extracted CSS */
+
+/* Container */
+.hero {
+  background-color: #000;
+}
+
+/* Hero Layer - main wrapper */
+.heroLayer {
+  position: relative;
+  z-index: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: 485px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .heroLayer {
+    height: 680px;
+  }
+}
+
+/* Background Image */
+.background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  object-fit: cover;
+  height: 60%;
+  width: 100%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1);
+  opacity: 0;
+  background-color: #000;
+  transition: opacity 500ms ease-in-out;
+}
+
+.background[data-is-visible="true"] {
+  opacity: 1;
+  animation: scaleUp 7.1s ease-out 1 forwards;
+}
+
+@keyframes scaleUp {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+@media (min-width: 768px) {
+  .background {
+    width: 65%;
+    height: 80%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .background {
+    width: 70%;
+    height: 100%;
+  }
+}
+
+/* Shadow/Gradient Overlay */
+.heroShadow {
+  position: relative;
+  height: 100%;
+  z-index: 10;
+  background-image:
+    linear-gradient(0deg, #000 205px, transparent 275px),
+    linear-gradient(180deg, #000 5px, transparent 80px);
+}
+
+@media (min-width: 768px) {
+  .heroShadow {
+    background-image:
+      linear-gradient(90deg, #000 200px, transparent 58%),
+      linear-gradient(0deg, #000 20%, transparent 35%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroShadow {
+    background-image:
+      linear-gradient(90deg, #000 25%, transparent 42%),
+      linear-gradient(0deg, #000 20%, transparent 35%);
+  }
+}
+
+@media (min-width: 1280px) {
+  .heroShadow {
+    background-image:
+      linear-gradient(90deg, #000 30%, transparent 52%),
+      linear-gradient(0deg, #000 20%, transparent 35%);
+  }
+}
+
+/* Content Layer */
+.contentLayer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 20;
+  transition: all 500ms ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .contentLayer {
+    width: 66.666667%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 0;
+    padding-top: 4rem;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1280px) {
+  .contentLayer {
+    width: 50%;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* Headline */
+.headline {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.1;
+  font-feature-settings: "ss02" on;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .headline {
+    margin-bottom: 1.25rem;
+    font-size: 2.25rem;
+  }
+}
+
+/* Description */
+.description {
+  display: none;
+  margin-bottom: 1.25rem;
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  font-size: 0.875rem;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .description {
+    display: block;
+  }
+}
+
+/* CTA Button - pill shape */
+.ctaButton {
+  border-width: 2px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  line-height: 1.2;
+  font-size: 0.875rem;
+  display: inline-block;
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 200ms, color 200ms;
+}
+
+.ctaButton:hover {
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+}
+
+.buttonsWrap {
+  margin-bottom: 1rem;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .buttonsWrap {
+    margin-bottom: 1.75rem;
+  }
+}
+
+/* Related Content */
+.relatedContent {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .relatedContent {
+    display: block;
+  }
+}
+
+.relatedTitle {
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  line-height: 1.2;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.relatedItem {
+  margin-bottom: 0.25rem;
+}
+
+.relatedLink {
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 200ms;
+}
+
+.relatedLink:hover {
+  color: #fff;
+}
+
+/* Controls Layer - Bottom indicator bar */
+.controlsLayer {
+  position: absolute;
+  bottom: 0;
+  z-index: 20;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.controlsInner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* Individual control button */
+.controlButton {
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  text-align: left;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Progress bar */
+.controlBar {
+  -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+  position: relative;
+  height: 0.25rem;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  border-radius: 2px;
+  background-color: #545454;
+}
+
+.controlTrack {
+  position: absolute;
+  height: 0.25rem;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.controlTrack[data-track-in="true"] {
+  animation: slideIn 7s linear 1 forwards;
+}
+
+.controlTrack[data-track-full="true"] {
+  opacity: 1;
+  width: 100%;
+}
+
+.controlTrack[data-track-in="false"][data-track-full="false"] {
+  opacity: 0;
+  width: 0;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0%;
+    opacity: 1;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+/* Category title in controls */
+.controlTitle {
+  margin-bottom: 0.75rem;
+  display: none;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .controlTitle {
+    display: block;
+  }
+}
+
+.controlHeroText {
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  line-height: 1.2;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  transition: color 200ms;
+}
+
+.controlHeroText[data-is-current="false"] {
+  color: #545454;
+}
+
+/* Slide headline text in controls */
+.controlText {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.1;
+  font-feature-settings: "ss02" on;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: color 200ms;
+  color: #fff;
+  display: none;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+@media (min-width: 768px) {
+  .controlText {
+    display: -webkit-box;
+  }
+}
+
+.controlText[data-is-current="false"] {
+  color: #545454;
+}
+
+/* Margin bottom for hero in page context */
+.heroMargin {
+  margin-bottom: 1.5rem;
+}

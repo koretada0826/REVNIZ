@@ -7,6 +7,7 @@ import FadeIn from "@/components/motion/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/motion/StaggerContainer";
 import { toast } from "sonner";
 import { companies } from "@/data/mock";
+import RebniseCard from "@/components/cards/RebniseCard";
 
 const industries = ["すべて", "IT・テクノロジー", "食品・飲料", "広告・クリエイティブ", "建設・不動産", "人材・HR", "マーケティング"];
 const areas = ["すべて", "鹿児島", "東京", "九州"];
@@ -66,41 +67,38 @@ export default function CompaniesPage() {
       </div>
 
       {view === "grid" ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {list.map((c) => (
-            <div key={c.id} className="card card-hover group">
-              <div className="flex items-start justify-between mb-5">
-                <div className="avatar-md">{c.name.charAt(0)}</div>
-                <button onClick={() => toast.success(`${c.name}をお気に入りに追加しました`)} className="btn-icon w-9 h-9 text-black-200 hover:text-red hover:bg-red-50 rounded-md"><Heart className="w-4 h-4" /></button>
-              </div>
-              <h3 className="font-bold text-black-900 text-[16px] mb-1 group-hover:text-red transition-colors">{c.name}</h3>
-              <p className="text-[14px] text-black-400 mb-4">{c.tagline}</p>
-              <div className="flex items-center gap-4 text-[13px] text-black-300 mb-5">
-                <span className="flex items-center gap-1.5"><Briefcase className="w-3.5 h-3.5" /> {c.industry}</span>
-                <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {c.area}</span>
-              </div>
-              <div className="space-y-3 mb-6">
-                <div>
-                  <p className="text-[10px] font-bold text-black-300 tracking-[0.1em] uppercase mb-1.5">提供</p>
-                  <div className="flex flex-wrap gap-1.5">{c.canProvide.slice(0, 2).map((x) => <span key={x} className="badge-muted">{x}</span>)}</div>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-black-300 tracking-[0.1em] uppercase mb-1.5">探している</p>
-                  <div className="flex flex-wrap gap-1.5">{c.lookingFor.slice(0, 2).map((x) => <span key={x} className="badge-green">{x}</span>)}</div>
-                </div>
-              </div>
-              <div className="flex gap-2.5 pt-5 border-t border-line">
-                <Link href={`/companies/${c.id}`} className="btn-outline btn-sm flex-1 justify-center">詳細を見る</Link>
-                <Link href="/meeting" className="btn-red btn-sm flex-1 justify-center">面談依頼</Link>
-              </div>
-            </div>
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          {list.map((c, i) => (
+            <RebniseCard
+              key={c.id}
+              href={`/companies/${c.id}`}
+              imageFallback={
+                <img
+                  src={c.logo}
+                  alt={c.name}
+                  style={{
+                    maxHeight: '60px',
+                    maxWidth: '70%',
+                    objectFit: 'contain',
+                  }}
+                />
+              }
+              title={`${c.name} — ${c.tagline}`}
+              date={c.memberSince}
+              categories={[
+                { label: "NEW", color: "red", isNew: true },
+                { label: c.industry, color: "#043457" },
+              ]}
+            />
           ))}
-        </div>
+        </ul>
       ) : (
         <div className="space-y-2.5">
           {list.map((c) => (
             <div key={c.id} className="card card-hover flex items-center gap-5 group">
-              <div className="avatar-md shrink-0">{c.name.charAt(0)}</div>
+              <div className="w-14 h-14 rounded-lg bg-white flex items-center justify-center shrink-0 border border-line p-1.5">
+                <img src={c.logo} alt={c.name} className="max-h-full max-w-full object-contain" />
+              </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-bold text-black-900 text-[16px] group-hover:text-red transition-colors">{c.name}</h3>
                 <div className="flex items-center gap-3 mt-1">

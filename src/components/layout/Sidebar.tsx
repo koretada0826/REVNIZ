@@ -21,7 +21,7 @@ export default function Sidebar() {
   const path = usePathname();
 
   return (
-    <aside className="hidden xl:flex flex-col w-[230px] border-r border-line bg-white min-h-[calc(100vh-56px)]">
+    <aside className="hidden xl:flex flex-col w-[230px] border-r border-line bg-black-900 min-h-[calc(100vh-56px)]">
       <nav className="flex-1 p-3 space-y-0.5">
         <div className="px-3 py-2">
           <span className="text-[9px] font-bold text-black-300 tracking-[0.15em] uppercase">メインメニュー</span>
@@ -31,7 +31,7 @@ export default function Sidebar() {
           return (
             <Link key={item.href} href={item.href}
               className={`flex items-center gap-2.5 rounded-md px-3 py-2.5 text-[13px] font-medium transition-colors group ${
-                active ? "bg-black-900 text-white" : "text-black-400 hover:text-black-900 hover:bg-black-50"
+                active ? "bg-white/10 text-white" : "text-black-400 hover:text-white hover:bg-white/10"
               }`}>
               <item.icon className={`w-[15px] h-[15px] shrink-0 ${active ? "text-red-400" : "group-hover:text-black-600"}`} />
               <span className="flex-1">{item.name}</span>
@@ -52,7 +52,7 @@ export default function Sidebar() {
           return (
             <Link key={item.href} href={item.href}
               className={`flex items-center gap-2.5 rounded-md px-3 py-2.5 text-[13px] font-medium transition-colors group ${
-                active ? "bg-black-900 text-white" : "text-black-400 hover:text-black-900 hover:bg-black-50"
+                active ? "bg-white/10 text-white" : "text-black-400 hover:text-white hover:bg-white/10"
               }`}>
               <item.icon className={`w-[15px] h-[15px] shrink-0 ${active ? "text-red-400" : "group-hover:text-black-600"}`} />
               <span className="flex-1">{item.name}</span>
@@ -66,13 +66,13 @@ export default function Sidebar() {
 
       {/* Profile completion */}
       <div className="p-3 border-t border-line">
-        <div className="rounded-md bg-black-50 p-4">
+        <div className="rounded-md bg-white/5 p-4">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="w-3.5 h-3.5 text-black-400" />
             <span className="text-[10px] font-bold text-black-400 tracking-[0.1em] uppercase">プロフィール充足率</span>
           </div>
           <div className="flex items-end justify-between mb-2">
-            <span className="text-[22px] font-bold text-black-900 leading-none tracking-tight">75<span className="text-[13px] text-black-400">%</span></span>
+            <span className="text-[22px] font-bold text-white leading-none tracking-tight">75<span className="text-[13px] text-black-400">%</span></span>
           </div>
           <div className="progress-bar">
             <div className="progress-fill bg-black-900 w-3/4" />

@@ -1,262 +1,277 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Building2, MessageSquare, Calendar, TrendingUp, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Building2, MessageSquare, Calendar, TrendingUp, ChevronRight, ArrowUpRight, Trophy } from "lucide-react";
 import { companies, consultations, events, newsItems, statTrends } from "@/data/mock";
 import FadeIn from "@/components/motion/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/motion/StaggerContainer";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
 import SparkLine from "@/components/charts/SparkLine";
-import LottieAnimation from "@/components/lottie/LottieAnimation";
+import NBAHero from "@/components/hero/NBAHero";
+import RebniseCard from "@/components/cards/RebniseCard";
+import Carousel3D from "@/components/carousel/Carousel3D";
 
 export default function DashboardPage() {
   return (
     <div className="space-y-12">
-      {/* Hero */}
+      {/* NBA.com-style Hero */}
+      <div className="-mx-6 lg:-mx-8 -mt-8">
+        <NBAHero />
+      </div>
+
+      {/* Stats - 3D Carousel */}
       <FadeIn>
-        <section className="card-black px-8 py-12 sm:px-12 sm:py-16">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8">
-            <div className="flex-1 min-w-0">
-              <p className="text-[11px] font-bold text-white/40 tracking-[0.2em] uppercase mb-6">Sponsor Connect</p>
-              <h1 className="text-[2rem] sm:text-[2.8rem] font-bold text-white leading-[1.08] tracking-tight mb-4">
-                スポンサー同士が、<br />
-                <span className="text-red-400">次のビジネス</span>につながる。
-              </h1>
-              <p className="text-black-400 text-[16px] leading-relaxed mb-8 max-w-lg">
-                企業を探し、つながり、協業へ。<br className="hidden sm:block" />レブナイズスポンサーだからこそ生まれる信頼ある接点を。
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/companies" className="btn-red text-[15px] px-8 py-3.5">
-                  <Building2 className="w-5 h-5 mr-2" /> 企業を探す
-                </Link>
-                <Link href="/board" className="btn rounded-md px-8 py-3.5 text-[15px] border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-colors">
-                  <MessageSquare className="w-5 h-5 mr-2" /> 相談を投稿する
-                </Link>
-              </div>
-            </div>
-            <div className="hidden lg:block w-48 h-48 shrink-0 opacity-20">
-              <LottieAnimation src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189571e83a25/eJEhyGiYLw.lottie" className="w-full h-full" />
+        <section>
+          <div className="section-header">
+            <h2 className="h2">アクティビティ</h2>
+          </div>
+          <Carousel3D />
+        </section>
+      </FadeIn>
+
+      {/* Sponsor Ring */}
+      <FadeIn delay={0.15}>
+        <section>
+          <div className="section-header">
+            <h2 className="h2">スポンサー企業様</h2>
+          </div>
+          <div className="flex flex-col items-center">
+            <img src="/images/sponsor-ring.svg" alt="Sponsor Ring" className="w-full max-w-[800px]" />
+            <div className="flex gap-3 mt-4">
+              <Link href="/companies" className="btn-black">
+                <Building2 className="w-4 h-4 mr-2" /> スポンサー企業一覧を見る
+              </Link>
+              <Link href="/benefits" className="btn-outline">
+                <Trophy className="w-4 h-4 mr-2" /> スポンサー特典を見る
+              </Link>
             </div>
           </div>
         </section>
       </FadeIn>
 
-      {/* Stats */}
-      <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4" stagger={0.1}>
-        {[
-          { icon: Building2, value: 24, label: "スポンサー企業", trend: statTrends.companies },
-          { icon: TrendingUp, value: 8, label: "今月の面談依頼", trend: statTrends.meetings, color: "#C8102E" },
-          { icon: MessageSquare, value: 12, label: "相談投稿", trend: statTrends.consultations },
-          { icon: Calendar, value: 3, label: "今月のイベント", trend: statTrends.events },
-        ].map((s) => (
-          <StaggerItem key={s.label}>
-            <div className="card card-hover group cursor-pointer p-5">
-              <div className="flex items-center justify-between mb-2">
-                <s.icon className="w-5 h-5 text-black-300" />
-                <ArrowUpRight className="w-4 h-4 text-black-200 group-hover:text-black-500 transition-colors" />
-              </div>
-              <div className="flex items-end justify-between gap-3">
-                <div>
-                  <p className="stat-value"><AnimatedNumber value={s.value} /></p>
-                  <p className="stat-label">{s.label}</p>
-                </div>
-                <div className="w-24 shrink-0">
-                  <SparkLine data={s.trend} color={s.color || "#0A0A0A"} height={36} />
-                </div>
-              </div>
-            </div>
-          </StaggerItem>
-        ))}
-      </StaggerContainer>
-
-      {/* This Week */}
+      {/* This Week - rebnise.jp card mirror */}
       <FadeIn delay={0.2}>
         <section>
           <div className="section-header">
-            <h2 className="h2">今週の注目</h2>
+            <h2 className="h2">今週の注目イベント</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* New Company */}
-            <div className="card-interactive group p-0 overflow-hidden">
-              <div className="bg-black-900 px-6 py-3 flex items-center justify-between">
-                <span className="text-[12px] font-bold text-white tracking-wide uppercase">New 企業</span>
-                <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <RebniseCard
+              href={`/companies/${companies[5].id}`}
+              image="/images/hero-new-company.jpg"
+              title={`${companies[5].name} — ${companies[5].tagline}`}
+              date={companies[5].memberSince}
+              categories={[
+                { label: "NEW", color: "red", isNew: true },
+                { label: "企業", color: "#043457" },
+              ]}
+            />
+            <RebniseCard
+              href="/board"
+              image="/images/hero-consultation.jpg"
+              title={consultations[0].title}
+              date={consultations[0].createdAt}
+              categories={[
+                { label: "NEW", color: "red", isNew: true },
+                { label: "相談", color: "#66cc99" },
+              ]}
+            />
+            <RebniseCard
+              href="/events"
+              image="/images/hero-event.jpg"
+              title={`${events[0].title} — ${events[0].location}`}
+              date={events[0].date}
+              categories={[
+                { label: "イベント", color: "#e8ca22" },
+              ]}
+            />
+          </ul>
+        </section>
+      </FadeIn>
+
+      {/* 実績セクション */}
+      <FadeIn delay={0.15}>
+        <section>
+          <div className="section-header">
+            <h2 className="h2">実績</h2>
+          </div>
+
+          {/* 数字ハイライト */}
+          <h3 className="text-[18px] font-bold text-white mb-4">数字で見る実績</h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {[
+              { value: "35", unit: "社", label: "スポンサー企業数", sub: "2025-26シーズン" },
+              { value: "12", unit: "件", label: "協業マッチング成立", sub: "累計実績" },
+              { value: "85", unit: "%", label: "スポンサー継続率", sub: "前年比+5%" },
+              { value: "4,800", unit: "人", label: "イベント動員数", sub: "2025-26シーズン" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center py-6 rounded-lg" style={{ background: '#111', border: '1px solid #333' }}>
+                <div className="flex items-end justify-center gap-1 mb-2">
+                  <span className="text-[36px] font-bold text-white leading-none tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {stat.value}
+                  </span>
+                  <span className="text-[16px] font-medium text-black-400 mb-1">{stat.unit}</span>
+                </div>
+                <p className="text-[13px] font-bold text-white mb-1">{stat.label}</p>
+                <p className="text-[11px] text-black-400">{stat.sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* 成功事例カード */}
+          <h3 className="text-[18px] font-bold text-white mb-4">成功事例ピックアップ</h3>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="rounded-lg overflow-hidden" style={{ background: '#111', border: '1px solid #333' }}>
+              <div className="px-6 py-3" style={{ background: '#dfb664' }}>
+                <span className="text-[12px] font-bold text-black tracking-wider uppercase">PICK UP 01</span>
               </div>
               <div className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="avatar-md">{companies[5].name.charAt(0)}</div>
-                  <div className="min-w-0">
-                    <h3 className="font-bold text-black-900 text-[16px] truncate">{companies[5].name}</h3>
-                    <p className="text-[13px] text-black-400 truncate">{companies[5].tagline}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {companies[5].canProvide.slice(0, 3).map((p) => <span key={p} className="badge-muted">{p}</span>)}
+                <h3 className="text-[16px] font-bold text-white mb-2">鹿児島の食品が東京のセレクトショップへ</h3>
+                <p className="text-[13px] text-black-400 mb-4 leading-relaxed">
+                  桜島フーズ × Tokyo Creative Lab — パッケージデザインリニューアルにより東京3店舗への納品が決定。スポンサー同士の信頼から生まれた協業。
+                </p>
+                <div className="flex gap-2">
+                  <span className="badge-muted">販路拡大</span>
+                  <span className="badge-muted">ブランディング</span>
                 </div>
               </div>
             </div>
 
-            {/* New Consultation */}
-            <div className="card-interactive group p-0 overflow-hidden">
-              <div className="bg-emerald-700 px-6 py-3 flex items-center justify-between">
-                <span className="text-[12px] font-bold text-white tracking-wide uppercase">新着 相談</span>
-                <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
+            <div className="rounded-lg overflow-hidden" style={{ background: '#111', border: '1px solid #333' }}>
+              <div className="px-6 py-3" style={{ background: '#dfb664' }}>
+                <span className="text-[12px] font-bold text-black tracking-wider uppercase">PICK UP 02</span>
               </div>
               <div className="p-6">
-                <h3 className="font-bold text-black-900 text-[16px] mb-2 line-clamp-2">{consultations[0].title}</h3>
-                <p className="body-sm line-clamp-2 mb-4">{consultations[0].content}</p>
-                <div className="flex items-center gap-3">
-                  <div className="avatar-sm text-[11px]">{consultations[0].companyName.charAt(0)}</div>
-                  <div>
-                    <span className="text-[13px] font-medium text-black-900">{consultations[0].companyName}</span>
-                    <span className="caption block">{consultations[0].targetArea}</span>
-                  </div>
+                <h3 className="text-[16px] font-bold text-white mb-2">建設会社のDX推進プロジェクトが始動</h3>
+                <p className="text-[13px] text-black-400 mb-4 leading-relaxed">
+                  かごしま建設 × 南九州テクノロジーズ — クラウド型工程管理システム導入で月間報告業務時間40%削減を達成。
+                </p>
+                <div className="flex gap-2">
+                  <span className="badge-muted">DX</span>
+                  <span className="badge-muted">業務効率化</span>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Upcoming Event */}
-            <div className="card-interactive group p-0 overflow-hidden">
-              <div className="bg-black-700 px-6 py-3 flex items-center justify-between">
-                <span className="text-[12px] font-bold text-white tracking-wide uppercase">イベント</span>
-                <span className="text-[12px] text-white/60">{events[0].date}</span>
-              </div>
-              <div className="p-6">
-                <h3 className="font-bold text-black-900 text-[16px] mb-2">{events[0].title}</h3>
-                <p className="body-sm mb-4">{events[0].location}</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="progress-bar w-20"><div className="progress-fill bg-black-900" style={{ width: `${(events[0].registered / events[0].capacity) * 100}%` }} /></div>
-                    <span className="text-[13px] font-semibold text-black-900">{events[0].registered}/{events[0].capacity}名</span>
-                  </div>
-                  <Link href="/events" className="text-[13px] font-semibold text-red hover:text-red-700">
-                    申込む →
-                  </Link>
-                </div>
-              </div>
-            </div>
+          <div className="text-center mt-6">
+            <Link href="/cases" className="btn-outline">
+              すべての成功事例を見る →
+            </Link>
           </div>
         </section>
       </FadeIn>
 
-      {/* Spotlight */}
-      <FadeIn delay={0.1}>
-        <section className="card-red p-0 overflow-hidden">
-          <div className="px-8 py-10 sm:px-10">
-            <p className="label mb-4">今週のピックアップ</p>
-            <div className="flex flex-col sm:flex-row gap-6">
-              <div className="avatar-lg shrink-0">{companies[2].name.charAt(0)}</div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-[22px] font-bold text-black-900 tracking-tight mb-1">{companies[2].name}</h3>
-                <p className="text-[15px] text-black-400 mb-4">{companies[2].tagline}</p>
-                <p className="body mb-5 max-w-lg">{companies[2].description}</p>
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {companies[2].canProvide.map((i) => <span key={i} className="badge-muted">{i}</span>)}
-                  {companies[2].lookingFor.map((i) => <span key={i} className="badge-green">{i}</span>)}
-                </div>
-                <div className="flex gap-3">
-                  <Link href={`/companies/${companies[2].id}`} className="btn-black">プロフィールを見る</Link>
-                  <Link href="/meeting" className="btn-outline">面談を依頼する</Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeIn>
 
-      {/* Consultations */}
+      {/* Consultations - RebniseCard style */}
       <FadeIn delay={0.1}>
         <section>
           <div className="section-header">
             <h2 className="h2">新着相談</h2>
-            <Link href="/board" className="text-[14px] font-semibold text-black-400 hover:text-black-900 transition-colors">
+            <Link href="/board" className="text-[14px] font-semibold text-black-400 hover:text-white transition-colors">
               すべて見る →
             </Link>
           </div>
-          <div className="card-flush divide-y divide-line">
-            {consultations.slice(0, 4).map((p) => (
-              <Link key={p.id} href="/board" className="flex items-center gap-5 px-6 py-5 hover:bg-black-50/50 transition-colors group">
-                <div className="avatar-sm">
-                  <MessageSquare className="w-4 h-4 text-black-300" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="badge-green">{p.category}</span>
-                    <span className="caption">{p.createdAt}</span>
-                  </div>
-                  <h3 className="text-[15px] font-semibold text-black-900 truncate group-hover:text-red transition-colors">{p.title}</h3>
-                  <p className="text-[13px] text-black-400 mt-0.5">{p.companyName} &middot; {p.targetArea}</p>
-                </div>
-                <div className="text-center shrink-0 px-3">
-                  <p className="text-[22px] font-bold text-black-900 tabular-nums">{p.responses}</p>
-                  <p className="text-[10px] text-black-300 uppercase tracking-wide">反応</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-black-200 shrink-0 group-hover:text-black-500 transition-colors" />
-              </Link>
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {consultations.slice(0, 4).map((p, i) => (
+              <RebniseCard
+                key={p.id}
+                href="/board"
+                image={["/images/hero-consultation.jpg", "/images/hero-new-company.jpg", "/images/hero-meeting.jpg", "/images/hero-event.jpg"][i]}
+                title={p.title}
+                date={p.createdAt}
+                categories={[
+                  { label: "NEW", color: "red", isNew: true },
+                  { label: p.category, color: "#66cc99" },
+                ]}
+              />
             ))}
-          </div>
+          </ul>
         </section>
       </FadeIn>
 
-      {/* Events */}
+      {/* Events - RebniseCard style */}
       <FadeIn delay={0.1}>
         <section>
           <div className="section-header">
             <h2 className="h2">近日のイベント</h2>
-            <Link href="/events" className="text-[14px] font-semibold text-black-400 hover:text-black-900 transition-colors">
+            <Link href="/events" className="text-[14px] font-semibold text-black-400 hover:text-white transition-colors">
               すべて見る →
             </Link>
           </div>
-          <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" stagger={0.08}>
-            {events.map((ev) => {
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {events.map((ev, i) => {
+              const catColor = ev.category === "GAME" ? "#e8ca22" : ev.category === "イベント" ? "#ec3e6b" : "#043457";
               const pct = Math.round((ev.registered / ev.capacity) * 100);
               return (
-                <StaggerItem key={ev.id}>
-                  <div className="card card-hover group h-full">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="badge-dark">{ev.category}</span>
-                      {pct >= 90 && <span className="badge-red">残りわずか</span>}
-                    </div>
-                    <h3 className="text-[16px] font-bold text-black-900 mb-2 group-hover:text-red transition-colors">{ev.title}</h3>
-                    <div className="space-y-1 mb-5">
-                      <p className="caption text-[13px]">{ev.date}</p>
-                      <p className="caption text-[13px]">{ev.location}</p>
-                    </div>
-                    <div className="pt-4 border-t border-line">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[13px] text-black-400">{ev.registered}/{ev.capacity}名</span>
-                        <span className="text-[14px] font-bold text-black-900 tabular-nums">{pct}%</span>
-                      </div>
-                      <div className="progress-bar">
-                        <div className={`progress-fill ${pct >= 90 ? "bg-red" : "bg-black-900"}`} style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                  </div>
-                </StaggerItem>
+                <RebniseCard
+                  key={ev.id}
+                  href="/events"
+                  image={["/images/hero-game1.jpg", "/images/hero-game2.jpg", "/images/hero-fanfest.jpg", "/images/hero-party.jpg"][i]}
+                  title={ev.title}
+                  date={ev.date}
+                  categories={[
+                    ...(pct >= 90 ? [{ label: "残りわずか", color: "red", isNew: true }] : []),
+                    { label: ev.category, color: catColor },
+                  ]}
+                />
               );
             })}
-          </StaggerContainer>
+          </ul>
         </section>
       </FadeIn>
 
-      {/* News */}
+      {/* News - Timeline */}
       <FadeIn delay={0.1}>
         <section>
           <div className="section-header">
             <h2 className="h2">お知らせ</h2>
-            <Link href="/news" className="text-[14px] font-semibold text-black-400 hover:text-black-900 transition-colors">
+            <Link href="/news" className="text-[14px] font-semibold text-black-400 hover:text-white transition-colors">
               すべて見る →
             </Link>
           </div>
-          <div className="card-flush divide-y divide-line">
-            {newsItems.slice(0, 4).map((item) => (
-              <Link key={item.id} href="/news" className="flex items-center gap-5 px-6 py-4 hover:bg-black-50/50 transition-colors group">
-                <span className="caption w-24 shrink-0 tabular-nums text-[13px]">{item.createdAt}</span>
-                <span className="badge-red shrink-0">{item.category}</span>
-                <span className="text-[15px] font-medium text-black-900 truncate flex-1 group-hover:text-red transition-colors">{item.title}</span>
-                <ChevronRight className="w-4 h-4 text-black-200 shrink-0 group-hover:text-black-500 transition-colors" />
-              </Link>
-            ))}
+          <div className="relative pl-8">
+            {/* Gold vertical line */}
+            <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-[#dfb664] via-[#dfb664]/60 to-transparent" />
+
+            <div className="space-y-0">
+              {newsItems.slice(0, 4).map((item, i) => (
+                <Link
+                  key={item.id}
+                  href="/news"
+                  className="group relative flex items-start gap-4 py-4 hover:bg-white/5 rounded-lg px-3 -ml-3 transition-colors"
+                >
+                  {/* Dot on the line */}
+                  <div className="absolute left-[-17px] top-[22px] flex items-center justify-center">
+                    <div
+                      className="w-[10px] h-[10px] rounded-full border-2 transition-colors"
+                      style={{
+                        borderColor: '#dfb664',
+                        background: i === 0 ? '#dfb664' : '#000',
+                      }}
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <span
+                        className="text-[12px] font-bold tracking-wider tabular-nums"
+                        style={{ color: '#dfb664', fontFamily: "'Space Grotesk', sans-serif" }}
+                      >
+                        {item.createdAt}
+                      </span>
+                      <span className="badge-red text-[10px]">{item.category}</span>
+                    </div>
+                    <p className="text-[14px] font-medium text-white/80 group-hover:text-white transition-colors leading-snug">
+                      {item.title}
+                    </p>
+                  </div>
+
+                  <ChevronRight className="w-4 h-4 text-black-400 shrink-0 mt-1 group-hover:text-white transition-colors" />
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       </FadeIn>

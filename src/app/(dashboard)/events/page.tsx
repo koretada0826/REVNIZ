@@ -1,67 +1,117 @@
 "use client";
 
+import Image from "next/image";
 import { Calendar, MapPin, Users, ArrowRight } from "lucide-react";
 import { events } from "@/data/mock";
-import LottieAnimation from "@/components/lottie/LottieAnimation";
 import FadeIn from "@/components/motion/FadeIn";
 
-export default function EventsPage() {
+const TODAY = "2026-03-18";
+
+function EventCard({ ev }: { ev: (typeof events)[number] }) {
+  const dateLabel = ev.date.slice(0, 7);
   return (
-    <FadeIn><div className="space-y-6">
-      <div className="flex items-start justify-between gap-6">
-        <div>
-          <p className="label">Events</p>
-          <h1 className="h1">イベント一覧</h1>
-          <p className="body mt-3">オンラインの接点をリアルな交流や商談につなげる</p>
+    <div className="group relative cursor-pointer">
+      <a className="block">
+        <div className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
+          <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEW</span>
+          <span className="inline-block bg-[#e8ca22] text-white text-[14px] font-bold text-center px-2.5 py-1">{ev.category}</span>
         </div>
-        <div className="hidden lg:block w-24 h-24 shrink-0 opacity-15">
-          <LottieAnimation src="https://lottie.host/e9f2d4c9-bbfe-4810-a508-7e2dd0cdb3c5/oq8sYNfxKu.lottie" className="w-full h-full" />
+        <div className="relative overflow-hidden">
+          <div className="aspect-[4/3] overflow-hidden">
+            <Image
+              src={ev.image}
+              alt={ev.title}
+              fill
+              className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.15]"
+            />
+          </div>
         </div>
+        <div className="relative bg-[#333] px-5 pt-7 pb-5">
+          <p className="text-[14px] text-white leading-relaxed line-clamp-2 h-[45px] mb-2.5">
+            {ev.title}
+          </p>
+          <p className="text-[20px] font-bold text-[#a2a2a2] tracking-wide tabular-nums" style={{ fontFamily: '"Space Grotesk", "abolition", sans-serif' }}>
+            {dateLabel}
+          </p>
+        </div>
+      </a>
+      <div className="absolute right-5 bottom-7 flex items-center gap-2">
+        <span className="text-[14px] text-[#686868] hover:text-[#1da1f2] transition-colors cursor-pointer font-medium">X</span>
+        <span className="text-[14px] text-[#686868] hover:text-[#3a5795] transition-colors cursor-pointer font-medium">f</span>
+      </div>
+    </div>
+  );
+}
+
+export default function EventsPage() {
+  const sorted = [...events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const upcoming = sorted.filter((ev) => ev.date >= TODAY);
+  const nearest = upcoming[0];
+  const rest = upcoming.slice(1);
+
+  return (
+    <FadeIn><div className="space-y-8">
+      <div>
+        <p className="label">Events</p>
+        <h1 className="h1">イベント一覧</h1>
+        <p className="body mt-3">オンラインの接点をリアルな交流や商談につなげる</p>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {["すべて", "交流会", "商談会", "観戦交流会"].map((c, i) => <button key={c} className={i === 0 ? "tag-active" : "tag"}>{c}</button>)}
+        {["すべて", "GAME", "イベント", "スポンサー"].map((c, i) => <button key={c} className={i === 0 ? "tag-active" : "tag"}>{c}</button>)}
       </div>
 
-      <div className="space-y-4">
-        {events.map((ev) => {
-          const pct = Math.round((ev.registered / ev.capacity) * 100);
-          return (
-            <div key={ev.id} className="card card-hover group">
-              <div className="flex flex-col sm:flex-row gap-6">
-                <div className="shrink-0 sm:w-24">
-                  <div className="bg-black-900 rounded-md p-5 text-center inline-block sm:block">
-                    <p className="text-[28px] font-bold text-white tabular-nums leading-none">{ev.date.split("-")[2]}</p>
-                    <p className="text-[12px] text-black-400 tracking-wider uppercase mt-1">{ev.date.split("-")[1]}月</p>
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="badge-dark">{ev.category}</span>
-                    {pct >= 90 && <span className="badge-red">残りわずか</span>}
-                  </div>
-                  <h3 className="text-[18px] font-bold text-black-900 mb-2 group-hover:text-red transition-colors">{ev.title}</h3>
-                  <p className="body-sm mb-4">{ev.description}</p>
-                  <div className="flex flex-wrap items-center gap-5 text-[14px] text-black-400 mb-4">
-                    <span>{ev.date}</span>
-                    <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {ev.location}</span>
-                    <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {ev.registered}/{ev.capacity}名</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex-1 progress-bar">
-                      <div className={`progress-fill ${pct >= 90 ? "bg-red" : "bg-black-900"}`} style={{ width: `${pct}%` }} />
-                    </div>
-                    <span className="text-[14px] font-bold text-black-900 tabular-nums w-10 text-right">{pct}%</span>
-                  </div>
-                </div>
-                <div className="shrink-0 flex items-start">
-                  <button className="btn-red">参加申込 <ArrowRight className="w-4 h-4 ml-2" /></button>
+      {/* 直近イベント（大きく表示） */}
+      {nearest && (
+        <div>
+          <p className="label mb-4">Next Event</p>
+          <div className="group relative cursor-pointer">
+            <a className="block">
+              <div className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
+                <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEXT</span>
+                <span className="inline-block bg-[#e8ca22] text-white text-[14px] font-bold text-center px-2.5 py-1">{nearest.category}</span>
+              </div>
+              <div className="relative overflow-hidden">
+                <div className="aspect-[2/1] overflow-hidden">
+                  <Image
+                    src={nearest.image}
+                    alt={nearest.title}
+                    fill
+                    className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.15]"
+                  />
                 </div>
               </div>
+              <div className="relative bg-[#333] px-6 pt-6 pb-5">
+                <p className="text-[18px] text-white font-bold leading-relaxed mb-3">
+                  {nearest.title}
+                </p>
+                <p className="text-[14px] text-black-400 mb-4">{nearest.description}</p>
+                <div className="flex flex-wrap items-center gap-5 text-[14px] text-[#a2a2a2]">
+                  <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {nearest.date}</span>
+                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {nearest.location}</span>
+                  <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {nearest.registered}/{nearest.capacity}名</span>
+                </div>
+              </div>
+            </a>
+            <div className="absolute right-5 bottom-6 flex items-center gap-2">
+              <span className="text-[14px] text-[#686868] hover:text-[#1da1f2] transition-colors cursor-pointer font-medium">X</span>
+              <span className="text-[14px] text-[#686868] hover:text-[#3a5795] transition-colors cursor-pointer font-medium">f</span>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        </div>
+      )}
+
+      {/* 今後のイベント */}
+      {rest.length > 0 && (
+        <div>
+          <p className="label mb-4">Upcoming Events</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {rest.map((ev) => (
+              <EventCard key={ev.id} ev={ev} />
+            ))}
+          </div>
+        </div>
+      )}
     </div></FadeIn>
   );
 }

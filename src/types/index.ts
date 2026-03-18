@@ -45,6 +45,7 @@ export interface Event {
   category: string;
   capacity: number;
   registered: number;
+  image: string;
 }
 
 export interface MeetingRequest {

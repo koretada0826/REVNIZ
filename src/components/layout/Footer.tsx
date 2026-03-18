@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-line bg-white mt-16">
+    <footer className="border-t border-line bg-black-900 mt-16">
       <div className="max-w-7xl mx-auto px-5 lg:px-8 py-10">
         <div className="flex flex-col sm:flex-row items-start justify-between gap-8">
           <div>
@@ -10,7 +10,7 @@ export default function Footer() {
               <div className="w-7 h-7 bg-black-900 rounded-md flex items-center justify-center">
                 <span className="text-white font-bold text-[7px] tracking-[0.15em]">SC</span>
               </div>
-              <span className="text-[13px] font-bold text-black-900 tracking-tight">Sponsor Connect</span>
+              <span className="text-[13px] font-bold text-white tracking-tight">Sponsor Connect</span>
             </div>
             <p className="text-[11px] text-black-300 max-w-[280px] leading-relaxed">
               レブナイズスポンサー企業同士の接点を設計・促進・可視化するビジネスインフラ。
