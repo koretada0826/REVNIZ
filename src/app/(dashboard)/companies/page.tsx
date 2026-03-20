@@ -1,9 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal, MessageSquare } from "lucide-react";
 import FadeIn from "@/components/motion/FadeIn";
 import { sponsorSections } from "@/data/sponsors";
+import { consultations, companies } from "@/data/mock";
+
+// companyId → スポンサー名のマッピング
+const companyIdToSponsorNames: Record<string, string[]> = {
+  "1": ["南九州テクノロジーズ", "株式会社テクノミックス"],
+  "2": ["桜島フーズ", "福山黒酢株式会社", "鹿児島堀口製茶有限会社"],
+  "3": ["Tokyo Creative Lab", "株式会社メディアサービス"],
+  "4": ["かごしま建設", "株式会社大洋", "岩崎産業"],
+  "5": ["グローバルHRパートナーズ", "株式会社Wiz"],
+  "6": ["薩摩デジタルマーケティング", "株式会社デジタルフィンテック"],
+};
 
 const allIndustries = [
   "すべて", "IT", "飲食", "自動車", "不動産", "サービス", "自治体",
@@ -145,6 +156,14 @@ export default function CompaniesPage() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filterLogos(section.logos).map((logo, li) => {
                   const color = industryColors[logo.industry || ""] || "#6B7280";
+                  // この企業の相談を検索
+                  const companyConsultations = consultations.filter((c) => {
+                    // スポンサー名と直接一致
+                    if (logo.name.includes(c.companyName) || c.companyName.includes(logo.name)) return true;
+                    // companyId→スポンサー名マッピングで照合
+                    const sponsorNames = companyIdToSponsorNames[c.companyId] || [];
+                    return sponsorNames.some((sn) => logo.name.includes(sn) || sn.includes(logo.name));
+                  });
                   return (
                     <a key={li} href={logo.url || "#"} target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden cursor-pointer block">
                       {/* 右上バッジ */}
@@ -152,7 +171,7 @@ export default function CompaniesPage() {
                         <span className="inline-block text-white text-[13px] font-bold text-center px-2.5 py-1" style={{ backgroundColor: color }}>{logo.industry}</span>
                       </div>
 
-                      {/* ロゴエリア（白背景・枠いっぱいに表示） */}
+                      {/* ロゴエリア */}
                       <div className="overflow-hidden">
                         <img
                           src={`/images/sponsors/${logo.file}`}
@@ -167,9 +186,34 @@ export default function CompaniesPage() {
                           {logo.name}
                         </p>
                         <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-[#888] mb-2">About</p>
-                        <p className="text-[13px] text-[#a2a2a2] leading-relaxed line-clamp-4">
+                        <p className="text-[13px] text-[#a2a2a2] leading-relaxed line-clamp-3 mb-3">
                           {logo.description || ""}
                         </p>
+
+                        {/* 相談内容 */}
+                        <div className="border-t border-[#444] pt-3">
+                          <div className="flex items-center gap-1.5 mb-2">
+                            <MessageSquare className="w-3.5 h-3.5" style={{ color: "#dfb664" }} />
+                            <span className="text-[10px] font-extrabold uppercase tracking-wider" style={{ color: "#dfb664" }}>相談内容</span>
+                          </div>
+                          {companyConsultations.length > 0 ? (
+                            companyConsultations.slice(0, 2).map((c) => (
+                              <div
+                                key={c.id}
+                                className="mb-2 rounded-md p-2.5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = `/board/${c.id}`; }}
+                              >
+                                <p className="text-[12px] text-white font-bold leading-snug mb-1">{c.title}</p>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[10px] font-bold text-black px-1.5 py-0.5 rounded" style={{ backgroundColor: "#dfb664" }}>{c.category}</span>
+                                  <span className="text-[10px] text-black-400">{c.responses}件の反応</span>
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-[12px] text-black-500 font-medium">まだ相談はありません</p>
+                          )}
+                        </div>
                       </div>
                     </a>
                   );

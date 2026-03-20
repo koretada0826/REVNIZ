@@ -1,265 +1,214 @@
-<svg width="800" height="340" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- ドロップシャドウ（床に落ちる影） -->
-    <filter id="plateShadow" x="-15%" y="-15%" width="130%" height="130%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="6" />
-      <feOffset dx="0" dy="12" result="offsetblur" />
+    <!-- 極薄いドロップシャドウ（デザイン要件のため） -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="0" dy="2" result="offsetblur" />
       <feComponentTransfer>
-        <feFuncA type="linear" slope="0.1" />
+        <feFuncA type="linear" slope="0.05" />
       </feComponentTransfer>
       <feMerge>
         <feMergeNode />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-
-    <!-- プレート上面のグラデーション（微細な光の反射） -->
-    <linearGradient id="plateTopGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#F3F4F6" />
-    </linearGradient>
-
-    <!-- プレート側面のグラデーション（厚み部分の陰影） -->
-    <linearGradient id="plateSideGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#E5E7EB" />
-      <stop offset="100%" stop-color="#D1D5DB" />
-    </linearGradient>
-    
-    <!-- 時計周りの軌道パス (右 -> 手前 -> 左 -> 奥) -->
-    <path id="orbitPath" d="M 720,170 A 320,70 0 0,1 80,170 A 320,70 0 0,1 720,170 Z" fill="none" />
   </defs>
 
   <style>
-    .sponsor-link { 
-      cursor: pointer; 
-      text-decoration: none; 
+    /* 回転アニメーション（12秒リニア） */
+    .plate-group {
+      transform-origin: 400px 240px;
+      animation: rotatePlate 12s linear infinite;
     }
-    .initial { 
-      font-family: "Space Grotesk", "Noto Sans JP", sans-serif; 
-      font-size: 24px; 
-      font-weight: bold; 
-      fill: #141414; 
-      text-anchor: middle; 
-      dominant-baseline: central; 
-      transition: fill 0.3s ease;
-      /* ロゴ自体にもフワッと浮くシャドウを追加 */
-      filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.08));
+
+    /* ロゴの可読性維持のための逆回転アニメーション */
+    /* 親の回転を打ち消して常に正立するようにする */
+    .logo-container {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: counterRotate 12s linear infinite;
     }
-    .tooltip-bg {
-      fill: rgba(0,0,0,0.85);
-      rx: 4;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
+
+    @keyframes rotatePlate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
-    .tooltip-text { 
-      font-family: sans-serif; 
-      font-size: 11px; 
-      font-weight: 500; 
-      fill: #fff; 
-      text-anchor: middle; 
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
+
+    @keyframes counterRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
     }
-    .sponsor-link:hover .initial { fill: #4F46E5; }
-    .sponsor-link:hover .tooltip-bg { opacity: 1; }
-    .sponsor-link:hover .tooltip-text { opacity: 1; }
+
+    /* 以下はスタイル調整用のCSS */
+    .plate-shape {
+      fill: #FFFFFF;
+      stroke: #E5E7EB;
+      stroke-width: 1;
+      filter: url(#softShadow);
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      fill: #141414;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    .logo-subtext {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 10px;
+      fill: #666;
+      text-anchor: middle;
+      dominant-baseline: hanging;
+    }
   </style>
 
-  <!-- 3Dっぽさを出すための厚み（側面のエクストルージョン） -->
-  <!-- 下にずらしたレイヤーを重ねることで、滑らかな物理的厚みを表現 -->
-  <g filter="url(#plateShadow)">
-    <ellipse cx="400" cy="182" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
-    <ellipse cx="400" cy="180" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
-    <ellipse cx="400" cy="178" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
-    <ellipse cx="400" cy="176" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
-    <ellipse cx="400" cy="174" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
-    <ellipse cx="400" cy="172" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
-  </g>
+  <!-- 
+    グループ全体（だ円プレート＋ロゴ）をまとめるコンテナ 
+    この g タグに対して rotatePlate アニメーションが適用される
+  -->
+  <g id="ring" class="plate-group">
+    
+    <!-- 
+      1枚の楕円プレート（ドーナツ状）。
+      evenodd ルールを使うことで中をくり抜き、外側rx=300、内側rx=280のリングにしている
+      （cx=400, cy=240）
+    -->
+    <path class="plate-shape" fill-rule="evenodd" clip-rule="evenodd"
+      d="
+        M 700 240 A 300 180 0 1 1 100 240 A 300 180 0 1 1 700 240 Z
+        M 680 240 A 280 160 0 1 0 120 240 A 280 160 0 1 0 680 240 Z
+      " 
+    />
 
-  <!-- プレート上面（トップフェイス） -->
-  <ellipse cx="400" cy="170" rx="320" ry="70" fill="none" stroke="url(#plateTopGrad)" stroke-width="64" />
-  
-  <!-- 面取り（ベベル）ハイライト＆シャドウでエッジをシャープに -->
-  <!-- 外側のハイライト -->
-  <ellipse cx="400" cy="170" rx="352" ry="102" fill="none" stroke="#FFFFFF" stroke-width="2" />
-  <!-- 外側の微細な影 -->
-  <ellipse cx="400" cy="170" rx="351" ry="101" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1" />
-  
-  <!-- 内側のハイライト -->
-  <ellipse cx="400" cy="170" rx="288" ry="38" fill="none" stroke="#FFFFFF" stroke-width="2" />
-  <!-- 内側の微細な影 -->
-  <ellipse cx="400" cy="170" rx="289" ry="39" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1" />
+    <!--
+      各ロゴ（外周ライン上に均等配置）
+      座標ロジック:
+      x = 400 + 300 * cos(θ)
+      y = 240 + 180 * sin(θ)
+      少し外側に配置するため r を微増（rx=330, ry=210）とする
+      x = 400 + 330 * cos(θ)
+      y = 240 + 210 * sin(θ)
+    -->
 
-  <!-- ロゴ群 -->
-  <g>
-    <!-- Logo 1 (TV) -->
-    <a xlink:href="/bridge/companies/co-1" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="0s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="0s" />
-          <text class="initial" y="0">TV</text>
-          <rect class="tooltip-bg" x="-36" y="18" width="72" height="20" />
-          <text class="tooltip-text" y="31">テクノバレー</text>
-        </g>
+    <!-- 0度: cos(0)=1, sin(0)=0 -->
+    <g transform="translate(730, 240)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">TV</text>
+        <text class="logo-subtext" y="10">テクノバレー</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 2 (NS) -->
-    <a xlink:href="/bridge/companies/co-2" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-2.083s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-2.083s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-2.083s" />
-          <text class="initial" y="0">NS</text>
-          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
-          <text class="tooltip-text" y="31">NextStep</text>
-        </g>
+    <!-- 30度: cos(30)=0.866, sin(30)=0.5 -->
+    <!-- X = 400 + 330 * 0.866 = 685.8 -->
+    <!-- Y = 240 + 210 * 0.5 = 345 -->
+    <g transform="translate(685.8, 345)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">NS</text>
+        <text class="logo-subtext" y="10">NextStep</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 3 (CP) -->
-    <a xlink:href="/bridge/companies/co-3" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-4.166s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-4.166s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-4.166s" />
-          <text class="initial" y="0">CP</text>
-          <rect class="tooltip-bg" x="-36" y="18" width="72" height="20" />
-          <text class="tooltip-text" y="31">CRAFT PR</text>
-        </g>
+    <!-- 60度: cos(60)=0.5, sin(60)=0.866 -->
+    <!-- X = 400 + 330 * 0.5 = 565 -->
+    <!-- Y = 240 + 210 * 0.866 = 421.8 -->
+    <g transform="translate(565, 421.8)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">CP</text>
+        <text class="logo-subtext" y="10">CRAFT PR</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 4 (LX) -->
-    <a xlink:href="/bridge/companies/co-5" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-6.249s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-6.249s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-6.249s" />
-          <text class="initial" y="0">LX</text>
-          <rect class="tooltip-bg" x="-38" y="18" width="76" height="20" />
-          <text class="tooltip-text" y="31">LocalX Labs</text>
-        </g>
+    <!-- 90度: cos(90)=0, sin(90)=1 -->
+    <!-- X = 400 -->
+    <!-- Y = 240 + 210 = 450 -->
+    <g transform="translate(400, 450)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">LX</text>
+        <text class="logo-subtext" y="10">LocalX</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 5 (BC) -->
-    <a xlink:href="/bridge/companies/co-6" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-8.332s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-8.332s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-8.332s" />
-          <text class="initial" y="0">BC</text>
-          <rect class="tooltip-bg" x="-38" y="18" width="76" height="20" />
-          <text class="tooltip-text" y="31">Bridge Com</text>
-        </g>
+    <!-- 120度: cos(120)=-0.5, sin(120)=0.866 -->
+    <!-- X = 400 - 165 = 235 -->
+    <!-- Y = 240 + 181.8 = 421.8 -->
+    <g transform="translate(235, 421.8)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">BC</text>
+        <text class="logo-subtext" y="10">Bridge C</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 6 (KC) -->
-    <a xlink:href="/bridge/companies/th-1" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-10.415s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-10.415s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-10.415s" />
-          <text class="initial" y="0">KC</text>
-          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
-          <text class="tooltip-text" y="31">鹿児島建設</text>
-        </g>
+    <!-- 150度: cos(150)=-0.866, sin(150)=0.5 -->
+    <!-- X = 400 - 285.8 = 114.2 -->
+    <!-- Y = 240 + 105 = 345 -->
+    <g transform="translate(114.2, 345)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">KC</text>
+        <text class="logo-subtext" y="10">鹿児島建設</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 7 (SF) -->
-    <a xlink:href="/bridge/companies/th-2" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-12.498s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-12.498s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-12.498s" />
-          <text class="initial" y="0">SF</text>
-          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
-          <text class="tooltip-text" y="31">南薩フーズ</text>
-        </g>
+    <!-- 180度: cos(180)=-1, sin(180)=0 -->
+    <!-- X = 400 - 330 = 70 -->
+    <!-- Y = 240 -->
+    <g transform="translate(70, 240)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">SF</text>
+        <text class="logo-subtext" y="10">南薩フーズ</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 8 (KT) -->
-    <a xlink:href="/bridge/companies/th-3" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-14.581s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-14.581s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-14.581s" />
-          <text class="initial" y="0">KT</text>
-          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
-          <text class="tooltip-text" y="31">霧島テック</text>
-        </g>
+    <!-- 210度: cos(210)=-0.866, sin(210)=-0.5 -->
+    <!-- X = 400 - 285.8 = 114.2 -->
+    <!-- Y = 240 - 105 = 135 -->
+    <g transform="translate(114.2, 135)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">KT</text>
+        <text class="logo-subtext" y="10">霧島テック</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 9 (SS) -->
-    <a xlink:href="/bridge/companies/th-5" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-16.664s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-16.664s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-16.664s" />
-          <text class="initial" y="0">SS</text>
-          <rect class="tooltip-bg" x="-36" y="18" width="72" height="20" />
-          <text class="tooltip-text" y="31">薩摩サービス</text>
-        </g>
+    <!-- 240度: cos(240)=-0.5, sin(240)=-0.866 -->
+    <!-- X = 400 - 165 = 235 -->
+    <!-- Y = 240 - 181.8 = 58.2 -->
+    <g transform="translate(235, 58.2)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">SS</text>
+        <text class="logo-subtext" y="10">薩摩サービス</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 10 (SR) -->
-    <a xlink:href="/bridge/companies/th-4" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-18.747s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-18.747s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-18.747s" />
-          <text class="initial" y="0">SR</text>
-          <rect class="tooltip-bg" x="-38" y="18" width="76" height="20" />
-          <text class="tooltip-text" y="31">桜島リゾーツ</text>
-        </g>
+    <!-- 270度: cos(270)=0, sin(270)=-1 -->
+    <!-- X = 400 -->
+    <!-- Y = 240 - 210 = 30 -->
+    <g transform="translate(400, 30)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">SR</text>
+        <text class="logo-subtext" y="10">桜島リゾーツ</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 11 (RZ) -->
-    <a xlink:href="/bridge/companies/revniz" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-20.830s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-20.830s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-20.830s" />
-          <text class="initial" y="0">RZ</text>
-          <rect class="tooltip-bg" x="-28" y="18" width="56" height="20" />
-          <text class="tooltip-text" y="31">REVNIZ</text>
-        </g>
+    <!-- 300度: cos(300)=0.5, sin(300)=-0.866 -->
+    <!-- X = 400 + 165 = 565 -->
+    <!-- Y = 240 - 181.8 = 58.2 -->
+    <g transform="translate(565, 58.2)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">RZ</text>
+        <text class="logo-subtext" y="10">REVNIZ</text>
       </g>
-    </a>
+    </g>
 
-    <!-- Logo 12 (SD) -->
-    <a xlink:href="/bridge/companies/spark" class="sponsor-link">
-      <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-22.913s"><mpath xlink:href="#orbitPath" /></animateMotion>
-        <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-22.913s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-22.913s" />
-          <text class="initial" y="0">SD</text>
-          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
-          <text class="tooltip-text" y="31">Spark Dig</text>
-        </g>
+    <!-- 330度: cos(330)=0.866, sin(330)=-0.5 -->
+    <!-- X = 400 + 285.8 = 685.8 -->
+    <!-- Y = 240 - 105 = 135 -->
+    <g transform="translate(685.8, 135)">
+      <g class="logo-container">
+        <text class="logo-text" y="-6">SD</text>
+        <text class="logo-subtext" y="10">Spark Dig</text>
       </g>
-    </a>
+    </g>
   </g>
 </svg>

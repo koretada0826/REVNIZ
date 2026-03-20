@@ -78,8 +78,8 @@ export default function RebniseCard({
 
         {/* Detail */}
         <div className={styles.detail}>
-          <p className={styles.title}>{title}</p>
-          <p className={styles.update}>{date}</p>
+          <p className={styles.title} style={!date ? { fontSize: "16px", fontWeight: 800, height: "auto", marginBottom: 0 } : undefined}>{title}</p>
+          {date && <p className={styles.update}>{date}</p>}
         </div>
       </Link>
 

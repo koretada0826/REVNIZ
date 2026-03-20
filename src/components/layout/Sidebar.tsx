@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, MessageSquare, Handshake, Calendar, Trophy, UserCircle, Megaphone, TrendingUp } from "lucide-react";
+import { LayoutDashboard, Building2, MessageSquare, Handshake, Calendar, Trophy, UserCircle, Megaphone, TrendingUp, Mail } from "lucide-react";
 
 const mainItems = [
   { name: "ダッシュボード", href: "/", icon: LayoutDashboard },
@@ -13,7 +13,8 @@ const mainItems = [
 
 const subItems = [
   { name: "成功事例", href: "/cases", icon: Trophy },
-  { name: "お知らせ", href: "/news", icon: Megaphone, badge: 3 },
+  { name: "メッセージ", href: "/messages", icon: Mail, badge: 3 },
+  { name: "お知らせ", href: "/news", icon: Megaphone },
   { name: "プロフィール", href: "/profile", icon: UserCircle },
 ];
 

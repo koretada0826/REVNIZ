@@ -71,6 +71,7 @@ export interface SuccessCase {
   howTheyMet: string;
   consultation: string;
   result: string;
+  image?: string;
   comment: string;
   category: string;
 }
@@ -81,4 +82,16 @@ export interface NewsItem {
   content: string;
   category: string;
   createdAt: string;
+}
+
+export interface Notification {
+  id: string;
+  type: "reaction" | "message" | "system";
+  fromCompanyId?: string;
+  fromCompanyName: string;
+  consultationId?: string;
+  consultationTitle?: string;
+  message: string;
+  createdAt: string;
+  read: boolean;
 }

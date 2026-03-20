@@ -111,6 +111,63 @@ export default function DashboardPage() {
         </section>
       </FadeIn>
 
+      {/* 相談カードスクロール */}
+      <FadeIn delay={0.15}>
+        <section>
+          <div className="section-header">
+            <h2 className="h2">いま注目の相談</h2>
+            <Link href="/board" className="text-[14px] font-semibold text-black-400 hover:text-white transition-colors">
+              すべて見る →
+            </Link>
+          </div>
+          <div className="overflow-x-auto -mx-6 lg:-mx-8 px-6 lg:px-8" style={{ scrollbarWidth: "none" }}>
+            <div className="flex gap-4" style={{ minWidth: "max-content" }}>
+              {consultations.slice(0, 6).map((p) => {
+                const company = companies.find((c) => c.id === p.companyId);
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/board/${p.id}`}
+                    className="shrink-0 block rounded-lg overflow-hidden border border-line hover:border-line-dark transition-all duration-200 group"
+                    style={{ width: "320px", backgroundColor: "#1e1e1e" }}
+                  >
+                    {/* 企業ロゴ */}
+                    <div className="bg-white flex items-center justify-center" style={{ height: "100px", fontSize: 0, lineHeight: 0 }}>
+                      {company ? (
+                        <img src={company.logo} alt={company.name} className="max-w-[70%] max-h-[60px] object-contain" />
+                      ) : (
+                        <span className="text-[24px] font-bold text-black">{p.companyName.charAt(0)}</span>
+                      )}
+                    </div>
+                    {/* 相談内容 */}
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[11px] font-bold text-white px-2 py-0.5 rounded-full bg-red">{p.category}</span>
+                        <span className="text-[11px] text-black-500 font-medium">{p.companyName}</span>
+                      </div>
+                      {p.keywords && p.keywords.length > 0 ? (
+                        <div className="flex flex-wrap gap-x-2 gap-y-0.5 mb-2">
+                          {p.keywords.map((kw, ki) => (
+                            <span key={ki} className="text-red text-[16px] font-black">{kw}</span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-[14px] text-white font-bold leading-snug mb-2 line-clamp-1">{p.title}</p>
+                      )}
+                      <p className="text-[12px] text-black-400 font-medium leading-relaxed line-clamp-2 mb-3">{p.content}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[14px] font-bold tabular-nums" style={{ color: "#dfb664" }}>{p.responses} 反応</span>
+                        <ChevronRight className="w-4 h-4 text-black-500 group-hover:text-white transition-colors" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </FadeIn>
+
       {/* This Week - rebnise.jp card mirror */}
       <FadeIn delay={0.2}>
         <section>
@@ -194,24 +251,36 @@ export default function DashboardPage() {
             </Link>
           </div>
           <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            {consultations.slice(0, 4).map((p, i) => (
-              <RebniseCard
-                key={p.id}
-                href="/board"
-                image={["/images/hero-consultation.jpg", "/images/hero-new-company.jpg", "/images/hero-meeting.jpg", "/images/hero-event.jpg"][i]}
-                title={p.title}
-                date={p.createdAt}
-                categories={[
-                  { label: "NEW", color: "red", isNew: true },
-                  { label: p.category, color: "#66cc99" },
-                ]}
-              />
-            ))}
+            {consultations.slice(0, 4).map((p) => {
+              const company = companies.find((c) => c.id === p.companyId);
+              return (
+                <RebniseCard
+                  key={p.id}
+                  href={`/board/${p.id}`}
+                  imageFallback={
+                    company ? (
+                      <img
+                        src={company.logo}
+                        alt={company.name}
+                        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                      />
+                    ) : (
+                      <span style={{ fontSize: "28px", fontWeight: "bold", color: "#1a1a1a" }}>{p.companyName.charAt(0)}</span>
+                    )
+                  }
+                  title={p.title}
+                  date=""
+                  categories={[
+                    { label: p.category, color: "#66cc99" },
+                  ]}
+                />
+              );
+            })}
           </ul>
         </section>
       </FadeIn>
 
-      {/* Events - RebniseCard style */}
+      {/* Events - 横スクロール自動 */}
       <FadeIn delay={0.1}>
         <section>
           <div className="section-header">
@@ -220,25 +289,28 @@ export default function DashboardPage() {
               すべて見る →
             </Link>
           </div>
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            {events.map((ev, i) => {
-              const catColor = ev.category === "GAME" ? "#e8ca22" : ev.category === "イベント" ? "#ec3e6b" : "#043457";
-              const pct = Math.round((ev.registered / ev.capacity) * 100);
-              return (
-                <RebniseCard
-                  key={ev.id}
-                  href="/events"
-                  image={["/images/hero-game1.jpg", "/images/hero-game2.jpg", "/images/hero-fanfest.jpg", "/images/hero-party.jpg"][i]}
-                  title={ev.title}
-                  date={ev.date}
-                  categories={[
-                    ...(pct >= 90 ? [{ label: "残りわずか", color: "red", isNew: true }] : []),
-                    { label: ev.category, color: catColor },
-                  ]}
-                />
-              );
-            })}
-          </ul>
+          <div className="-mx-6 lg:-mx-8">
+            <InfiniteScroll interval={3000} cardWidth={290}>
+              {events.slice(0, 8).map((ev, i) => {
+                const catColor = ev.category === "GAME" ? "#e8ca22" : ev.category === "イベント" ? "#ec3e6b" : "#043457";
+                const pct = Math.round((ev.registered / ev.capacity) * 100);
+                return (
+                  <Link key={ev.id} href="/events" className="block">
+                    <RebniseCard
+                      href="/events"
+                      image={ev.image}
+                      title={ev.title}
+                      date={ev.date}
+                      categories={[
+                        ...(pct >= 90 ? [{ label: "残りわずか", color: "red", isNew: true }] : []),
+                        { label: ev.category, color: catColor },
+                      ]}
+                    />
+                  </Link>
+                );
+              })}
+            </InfiniteScroll>
+          </div>
         </section>
       </FadeIn>
 
