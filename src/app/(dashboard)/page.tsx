@@ -10,6 +10,8 @@ import SparkLine from "@/components/charts/SparkLine";
 import NBAHero from "@/components/hero/NBAHero";
 import RebniseCard from "@/components/cards/RebniseCard";
 import Carousel3D from "@/components/carousel/Carousel3D";
+import InfiniteScroll from "@/components/carousel/InfiniteScroll";
+import SponsorOrbit from "@/components/carousel/SponsorOrbit";
 
 export default function DashboardPage() {
   return (
@@ -36,7 +38,7 @@ export default function DashboardPage() {
             <h2 className="h2">スポンサー企業様</h2>
           </div>
           <div className="flex flex-col items-center">
-            <img src="/images/sponsor-ring.svg" alt="Sponsor Ring" className="w-full max-w-[800px]" />
+            <SponsorOrbit />
             <div className="flex gap-3 mt-4">
               <Link href="/companies" className="btn-black">
                 <Building2 className="w-4 h-4 mr-2" /> スポンサー企業一覧を見る
@@ -45,6 +47,66 @@ export default function DashboardPage() {
                 <Trophy className="w-4 h-4 mr-2" /> スポンサー特典を見る
               </Link>
             </div>
+          </div>
+        </section>
+      </FadeIn>
+
+      {/* 成功事例ピックアップ - Yenta style */}
+      <FadeIn delay={0.15}>
+        <section>
+          <p className="text-center text-[24px] lg:text-[30px] font-bold text-white leading-[35px] tracking-[0.11em] mb-0">
+            Sponsor Connectから生まれた<br className="sm:hidden" />出会いや繋がりの事例
+          </p>
+          <div className="mt-10 -mx-6 lg:-mx-8">
+            <InfiniteScroll interval={2500} cardWidth={332}>
+              {[
+                {
+                  image: "/images/cases/case1.png",
+                  title: "鹿児島の食品が東京のセレクトショップへ — スポンサー同士の信頼から生まれた協業",
+                  sub: "桜島フーズ × Tokyo Creative Lab",
+                },
+                {
+                  image: "/images/cases/case2.png",
+                  title: "建設会社のDX推進プロジェクトが始動 — クラウド型工程管理で業務時間40%削減",
+                  sub: "かごしま建設 × 南九州テクノロジーズ",
+                },
+                {
+                  image: "/images/cases/case3.png",
+                  title: "地方×都市のHRネットワーク構築 — 採用力強化で新卒応募数2倍に",
+                  sub: "グローバルHRパートナーズ × かごしま建設",
+                },
+                {
+                  image: "/images/cases/case4.png",
+                  title: "データドリブンマーケティングで売上130%達成 — SNS戦略とEC販売の融合",
+                  sub: "薩摩デジタルマーケティング × 桜島フーズ",
+                },
+              ].map((c, i) => (
+                <Link
+                  key={i}
+                  href="/cases"
+                  className="group block"
+                >
+                  <div className="overflow-hidden rounded-sm">
+                    <img
+                      src={c.image}
+                      alt=""
+                      className="w-full aspect-[16/9] object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <p className="text-[12px] sm:text-[14px] lg:text-[16px] font-bold text-white mt-2 leading-relaxed group-hover:text-black-300 transition-colors">
+                    {c.title}
+                  </p>
+                  <p className="text-[10px] sm:text-[13px] lg:text-[14px] font-normal text-[#7C8DA3] mt-1">
+                    {c.sub}
+                  </p>
+                </Link>
+              ))}
+            </InfiniteScroll>
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/cases" className="btn-outline">
+              すべての成功事例を見る →
+            </Link>
           </div>
         </section>
       </FadeIn>
@@ -118,47 +180,6 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          {/* 成功事例カード */}
-          <h3 className="text-[18px] font-bold text-white mb-4">成功事例ピックアップ</h3>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="rounded-lg overflow-hidden" style={{ background: '#111', border: '1px solid #333' }}>
-              <div className="px-6 py-3" style={{ background: '#dfb664' }}>
-                <span className="text-[12px] font-bold text-black tracking-wider uppercase">PICK UP 01</span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-[16px] font-bold text-white mb-2">鹿児島の食品が東京のセレクトショップへ</h3>
-                <p className="text-[13px] text-black-400 mb-4 leading-relaxed">
-                  桜島フーズ × Tokyo Creative Lab — パッケージデザインリニューアルにより東京3店舗への納品が決定。スポンサー同士の信頼から生まれた協業。
-                </p>
-                <div className="flex gap-2">
-                  <span className="badge-muted">販路拡大</span>
-                  <span className="badge-muted">ブランディング</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-lg overflow-hidden" style={{ background: '#111', border: '1px solid #333' }}>
-              <div className="px-6 py-3" style={{ background: '#dfb664' }}>
-                <span className="text-[12px] font-bold text-black tracking-wider uppercase">PICK UP 02</span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-[16px] font-bold text-white mb-2">建設会社のDX推進プロジェクトが始動</h3>
-                <p className="text-[13px] text-black-400 mb-4 leading-relaxed">
-                  かごしま建設 × 南九州テクノロジーズ — クラウド型工程管理システム導入で月間報告業務時間40%削減を達成。
-                </p>
-                <div className="flex gap-2">
-                  <span className="badge-muted">DX</span>
-                  <span className="badge-muted">業務効率化</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-6">
-            <Link href="/cases" className="btn-outline">
-              すべての成功事例を見る →
-            </Link>
-          </div>
         </section>
       </FadeIn>
 

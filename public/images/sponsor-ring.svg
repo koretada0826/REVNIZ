@@ -1,253 +1,263 @@
 <svg width="800" height="340" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <!-- ドロップシャドウ（床に落ちる影） -->
+    <filter id="plateShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" />
+      <feOffset dx="0" dy="12" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.1" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
     </filter>
-    <!-- The master path for rotation -->
-    <path id="orbitPath" d="M 400,220 A 320,60 0 1,1 400.01,220 Z" fill="none" />
+
+    <!-- プレート上面のグラデーション（微細な光の反射） -->
+    <linearGradient id="plateTopGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F3F4F6" />
+    </linearGradient>
+
+    <!-- プレート側面のグラデーション（厚み部分の陰影） -->
+    <linearGradient id="plateSideGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E5E7EB" />
+      <stop offset="100%" stop-color="#D1D5DB" />
+    </linearGradient>
+    
+    <!-- 時計周りの軌道パス (右 -> 手前 -> 左 -> 奥) -->
+    <path id="orbitPath" d="M 720,170 A 320,70 0 0,1 80,170 A 320,70 0 0,1 720,170 Z" fill="none" />
   </defs>
 
   <style>
-    .sponsor-link { cursor: pointer; text-decoration: none; }
-    .logo-frame {
-      stroke: #4F46E5;
-      stroke-width: 1.5;
-      stroke-dasharray: 240;
-      stroke-dashoffset: 240;
-      fill: rgba(255, 255, 255, 0.05);
-      filter: url(#glow);
+    .sponsor-link { 
+      cursor: pointer; 
+      text-decoration: none; 
     }
-    .initial {
-      font-family: sans-serif;
-      font-size: 14px;
-      font-weight: bold;
-      fill: #4F46E5;
-      text-anchor: middle;
-      dominant-baseline: central;
+    .initial { 
+      font-family: "Space Grotesk", "Noto Sans JP", sans-serif; 
+      font-size: 24px; 
+      font-weight: bold; 
+      fill: #141414; 
+      text-anchor: middle; 
+      dominant-baseline: central; 
+      transition: fill 0.3s ease;
+      /* ロゴ自体にもフワッと浮くシャドウを追加 */
+      filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.08));
+    }
+    .tooltip-bg {
+      fill: rgba(0,0,0,0.85);
+      rx: 4;
       opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
     }
-    .label {
-      font-family: sans-serif;
-      font-size: 10px;
-      fill: #999;
-      text-anchor: middle;
+    .tooltip-text { 
+      font-family: sans-serif; 
+      font-size: 11px; 
+      font-weight: 500; 
+      fill: #fff; 
+      text-anchor: middle; 
       opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
     }
-
-    /* Drawing animation */
-    @keyframes drawFrame {
-      0% { stroke-dashoffset: 240; opacity: 0.2; }
-      30% { stroke-dashoffset: 0; opacity: 1; }
-      70% { stroke-dashoffset: 0; opacity: 1; }
-      100% { stroke-dashoffset: -240; opacity: 0.2; }
-    }
-    @keyframes fadeIn {
-      0%, 20% { opacity: 0; }
-      40%, 80% { opacity: 0.8; }
-      100% { opacity: 0; }
-    }
-
-    .logo-frame-anim {
-      animation: drawFrame 4s infinite linear;
-    }
-    .initial-anim {
-      animation: fadeIn 4s infinite linear;
-    }
+    .sponsor-link:hover .initial { fill: #4F46E5; }
+    .sponsor-link:hover .tooltip-bg { opacity: 1; }
+    .sponsor-link:hover .tooltip-text { opacity: 1; }
   </style>
 
-  <!-- Background Decorative Ring -->
-  <ellipse cx="400" cy="160" rx="320" ry="60" fill="none" stroke="#F0F0F0" stroke-width="1" />
+  <!-- 3Dっぽさを出すための厚み（側面のエクストルージョン） -->
+  <!-- 下にずらしたレイヤーを重ねることで、滑らかな物理的厚みを表現 -->
+  <g filter="url(#plateShadow)">
+    <ellipse cx="400" cy="182" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
+    <ellipse cx="400" cy="180" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
+    <ellipse cx="400" cy="178" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
+    <ellipse cx="400" cy="176" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
+    <ellipse cx="400" cy="174" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
+    <ellipse cx="400" cy="172" rx="320" ry="70" fill="none" stroke="url(#plateSideGrad)" stroke-width="64" />
+  </g>
 
-  <!-- Logo Generator -->
+  <!-- プレート上面（トップフェイス） -->
+  <ellipse cx="400" cy="170" rx="320" ry="70" fill="none" stroke="url(#plateTopGrad)" stroke-width="64" />
+  
+  <!-- 面取り（ベベル）ハイライト＆シャドウでエッジをシャープに -->
+  <!-- 外側のハイライト -->
+  <ellipse cx="400" cy="170" rx="352" ry="102" fill="none" stroke="#FFFFFF" stroke-width="2" />
+  <!-- 外側の微細な影 -->
+  <ellipse cx="400" cy="170" rx="351" ry="101" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1" />
+  
+  <!-- 内側のハイライト -->
+  <ellipse cx="400" cy="170" rx="288" ry="38" fill="none" stroke="#FFFFFF" stroke-width="2" />
+  <!-- 内側の微細な影 -->
+  <ellipse cx="400" cy="170" rx="289" ry="39" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1" />
+
+  <!-- ロゴ群 -->
   <g>
-    <!-- Template Logo G -->
-    <script type="text/ecmascript">
-      <![CDATA[
-        const SPONSORS_DATA = [
-          { id: "co-1", init: "TV", name: "テクノバレー", delay: 0 },
-          { id: "co-2", init: "NS", name: "NextStep", delay: -2.083 },
-          { id: "co-3", init: "CP", name: "CRAFT PR", delay: -4.166 },
-          { id: "co-5", init: "LX", name: "LocalX Labs", delay: -6.249 },
-          { id: "co-6", init: "BC", name: "Bridge Com", delay: -8.332 },
-          { id: "th-1", init: "KC", name: "鹿児島建設", delay: -10.415 },
-          { id: "th-2", init: "SF", name: "南薩フーズ", delay: -12.498 },
-          { id: "th-3", init: "KT", name: "霧島テック", delay: -14.581 },
-          { id: "th-5", init: "SS", name: "薩摩サービス", delay: -16.664 },
-          { id: "th-4", init: "SR", name: "桜島リゾーツ", delay: -18.747 },
-          { id: "revniz", init: "RZ", name: "REVNIZ", delay: -20.830 },
-          { id: "spark", init: "SD", name: "Spark Dig", delay: -22.913 },
-        ];
-      ]]>
-    </script>
-
-    <!-- Logo 1..12 -->
-    <!-- Hand-writing for compatibility since script-injection in SVG is sometimes blocked -->
-    
+    <!-- Logo 1 (TV) -->
     <a xlink:href="/bridge/companies/co-1" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="0s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="0s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="0s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: 0s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: 0s;">TV</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="0s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="0s" />
+          <text class="initial" y="0">TV</text>
+          <rect class="tooltip-bg" x="-36" y="18" width="72" height="20" />
+          <text class="tooltip-text" y="31">テクノバレー</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 2 (NS) -->
     <a xlink:href="/bridge/companies/co-2" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-2.083s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-2.083s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-2.083s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-2.083s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -1s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -1s;">NS</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-2.083s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-2.083s" />
+          <text class="initial" y="0">NS</text>
+          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
+          <text class="tooltip-text" y="31">NextStep</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 3 (CP) -->
     <a xlink:href="/bridge/companies/co-3" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-4.166s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-4.166s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-4.166s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-4.166s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -2s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -2s;">CP</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-4.166s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-4.166s" />
+          <text class="initial" y="0">CP</text>
+          <rect class="tooltip-bg" x="-36" y="18" width="72" height="20" />
+          <text class="tooltip-text" y="31">CRAFT PR</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 4 (LX) -->
     <a xlink:href="/bridge/companies/co-5" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-6.249s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-6.249s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-6.249s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-6.249s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -3s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -3s;">LX</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-6.249s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-6.249s" />
+          <text class="initial" y="0">LX</text>
+          <rect class="tooltip-bg" x="-38" y="18" width="76" height="20" />
+          <text class="tooltip-text" y="31">LocalX Labs</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 5 (BC) -->
     <a xlink:href="/bridge/companies/co-6" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-8.332s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-8.332s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-8.332s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-8.332s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -0.5s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -0.5s;">BC</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-8.332s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-8.332s" />
+          <text class="initial" y="0">BC</text>
+          <rect class="tooltip-bg" x="-38" y="18" width="76" height="20" />
+          <text class="tooltip-text" y="31">Bridge Com</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 6 (KC) -->
     <a xlink:href="/bridge/companies/th-1" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-10.415s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-10.415s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-10.415s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-10.415s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -1.5s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -1.5s;">KC</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-10.415s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-10.415s" />
+          <text class="initial" y="0">KC</text>
+          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
+          <text class="tooltip-text" y="31">鹿児島建設</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 7 (SF) -->
     <a xlink:href="/bridge/companies/th-2" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-12.498s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-12.498s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-12.498s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-12.498s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -2.5s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -2.5s;">SF</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-12.498s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-12.498s" />
+          <text class="initial" y="0">SF</text>
+          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
+          <text class="tooltip-text" y="31">南薩フーズ</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 8 (KT) -->
     <a xlink:href="/bridge/companies/th-3" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-14.581s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-14.581s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-14.581s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-14.581s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -3.5s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -3.5s;">KT</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-14.581s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-14.581s" />
+          <text class="initial" y="0">KT</text>
+          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
+          <text class="tooltip-text" y="31">霧島テック</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 9 (SS) -->
     <a xlink:href="/bridge/companies/th-5" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-16.664s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-16.664s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-16.664s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-16.664s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -0.2s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -0.2s;">SS</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-16.664s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-16.664s" />
+          <text class="initial" y="0">SS</text>
+          <rect class="tooltip-bg" x="-36" y="18" width="72" height="20" />
+          <text class="tooltip-text" y="31">薩摩サービス</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 10 (SR) -->
     <a xlink:href="/bridge/companies/th-4" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-18.747s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-18.747s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-18.747s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-18.747s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -1.2s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -1.2s;">SR</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-18.747s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-18.747s" />
+          <text class="initial" y="0">SR</text>
+          <rect class="tooltip-bg" x="-38" y="18" width="76" height="20" />
+          <text class="tooltip-text" y="31">桜島リゾーツ</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 11 (RZ) -->
     <a xlink:href="/bridge/companies/revniz" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-20.830s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-20.830s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-20.830s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-20.830s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -2.2s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -2.2s;">RZ</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-20.830s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-20.830s" />
+          <text class="initial" y="0">RZ</text>
+          <rect class="tooltip-bg" x="-28" y="18" width="56" height="20" />
+          <text class="tooltip-text" y="31">REVNIZ</text>
         </g>
       </g>
     </a>
 
+    <!-- Logo 12 (SD) -->
     <a xlink:href="/bridge/companies/spark" class="sponsor-link">
       <g>
-        <animateMotion dur="25s" repeatCount="indefinite" begin="-22.913s">
-          <mpath xlink:href="#orbitPath" />
-        </animateMotion>
+        <animateMotion dur="25s" repeatCount="indefinite" begin="-22.913s"><mpath xlink:href="#orbitPath" /></animateMotion>
         <g>
-          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="1;0.6;0.3;0.6;1" keyTimes="0;0.25;0.5;0.75;1" begin="-22.913s" />
-          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="1.1;0.85;0.75;0.85;1.1" keyTimes="0;0.25;0.5;0.75;1" begin="-22.913s" />
-          <rect class="logo-frame logo-frame-anim" x="-32" y="-32" width="64" height="64" rx="12" style="animation-delay: -3.2s;" />
-          <text class="initial initial-anim" y="0" style="animation-delay: -3.2s;">SD</text>
+          <animate attributeName="opacity" dur="25s" repeatCount="indefinite" values="0.6;1;0.6;0.3;0.6" keyTimes="0;0.25;0.5;0.75;1" begin="-22.913s" />
+          <animateTransform attributeName="transform" type="scale" dur="25s" repeatCount="indefinite" values="0.85;1.1;0.85;0.7;0.85" keyTimes="0;0.25;0.5;0.75;1" begin="-22.913s" />
+          <text class="initial" y="0">SD</text>
+          <rect class="tooltip-bg" x="-32" y="18" width="64" height="20" />
+          <text class="tooltip-text" y="31">Spark Dig</text>
         </g>
       </g>
     </a>

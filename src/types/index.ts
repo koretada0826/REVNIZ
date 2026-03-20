@@ -25,6 +25,10 @@ export interface ConsultationPost {
   deadline: string | null;
   createdAt: string;
   responses: number;
+  tags?: string[];
+  challenge?: string;
+  lookingFor?: string;
+  keywords?: string[];
 }
 
 export interface MatchingPair {

@@ -35,7 +35,8 @@ export const RotatingSponsors = () => {
       if (!isPaused) {
         if (lastTime.current !== null) {
           const delta = time - lastTime.current;
-          setAngle((prev) => (prev + delta * 0.02) % 360);
+          // Subtracted delta to make it rotate clockwise
+          setAngle((prev) => (prev - delta * 0.02) % 360);
         }
         lastTime.current = time;
       } else {
@@ -73,15 +74,24 @@ export const RotatingSponsors = () => {
 
   return (
     <div className="relative w-full h-[280px] sm:h-[340px] flex items-center justify-center overflow-hidden bg-transparent select-none py-10">
-      {/* Background Decorative Ring */}
+      {/* Background Continuous OVAL Plate */}
       <div 
-        className="absolute w-[90%] max-w-[700px] h-[100px] rounded-[100%] border border-black-100/30 pointer-events-none"
-        style={{ transform: "translateY(10px)" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[100%] pointer-events-none"
+        style={{
+          width: radiusX * 2 + 64,
+          height: radiusY * 2 + 64,
+          borderWidth: 64,
+          borderStyle: "solid",
+          borderColor: "#ffffff",
+          boxShadow: "0 10px 40px -10px rgba(0,0,0,0.08), inset 0 2px 10px rgba(0,0,0,0.02), inset 0 0 0 1px rgba(255,255,255,0.5), 0 0 0 1px rgba(0,0,0,0.02)",
+          boxSizing: "border-box",
+          zIndex: 5
+        }}
       />
       
       {/* Logos Container */}
       <div 
-        className="relative w-full max-w-[900px] h-full flex items-center justify-center"
+        className="relative w-full max-w-[900px] h-full flex items-center justify-center z-10"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -96,7 +106,7 @@ export const RotatingSponsors = () => {
           // Scale and opacity based on depth (z)
           const scale = 0.75 + (z + 1) * 0.15; // 0.75 to 1.05
           const opacity = 0.3 + (z + 1) * 0.35; // 0.3 to 1.0
-          const zIndex = Math.round((z + 1) * 100);
+          const zIndex = Math.round((z + 1) * 100) + 10; // offset to stay above plate
 
           return (
             <Link 
@@ -115,7 +125,7 @@ export const RotatingSponsors = () => {
               <motion.div
                 initial={false}
                 whileHover={{ 
-                  scale: 1.1, 
+                  scale: 1.15, 
                   zIndex: 300, 
                   opacity: 1,
                 }}
@@ -125,18 +135,15 @@ export const RotatingSponsors = () => {
                   damping: 30,
                 }}
               >
-                <div className="flex flex-col items-center gap-2.5 group">
-                  {/* Logo Card */}
-                  <div className="w-[54px] h-[54px] sm:w-[64px] sm:h-[64px] rounded-[10px] bg-white border border-line-dark shadow-xs flex items-center justify-center group-hover:border-indigo-400 group-hover:shadow-card-hover transition-all duration-300">
-                    <span className="text-[16px] sm:text-[18px] font-bold text-black-900 group-hover:text-indigo-600 tracking-tight">
-                      {sponsor.initial}
-                    </span>
-                  </div>
+                <div className="flex flex-col items-center justify-center group relative">
+                  {/* Logo (No Card Background) */}
+                  <span className="text-[20px] sm:text-[24px] font-bold text-black-900 group-hover:text-indigo-600 transition-colors drop-shadow-sm">
+                    {sponsor.initial}
+                  </span>
                   
-                  {/* Label (Optional: only visible when near front for clarity) */}
+                  {/* Name Tooltip */}
                   <div 
-                    className="text-[9px] sm:text-[11px] font-bold text-black-400 whitespace-nowrap transition-colors duration-300 group-hover:text-indigo-500"
-                    style={{ visibility: z > -0.5 ? "visible" : "hidden" }}
+                    className="absolute top-full mt-2 px-2.5 py-1 bg-black-900/90 text-white text-[10px] sm:text-[11px] font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md whitespace-nowrap"
                   >
                     {sponsor.name}
                   </div>
