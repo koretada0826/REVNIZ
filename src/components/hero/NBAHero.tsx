@@ -206,12 +206,12 @@ export default function NBAHero() {
 
                   {/* Slide Headline — desktop: full, mobile: short */}
                   <p
-                    className={`${styles.controlText} hidden md:block`}
+                    className={styles.controlText}
                     data-is-current={isCurrent ? "true" : "false"}
                     dangerouslySetInnerHTML={{ __html: slide.headline }}
                   />
                   <p
-                    className={`${styles.controlText} md:hidden`}
+                    className={styles.controlTextSp}
                     data-is-current={isCurrent ? "true" : "false"}
                     dangerouslySetInnerHTML={{ __html: slide.headlineSp }}
                   />

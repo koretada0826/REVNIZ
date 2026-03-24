@@ -363,8 +363,8 @@
   color: #545454;
 }
 
-/* Slide headline text in controls */
-.controlText {
+/* Slide headline text in controls — mobile (short) */
+.controlTextSp {
   font-family: 'Space Grotesk', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0;
@@ -374,26 +374,44 @@
   font-weight: 700;
   transition: color 200ms;
   color: #fff;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: none;
-  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .controlTextSp {
+    display: none;
+  }
+}
+
+/* Slide headline text in controls — desktop (full) */
+.controlText {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.1;
+  font-feature-settings: "ss02" on;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: color 200ms;
+  color: #fff;
+  display: none;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
   .controlText {
-    font-size: 1rem;
-    line-height: 1.1;
-    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
 }
 
-.controlText[data-is-current="false"] {
+.controlText[data-is-current="false"],
+.controlTextSp[data-is-current="false"] {
   color: #545454;
 }
 
-.controlText[data-is-current="false"] span {
+.controlText[data-is-current="false"] span,
+.controlTextSp[data-is-current="false"] span {
   color: #545454 !important;
 }
 
