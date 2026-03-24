@@ -1,241 +1,322 @@
+"use client";
+
+import { useState } from "react";
 import FadeIn from "@/components/motion/FadeIn";
 
-const tiers = [
+/* ────────────────────────────────────────
+   Benefit image cards (shared across tiers)
+   Row 1 — common 6 items
+   ──────────────────────────────────────── */
+const row1 = [
+  { img: "/images/benefits/team-logo.jpg",    label: "チームロゴ使用権" },
+  { img: "/images/benefits/naming-rights.jpg", label: "スポンサー呼称権" },
+  { img: "/images/benefits/hp-listing.jpg",    label: "HP法人名記載" },
+  { img: "/images/benefits/venue-signage.jpg", label: "試合会場看板掲出" },
+  { img: "/images/benefits/partner-news.jpg",  label: "パートナー通信" },
+  { img: "/images/benefits/ticket.jpg",        label: "ご優待券" },
+];
+
+/* Row 2 — additional benefits for スタンダード以上 */
+const row2 = [
+  { img: "/images/benefits/naming-rights.jpg", label: "Tip off パーティー" },
+  { img: "/images/benefits/naming-rights.jpg", label: "シーズン報告会" },
+  { img: "/images/benefits/venue-signage.jpg", label: "会場バナーフラッグ掲出" },
+  { img: null as string | null,                label: "山崎主催飲み会参加券＋顧問権",
+    text: { line1: "鹿児島レブナイズオーナー企業", line2: "株式会社Wiz", line3: "代表取締役CEO　山崎 俊" } },
+];
+
+/* Text-only extra benefits for シルバー */
+const silverExtras = [
+  ["ホームゲームチラシ配布", "コートサイド広告看板掲出"],
+  ["地元放送局 / TVCM※2", "SNSコラボ（年1回）"],
+  ["冠大会開催会場（1試合）", "ウェア広告 / 企業ロゴ"],
+  ["冠大会時配布物※3"],
+];
+
+/* ────────────────────────────────────────
+   Tier definitions
+   ──────────────────────────────────────── */
+interface Tier {
+  id: string;
+  name: string;
+  tabBg: string;
+  tabText: string;
+  headerBg: string;
+  price: string;
+  ticketNote: string;
+  row1Included: boolean[];
+  hasRow2: boolean;
+  hasSilverExtras: boolean;
+  notes: string[];
+}
+
+const tiers: Tier[] = [
   {
     id: "ticket-p",
     name: "チケットP",
-    color: "#333",
-    textColor: "#fff",
-    prices: "A ¥120,000 / B ¥240,000 / C ¥360,000",
-    priceNote: "※1",
-    benefits: [
-      { name: "チームロゴ使用権", included: true },
-      { name: "スポンサー呼称権", included: true },
-      { name: "HP法人名記載", included: true },
-      { name: "試合会場看板掲出", included: false },
-      { name: "パートナー通信", included: true },
-      { name: "ご優待券", included: true, note: "※2" },
+    tabBg: "#333",
+    tabText: "#fff",
+    headerBg: "#3D5A80",
+    price: "A ¥120,000 / B ¥240,000 / C ¥360,000※1",
+    ticketNote: "※2",
+    row1Included: [true, true, true, false, true, true],
+    hasRow2: false,
+    hasSilverExtras: false,
+    notes: [
+      "※1 チケットP「C」には「tip off パーティー」「シーズン報告会」にご参加いただけます。",
+      "※2 チケットパートナーのご優待券は「A」チケット15枚、「B」30枚、「C」45枚ご利用可能です。",
     ],
   },
   {
     id: "light",
     name: "ライト",
-    color: "#555",
-    textColor: "#fff",
-    prices: "¥600,000",
-    priceNote: "",
-    benefits: [
-      { name: "チームロゴ使用権", included: true },
-      { name: "スポンサー呼称権", included: true },
-      { name: "HP法人名記載", included: true },
-      { name: "試合会場看板掲出", included: false },
-      { name: "パートナー通信", included: true },
-      { name: "ご優待券", included: true },
-    ],
+    tabBg: "#3D5A80",
+    tabText: "#fff",
+    headerBg: "#3D5A80",
+    price: "¥600,000",
+    ticketNote: "",
+    row1Included: [true, true, true, false, true, true],
+    hasRow2: false,
+    hasSilverExtras: false,
+    notes: [],
   },
   {
     id: "standard",
     name: "スタンダード",
-    color: "#8B0000",
-    textColor: "#fff",
-    prices: "¥1,200,000",
-    priceNote: "",
-    benefits: [
-      { name: "チームロゴ使用権", included: true },
-      { name: "スポンサー呼称権", included: true },
-      { name: "HP法人名記載", included: true },
-      { name: "試合会場看板掲出", included: true },
-      { name: "パートナー通信", included: true },
-      { name: "ご優待券", included: true },
+    tabBg: "#8B0000",
+    tabText: "#fff",
+    headerBg: "#8B0000",
+    price: "¥1,200,000",
+    ticketNote: "(1F 20枚)※1",
+    row1Included: [true, true, true, true, true, true],
+    hasRow2: true,
+    hasSilverExtras: false,
+    notes: [
+      "※1 プラン内容はカスタマイズできるので、枚数増減、もしくは別の特典に変更できます",
     ],
   },
   {
     id: "bronze",
     name: "ブロンズ",
-    color: "#8B4513",
-    textColor: "#fff",
-    prices: "¥2,400,000",
-    priceNote: "",
-    benefits: [
-      { name: "チームロゴ使用権", included: true },
-      { name: "スポンサー呼称権", included: true },
-      { name: "HP法人名記載", included: true },
-      { name: "試合会場看板掲出", included: true },
-      { name: "パートナー通信", included: true },
-      { name: "ご優待券", included: true },
+    tabBg: "linear-gradient(135deg, #8B4513 0%, #CD7F32 50%, #8B4513 100%)",
+    tabText: "#fff",
+    headerBg: "linear-gradient(135deg, #8B4513 0%, #CD7F32 50%, #8B4513 100%)",
+    price: "¥3,000,000",
+    ticketNote: "(1F 50枚)※1",
+    row1Included: [true, true, true, true, true, true],
+    hasRow2: true,
+    hasSilverExtras: false,
+    notes: [
+      "※1 プラン内容はカスタマイズできるので、枚数増減、もしくは別の特典に変更できます",
     ],
   },
   {
     id: "silver",
     name: "シルバー",
-    color: "linear-gradient(135deg, #999 0%, #ccc 50%, #999 100%)",
-    textColor: "#000",
-    prices: "¥3,600,000",
-    priceNote: "",
-    benefits: [
-      { name: "チームロゴ使用権", included: true },
-      { name: "スポンサー呼称権", included: true },
-      { name: "HP法人名記載", included: true },
-      { name: "試合会場看板掲出", included: true },
-      { name: "パートナー通信", included: true },
-      { name: "ご優待券", included: true },
+    tabBg: "linear-gradient(135deg, #888 0%, #ccc 50%, #888 100%)",
+    tabText: "#000",
+    headerBg: "linear-gradient(135deg, #888 0%, #ccc 50%, #888 100%)",
+    price: "¥5,000,000",
+    ticketNote: "(1F 50枚)※1",
+    row1Included: [true, true, true, true, true, true],
+    hasRow2: true,
+    hasSilverExtras: true,
+    notes: [
+      "※1 プラン内容はカスタマイズできるので、枚数増減、もしくは別の特典に変更できます",
+      "※2※3 内容はご相談ください",
     ],
   },
 ];
 
-const benefitIcons = ["🏀", "🤝", "🌐", "📋", "📰", "🎟️"];
-
-const benefitDetails = [
-  { name: "チームロゴ使用権" },
-  { name: "スポンサー呼称権" },
-  { name: "HP法人名記載" },
-  { name: "試合会場看板掲出" },
-  { name: "パートナー通信" },
-  { name: "ご優待券" },
-];
-
-export default function BenefitsPage() {
+/* ────────────────────────────────────────
+   Benefit card component
+   ──────────────────────────────────────── */
+function BenefitCard({
+  img,
+  label,
+  included = true,
+  text,
+}: {
+  img: string | null;
+  label: string;
+  included?: boolean;
+  text?: { line1: string; line2: string; line3: string };
+}) {
   return (
-    <div className="space-y-16">
-      {/* Header */}
+    <div style={{ opacity: included ? 1 : 0.2 }}>
+      <div
+        className="aspect-[4/3] overflow-hidden"
+        style={{ background: text ? "#f5f5f5" : "#222", border: "1px solid #444" }}
+      >
+        {text ? (
+          <div className="w-full h-full flex flex-col items-center justify-center px-2 text-center">
+            <p className="text-[10px] text-gray-500 mb-1">{text.line1}</p>
+            <p className="text-[18px] font-black text-black leading-tight">{text.line2}</p>
+            <p className="text-[11px] text-gray-600 mt-1">{text.line3}</p>
+          </div>
+        ) : img ? (
+          <img src={img} alt={label} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-white/30 text-[11px]">NO IMAGE</span>
+          </div>
+        )}
+      </div>
+      <div
+        className="text-center py-2 text-[12px] sm:text-[13px] font-bold text-white"
+        style={{ background: "#333" }}
+      >
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* Text-only benefit block */
+function TextBenefitCard({ label }: { label: string }) {
+  return (
+    <div
+      className="flex items-center justify-center text-center py-4 px-2 text-[12px] sm:text-[13px] font-bold text-white"
+      style={{ background: "#333", border: "1px solid #444", minHeight: "48px" }}
+    >
+      {label}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────
+   Page
+   ──────────────────────────────────────── */
+export default function BenefitsPage() {
+  const [, setActiveTab] = useState(0);
+
+  return (
+    <div className="space-y-0">
+      {/* Red accent line */}
+      <div className="h-[4px] -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 mb-6 sm:mb-8" style={{ background: "#c00" }} />
+
+      {/* Header — white background like original */}
       <FadeIn>
-        <div className="text-center py-8">
-          <h1 className="inline-block">
+        <div style={{ background: "#fff", margin: "0 -16px", padding: "24px 16px 20px" }} className="sm:!mx-[-24px] sm:!px-[40px] sm:!py-[40px] sm:!pb-[32px]">
+          <h1>
             <span
-              className="text-[2.5rem] sm:text-[3.5rem] font-black italic tracking-tight text-white"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              className="text-[1.5rem] sm:text-[3.8rem] font-black italic tracking-tight block sm:inline"
+              style={{ fontFamily: "'Space Grotesk', 'Noto Sans JP', sans-serif", color: "#000" }}
             >
               SPONSORSHIP
             </span>
-            <span className="text-[1.2rem] sm:text-[1.5rem] font-bold text-white/80 ml-4">
+            <span className="text-[0.85rem] sm:text-[1.3rem] font-bold sm:ml-4 block sm:inline mt-1 sm:mt-0" style={{ color: "#555" }}>
               スポンサー金額
             </span>
           </h1>
         </div>
       </FadeIn>
 
-      {/* All Plans - stacked vertically */}
-      {tiers.map((tier, idx) => (
-        <FadeIn key={tier.id} delay={idx * 0.08}>
-          <section>
-            {/* Tier Header Bar */}
-            <div
-              className="flex items-center justify-center py-4 rounded-t-md"
-              style={{
-                background: tier.color,
-                color: tier.textColor,
+      {/* Tab Navigation */}
+      <FadeIn delay={0.05}>
+        <div className="flex gap-[2px] mb-10">
+          {tiers.map((tier, idx) => (
+            <button
+              key={tier.id}
+              type="button"
+              onClick={() => {
+                setActiveTab(idx);
+                const el = document.getElementById(`plan-${tier.id}`);
+                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
+              className="flex-1 py-5 text-center font-bold text-[15px] sm:text-[20px] tracking-wide cursor-pointer transition-opacity hover:opacity-90"
+              style={{ background: tier.tabBg, color: tier.tabText }}
             >
-              <span className="text-[20px] sm:text-[24px] font-bold tracking-wide">
-                {tier.name}
-              </span>
-            </div>
+              {tier.name}
+            </button>
+          ))}
+        </div>
+      </FadeIn>
 
-            {/* Price */}
-            <div className="text-center py-6 border-x border-line" style={{ background: '#111' }}>
-              <p className="text-white">
+      {/* All Plans */}
+      {tiers.map((tier, idx) => {
+        const ticketLabel = tier.ticketNote
+          ? `ご優待券 ${tier.ticketNote}`
+          : "ご優待券";
+
+        return (
+          <FadeIn key={tier.id} delay={idx * 0.06}>
+            <section
+              id={`plan-${tier.id}`}
+              className="mb-10 rounded-sm overflow-hidden"
+              style={{ background: "#1a1a1a" }}
+            >
+              {/* Plan Header */}
+              <div className="py-8 px-6 text-center" style={{ background: tier.headerBg }}>
                 <span
-                  className="text-[1.6rem] sm:text-[2rem] font-black italic mr-3"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  className="text-[2rem] sm:text-[2.6rem] font-black italic text-white mr-4"
+                  style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
                 >
                   {tier.name}
                 </span>
-                <span className="text-[1.3rem] sm:text-[1.8rem] font-bold tracking-wide">
-                  {tier.prices}
+                <span
+                  className="text-[1.4rem] sm:text-[2rem] font-bold tracking-wide"
+                  style={{ color: tier.tabText }}
+                >
+                  {tier.price}
                 </span>
-                {tier.priceNote && (
-                  <span className="text-red-400 text-[0.9rem] ml-1">{tier.priceNote}</span>
-                )}
-              </p>
-            </div>
+              </div>
 
-            {/* Dashed separator */}
-            <div className="border-t-2 border-dashed border-black-400 border-x border-line" style={{ background: '#111' }} />
+              {/* Dashed separator */}
+              <div className="mx-6 sm:mx-12 border-t-[3px] border-dashed" style={{ borderColor: "#555" }} />
 
-            {/* Benefits Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 p-6 border-x border-b border-line rounded-b-md" style={{ background: '#111' }}>
-              {benefitDetails.map((b, i) => {
-                const isIncluded = tier.benefits[i]?.included;
-                const note = tier.benefits[i]?.note;
-                return (
-                  <div
-                    key={b.name}
-                    className="flex flex-col items-center text-center"
-                    style={{ opacity: isIncluded ? 1 : 0.25 }}
-                  >
-                    <div className="w-full aspect-[4/3] bg-white rounded-sm overflow-hidden mb-3 flex items-center justify-center">
-                      <span className="text-[32px] text-gray-400">
-                        {benefitIcons[i]}
-                      </span>
-                    </div>
-                    <p className="text-white text-[13px] font-bold">
-                      {b.name}
-                      {note && <span className="text-red-400 ml-0.5">{note}</span>}
+              {/* Row 1 — common benefits */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 px-6 sm:px-12 py-8">
+                {row1.map((b, i) => {
+                  const isTicket = i === 5;
+                  return (
+                    <BenefitCard
+                      key={b.label}
+                      img={b.img}
+                      label={isTicket ? ticketLabel : b.label}
+                      included={tier.row1Included[i]}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Row 2 — additional benefits (スタンダード以上) */}
+              {tier.hasRow2 && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 px-6 sm:px-12 pb-4">
+                  {row2.map((b) => (
+                    <BenefitCard
+                      key={b.label}
+                      img={b.img}
+                      label={b.label}
+                      text={b.text}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Silver extras — text-only benefit blocks */}
+              {tier.hasSilverExtras && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 px-6 sm:px-12 pb-4">
+                  {silverExtras.flat().map((label) => (
+                    <TextBenefitCard key={label} label={label} />
+                  ))}
+                </div>
+              )}
+
+              {/* Notes */}
+              {tier.notes.length > 0 && (
+                <div className="px-6 sm:px-12 pb-8 space-y-1">
+                  {tier.notes.map((note) => (
+                    <p key={note} className="text-[12px] font-medium" style={{ color: "#c00" }}>
+                      {note}
                     </p>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        </FadeIn>
-      ))}
-
-      {/* Notes */}
-      <FadeIn>
-        <div className="max-w-5xl mx-auto text-[12px] text-black-400 leading-relaxed space-y-1 px-4">
-          <p>※1 チケットP「C」には「tip off パーティー」「シーズン報告会」にご参加いただけます。</p>
-          <p>※2 チケットパートナーのご優待券は「A」チケット15枚、「B」30枚、「C」45枚ご利用可能です。</p>
-        </div>
-      </FadeIn>
-
-      {/* Comparison Table */}
-      <FadeIn>
-        <div className="max-w-5xl mx-auto">
-          <h2 className="h2 text-center mb-8">プラン比較</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-[13px]">
-              <thead>
-                <tr>
-                  <th className="text-left py-3 px-4 text-black-400 font-bold border-b border-line">特典</th>
-                  {tiers.map((t) => (
-                    <th
-                      key={t.id}
-                      className="py-3 px-3 text-center font-bold border-b border-line"
-                      style={{ color: t.textColor === "#000" ? "#ccc" : "#fff" }}
-                    >
-                      {t.name}
-                    </th>
                   ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-line">
-                  <td className="py-3 px-4 text-white font-medium">年間金額</td>
-                  {tiers.map((t) => (
-                    <td key={t.id} className="py-3 px-3 text-center text-white/80 text-[12px]">
-                      {t.prices}
-                    </td>
-                  ))}
-                </tr>
-                {benefitDetails.map((b, i) => (
-                  <tr key={b.name} className="border-b border-line">
-                    <td className="py-3 px-4 text-white font-medium">{b.name}</td>
-                    {tiers.map((t) => (
-                      <td key={t.id} className="py-3 px-3 text-center">
-                        {t.benefits[i]?.included ? (
-                          <span className="text-emerald-400 text-[16px]">●</span>
-                        ) : (
-                          <span className="text-black-500">—</span>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </FadeIn>
+                </div>
+              )}
+            </section>
+          </FadeIn>
+        );
+      })}
     </div>
   );
 }

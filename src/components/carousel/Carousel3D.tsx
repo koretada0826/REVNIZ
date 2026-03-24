@@ -27,7 +27,7 @@ const cards: CardData[] = [
     changePositive: true,
     sparkline: [18, 20, 22, 24, 26, 30, 35],
     color: "#dfb664",
-    href: "/companies",
+    href: "/activity",
   },
   {
     id: "meetings",
@@ -38,7 +38,7 @@ const cards: CardData[] = [
     changePositive: true,
     sparkline: [3, 5, 4, 7, 6, 9, 12],
     color: "#C8102E",
-    href: "/meeting",
+    href: "/activity",
   },
   {
     id: "consultations",
@@ -49,7 +49,7 @@ const cards: CardData[] = [
     changePositive: true,
     sparkline: [5, 7, 8, 10, 12, 15, 18],
     color: "#22D3EE",
-    href: "/board",
+    href: "/activity",
   },
   {
     id: "events",
@@ -60,7 +60,7 @@ const cards: CardData[] = [
     changePositive: true,
     sparkline: [1, 1, 2, 2, 3, 3, 4],
     color: "#66cc99",
-    href: "/events",
+    href: "/activity",
   },
 ];
 
@@ -150,7 +150,7 @@ export default function Carousel3D() {
   return (
     <div
       className="relative w-full"
-      style={{ height: 220 }}
+      style={{ height: 180 }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -170,8 +170,8 @@ export default function Carousel3D() {
               {...(wrapperProps as any)}
               className="absolute top-0 left-1/2 group block"
               style={{
-                width: 260,
-                marginLeft: -130,
+                width: 230,
+                marginLeft: -115,
                 transform: `translateX(${pos.x}%) translateY(${pos.y}px) scale(${pos.scale})`,
                 opacity: pos.opacity,
                 zIndex: pos.z,
@@ -187,11 +187,12 @@ export default function Carousel3D() {
                 className="relative rounded-xl overflow-hidden"
                 style={{
                   background: isFront
-                    ? "linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%)"
-                    : "#f0f0f0",
+                    ? "linear-gradient(135deg, #3d2e10 0%, #4a3818 50%, #3d2e10 100%)"
+                    : "linear-gradient(135deg, #2a2010 0%, #332815 100%)",
+                  border: isFront ? "1px solid rgba(223,182,100,0.6)" : "1px solid rgba(223,182,100,0.25)",
                   boxShadow: isFront
-                    ? "0 20px 40px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.2)"
-                    : "0 4px 12px rgba(0,0,0,0.15)",
+                    ? "0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(223,182,100,0.1)"
+                    : "0 4px 12px rgba(0,0,0,0.2)",
                   transition: "box-shadow 300ms, transform 300ms",
                   transform: "translateY(0)",
                 }}
@@ -199,14 +200,14 @@ export default function Carousel3D() {
                   if (isFront) {
                     e.currentTarget.style.transform = "translateY(-4px)";
                     e.currentTarget.style.boxShadow =
-                      "0 24px 48px rgba(0,0,0,0.35), 0 12px 20px rgba(0,0,0,0.25)";
+                      "0 24px 48px rgba(0,0,0,0.4), 0 0 40px rgba(223,182,100,0.15)";
                   }
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
                   if (isFront) {
                     e.currentTarget.style.boxShadow =
-                      "0 20px 40px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.2)";
+                      "0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(223,182,100,0.1)";
                   }
                 }}
               >
@@ -216,18 +217,18 @@ export default function Carousel3D() {
                     className="absolute inset-0 pointer-events-none"
                     style={{
                       background:
-                        "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%)",
+                        "linear-gradient(135deg, rgba(223,182,100,0.15) 0%, transparent 50%)",
                       zIndex: 1,
                     }}
                   />
                 )}
 
-                <div className="relative p-5" style={{ zIndex: 2 }}>
+                <div className="relative p-4" style={{ zIndex: 2 }}>
                   {/* Header */}
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-2">
                     <span
-                      className="text-[11px] font-bold tracking-wider uppercase"
-                      style={{ color: "#888" }}
+                      className="text-[13px] font-bold tracking-wider uppercase"
+                      style={{ color: "#dfb664" }}
                     >
                       {card.title}
                     </span>
@@ -241,24 +242,24 @@ export default function Carousel3D() {
                   </div>
 
                   {/* Value */}
-                  <div className="flex items-end gap-1.5 mb-1">
+                  <div className="flex items-end gap-1 mb-0.5">
                     <span
-                      className="text-[36px] font-bold leading-none tracking-tight"
+                      className="text-[36px] font-black leading-none tracking-tight"
                       style={{
-                        color: "#111",
+                        color: "#fff",
                         fontFamily: "'Space Grotesk', sans-serif",
                       }}
                     >
                       {card.value}
                     </span>
-                    <span className="text-[14px] font-medium text-gray-400 mb-1">
+                    <span className="text-[16px] font-bold mb-1" style={{ color: "rgba(223,182,100,0.7)" }}>
                       {card.label}
                     </span>
                   </div>
 
                   {/* Change */}
                   <span
-                    className="text-[12px] font-semibold"
+                    className="text-[14px] font-bold"
                     style={{
                       color: card.changePositive ? "#22c55e" : "#ef4444",
                     }}
@@ -267,7 +268,7 @@ export default function Carousel3D() {
                   </span>
 
                   {/* Chart */}
-                  <div className="mt-4">
+                  <div className="mt-2">
                     <MiniChart data={card.sparkline} color={card.color} active={isFront} />
                   </div>
                 </div>
@@ -286,21 +287,22 @@ export default function Carousel3D() {
             className="snap-center shrink-0 rounded-xl p-5 block"
             style={{
               width: 220,
-              background: "#fff",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+              background: "linear-gradient(135deg, #3d2e10 0%, #4a3818 50%, #3d2e10 100%)",
+              border: "1px solid rgba(223,182,100,0.5)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
               textDecoration: "none",
             }}
           >
-            <span className="text-[11px] font-bold tracking-wider uppercase text-gray-500 block mb-3">
+            <span className="text-[13px] font-bold tracking-wider uppercase block mb-3" style={{ color: "#dfb664" }}>
               {card.title}
             </span>
             <div className="flex items-end gap-1.5 mb-1">
-              <span className="text-[28px] font-bold text-gray-900 leading-none" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <span className="text-[36px] font-black text-white leading-none" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {card.value}
               </span>
-              <span className="text-[13px] text-gray-400 mb-0.5">{card.label}</span>
+              <span className="text-[15px] font-bold mb-0.5" style={{ color: "rgba(223,182,100,0.7)" }}>{card.label}</span>
             </div>
-            <span className="text-[11px] font-semibold" style={{ color: "#22c55e" }}>
+            <span className="text-[13px] font-bold" style={{ color: "#22c55e" }}>
               {card.change}
             </span>
             <div className="mt-3">

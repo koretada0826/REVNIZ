@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, SlidersHorizontal, MessageSquare } from "lucide-react";
+import { Search, SlidersHorizontal, MessageSquare, ChevronDown } from "lucide-react";
 import FadeIn from "@/components/motion/FadeIn";
 import { sponsorSections } from "@/data/sponsors";
 import { consultations, companies } from "@/data/mock";
@@ -74,6 +74,7 @@ function accentColor(title: string): string {
 export default function CompaniesPage() {
   const [search, setSearch] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("すべて");
+  const [showMore, setShowMore] = useState(false);
 
   // レブナイズ35のフィルタリング
   const filterLogos = (logos: typeof sponsorSections[0]["logos"]) => {
@@ -153,7 +154,7 @@ export default function CompaniesPage() {
                 />
                 {section.title}
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
                 {filterLogos(section.logos).map((logo, li) => {
                   const color = industryColors[logo.industry || ""] || "#6B7280";
                   // この企業の相談を検索
@@ -168,7 +169,7 @@ export default function CompaniesPage() {
                     <a key={li} href={logo.url || "#"} target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden cursor-pointer block">
                       {/* 右上バッジ */}
                       <div className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
-                        <span className="inline-block text-white text-[13px] font-bold text-center px-2.5 py-1" style={{ backgroundColor: color }}>{logo.industry}</span>
+                        <span className="inline-block text-white text-[10px] sm:text-[13px] font-bold text-center px-1.5 sm:px-2.5 py-0.5 sm:py-1" style={{ backgroundColor: color }}>{logo.industry}</span>
                       </div>
 
                       {/* ロゴエリア */}
@@ -181,17 +182,17 @@ export default function CompaniesPage() {
                       </div>
 
                       {/* テキストエリア */}
-                      <div className="bg-[#333] px-5 pt-5 pb-5">
-                        <p className="text-[15px] text-white leading-snug mb-2 font-bold">
+                      <div className="bg-[#333] px-3 pt-3 pb-3 sm:px-5 sm:pt-5 sm:pb-5">
+                        <p className="text-[12px] sm:text-[15px] text-white leading-snug mb-1 sm:mb-2 font-bold">
                           {logo.name}
                         </p>
-                        <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-[#888] mb-2">About</p>
-                        <p className="text-[13px] text-[#a2a2a2] leading-relaxed line-clamp-3 mb-3">
+                        <p className="hidden sm:block text-[10px] font-bold tracking-[0.08em] uppercase text-[#888] mb-2">About</p>
+                        <p className="hidden sm:block text-[13px] text-[#a2a2a2] leading-relaxed line-clamp-3 mb-3">
                           {logo.description || ""}
                         </p>
 
                         {/* 相談内容 */}
-                        <div className="border-t border-[#444] pt-3">
+                        <div className="hidden sm:block border-t border-[#444] pt-3">
                           <div className="flex items-center gap-1.5 mb-2">
                             <MessageSquare className="w-3.5 h-3.5" style={{ color: "#dfb664" }} />
                             <span className="text-[10px] font-extrabold uppercase tracking-wider" style={{ color: "#dfb664" }}>相談内容</span>
@@ -226,6 +227,9 @@ export default function CompaniesPage() {
         if (section.size === "sponsorList") {
           return null;
         }
+
+        // オフィシャルスポンサー以降は showMore で制御
+        if (!showMore) return null;
 
         // ティア別セクション
         const w = logoWidth(section.size);
@@ -266,7 +270,12 @@ export default function CompaniesPage() {
                     margin: "10px 5px",
                   }}
                 >
-                  <a className="block transition-opacity hover:opacity-70">
+                  <a
+                    href={logo.url || undefined}
+                    target={logo.url ? "_blank" : undefined}
+                    rel={logo.url ? "noopener noreferrer" : undefined}
+                    className={`block transition-opacity hover:opacity-70${logo.url ? " cursor-pointer" : ""}`}
+                  >
                     <img
                       src={`/images/sponsors/${logo.file}`}
                       alt={logo.name}
@@ -280,6 +289,24 @@ export default function CompaniesPage() {
           </section>
         );
       })}
+
+      {/* もっと見る / 閉じる ボタン */}
+      <div className="text-center py-6">
+        <button
+          onClick={() => setShowMore(!showMore)}
+          className="inline-flex items-center gap-2 px-8 py-3 text-[15px] font-bold rounded-md transition-all cursor-pointer"
+          style={{
+            background: showMore ? "#333" : "#C8102E",
+            color: "#fff",
+          }}
+        >
+          {showMore ? "閉じる" : "オフィシャルスポンサー以降を見る"}
+          <ChevronDown
+            className="w-4 h-4 transition-transform"
+            style={{ transform: showMore ? "rotate(180deg)" : "rotate(0)" }}
+          />
+        </button>
+      </div>
     </div>
   );
 }

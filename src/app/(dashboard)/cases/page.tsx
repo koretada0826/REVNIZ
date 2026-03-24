@@ -82,10 +82,10 @@ export default function CasesPage() {
       {/* その他の事例（横スクロール） */}
       {others.length > 0 && (
         <div className="relative">
-          {/* スクロールボタン */}
+          {/* スクロールボタン — デスクトップのみ */}
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-[22px] font-black text-white">その他の事例</h2>
-            <div className="flex gap-2">
+            <div className="hidden sm:flex gap-2">
               <button
                 onClick={() => scroll("left")}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:opacity-80"
@@ -102,10 +102,10 @@ export default function CasesPage() {
               </button>
             </div>
           </div>
-          <div ref={scrollRef} className="overflow-x-auto -mx-6 lg:-mx-8 px-6 lg:px-8" style={{ scrollbarWidth: "none" }}>
-          <div className="flex gap-5" style={{ minWidth: "max-content" }}>
+          <div ref={scrollRef} className="overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 snap-x snap-mandatory" style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
+          <div className="flex gap-3 sm:gap-5" style={{ minWidth: "max-content" }}>
           {others.map((sc, idx) => (
-            <div key={sc.id} className="rounded-xl overflow-hidden bg-white shrink-0" style={{ width: "320px" }}>
+            <div key={sc.id} className="rounded-xl overflow-hidden bg-white shrink-0 snap-start" style={{ width: "260px" }}>
               {/* ゴールド帯（細め） */}
               <div
                 className="px-4 py-2.5 flex items-center justify-between"

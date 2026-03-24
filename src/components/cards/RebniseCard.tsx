@@ -23,22 +23,22 @@ export default function RebniseCard({
   categories = [],
 }: RebniseCardProps) {
   return (
-    <li className={styles.listCard}>
+    <div className={styles.listCard}>
       <Link href={href}>
         {/* Category Label */}
         {categories.length > 0 && (
           <div className={styles.categoryLabel}>
-            <ul>
+            <div style={{ display: "flex", gap: 0 }}>
               {categories.map((cat, i) => (
-                <li
+                <span
                   key={i}
                   className={cat.isNew ? styles.catNew : undefined}
                   style={cat.isNew ? undefined : { backgroundColor: cat.color }}
                 >
                   {cat.label}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         )}
 
@@ -88,6 +88,6 @@ export default function RebniseCard({
         <span>𝕏</span>
         <span>f</span>
       </div>
-    </li>
+    </div>
   );
 }

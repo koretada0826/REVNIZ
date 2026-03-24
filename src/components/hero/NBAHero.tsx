@@ -7,6 +7,7 @@ import styles from "./NBAHero.module.css";
 interface SlideData {
   category: string;
   headline: string;
+  headlineSp: string;
   description: string;
   cta: { label: string; href: string };
   image: string;
@@ -15,68 +16,73 @@ interface SlideData {
 
 const slides: SlideData[] = [
   {
-    category: "新着企業",
-    headline: "薩摩デジタルマーケティングが新たにスポンサー参加",
+    category: "試合",
+    headline: '一つになって戦う — <span style="color:#C8102E">レブナイズの熱い試合</span>をスポンサー席で',
+    headlineSp: '<span style="color:#C8102E">熱い試合</span>をスポンサー席で',
     description:
-      "デジタルマーケティングに強みを持つ薩摩デジタルマーケティングが加わりました。SNS運用、広告運用の実績多数。",
-    cta: { label: "詳細を見る", href: "/companies" },
-    image: "/images/hero-new-company.jpg",
+      "選手たちの円陣に宿るチームの絆。スポンサー企業の皆様の応援が、選手たちの力になっています。",
+    cta: { label: "イベントを見る", href: "/events" },
+    image: "/images/hero-1.jpg",
     relatedContent: [
-      { text: "スポンサー企業一覧を見る", href: "/companies" },
+      { text: "ホーム戦スケジュール", href: "/events" },
+      { text: "スポンサー観戦特典を見る", href: "/benefits" },
+      { text: "スポンサー企業一覧", href: "/companies" },
+    ],
+  },
+  {
+    category: "B2昇格",
+    headline: '鹿児島レブナイズ <span style="color:#C8102E">B2昇格</span> — 新たなステージへ',
+    headlineSp: 'レブナイズ<span style="color:#C8102E">B2昇格</span>',
+    description:
+      "スポンサー企業の皆様とともに掴んだB2昇格。さらなる高みを目指し、鹿児島のスポーツシーンを盛り上げます。",
+    cta: { label: "スポンサー一覧を見る", href: "/companies" },
+    image: "/images/hero-2.jpg",
+    relatedContent: [
+      { text: "35社のスポンサー企業一覧", href: "/companies" },
       { text: "企業間コラボの成功事例", href: "/cases" },
-      { text: "第3回スポンサー交流会 — 3月28日開催", href: "/events" },
+      { text: "シーズン報告会のご案内", href: "/events" },
     ],
   },
   {
-    category: "イベント",
-    headline: "第3回スポンサー交流会の参加受付を開始",
+    category: "交流会",
+    headline: 'スポンサー企業同士がつながる<span style="color:#C8102E">Tip offパーティー</span>',
+    headlineSp: '<span style="color:#C8102E">Tip off</span>パーティー',
     description:
-      "3月28日開催。今回のテーマは「東京×鹿児島の連携」。スポンサー企業同士の名刺交換・情報交換の場。",
-    cta: { label: "申込む", href: "/events" },
-    image: "/images/hero-event.jpg",
+      "シーズン開幕を祝うTip offパーティー。スポンサー企業の皆様が一堂に会し、新たなビジネスの出会いが生まれる特別な夜。",
+    cta: { label: "イベントを見る", href: "/events" },
+    image: "/images/hero-3.jpg",
     relatedContent: [
-      { text: "ビジネスマッチング商談会 4月15日開催", href: "/events" },
-      { text: "ホーム戦観戦交流会 — 残りわずか", href: "/events" },
-      { text: "過去の交流会レポート", href: "/news" },
+      { text: "次回交流会の参加受付中", href: "/events" },
+      { text: "スポンサー特典を確認する", href: "/benefits" },
+      { text: "相談掲示板で商談相手を探す", href: "/board" },
     ],
   },
   {
-    category: "成功事例",
-    headline: "鹿児島の食品が東京のセレクトショップへ展開決定",
+    category: "ビジネス",
+    headline: '鹿児島から全国へ — スポンサー企業間の<span style="color:#C8102E">協業が加速</span>',
+    headlineSp: '企業間<span style="color:#C8102E">協業</span>が加速',
     description:
-      "桜島フーズとTokyo Creative Labの協業事例。パッケージデザインリニューアルにより東京3店舗への納品が決定。",
-    cta: { label: "READ", href: "/cases" },
-    image: "/images/hero-success.jpg",
+      "レブナイズのスポンサーネットワークを通じて、異業種の企業同士が出会い、新たなビジネスチャンスを創出しています。",
+    cta: { label: "成功事例を見る", href: "/cases" },
+    image: "/images/hero-2.jpg",
     relatedContent: [
-      { text: "建設会社のDX推進プロジェクトが始動", href: "/cases" },
-      { text: "スポンサー同士の信頼が生む協業とは", href: "/cases" },
+      { text: "企業間コラボの成功事例", href: "/cases" },
+      { text: "ビジネスマッチング商談会", href: "/events" },
       { text: "2026年のマッチング実績を公開", href: "/news" },
     ],
   },
   {
-    category: "相談",
-    headline: "東京での販路拡大パートナーを募集中",
+    category: "スポンサー募集",
+    headline: '<span style="color:#C8102E">レブナイズと一緒に</span>鹿児島を盛り上げませんか',
+    headlineSp: '<span style="color:#C8102E">一緒に</span>盛り上げよう',
     description:
-      "鹿児島県産食品の東京進出を検討中。卸先の開拓やポップアップ出店のノウハウがある企業と組みたい。",
-    cta: { label: "READ", href: "/board" },
-    image: "/images/hero-consultation.jpg",
+      "年間12万円から参加可能。チームロゴ使用権、試合会場看板、パートナー通信など充実の特典をご用意しています。",
+    cta: { label: "スポンサー特典を見る", href: "/benefits" },
+    image: "/images/hero-1.jpg",
     relatedContent: [
-      { text: "採用サイトのリニューアルを検討中", href: "/board" },
-      { text: "DX導入の壁打ち相手がほしい", href: "/board" },
-      { text: "会場でのコラボイベントを企画したい", href: "/board" },
-    ],
-  },
-  {
-    category: "商談会",
-    headline: "ビジネスマッチング商談会 4月15日開催",
-    description:
-      "1社15分の短時間商談形式。事前にマッチングリストを共有し、効率的な商談を実現します。",
-    cta: { label: "申込む", href: "/events" },
-    image: "/images/hero-meeting.jpg",
-    relatedContent: [
-      { text: "ホーム戦観戦交流会のご案内", href: "/events" },
-      { text: "マッチングおすすめを更新しました", href: "/news" },
-      { text: "スポンサー交流会の参加受付中", href: "/events" },
+      { text: "スポンサー金額プランを確認", href: "/benefits" },
+      { text: "35社のスポンサー企業一覧", href: "/companies" },
+      { text: "お問い合わせ", href: "/profile" },
     ],
   },
 ];
@@ -133,7 +139,7 @@ export default function NBAHero() {
           >
             <div>
               <Link href={slide.cta.href}>
-                <h2 className={styles.headline}>{slide.headline}</h2>
+                <h2 className={styles.headline} dangerouslySetInnerHTML={{ __html: slide.headline }} />
               </Link>
 
               <p className={styles.description}>{slide.description}</p>
@@ -198,13 +204,17 @@ export default function NBAHero() {
                     </p>
                   </div>
 
-                  {/* Slide Headline */}
+                  {/* Slide Headline — desktop: full, mobile: short */}
                   <p
-                    className={styles.controlText}
+                    className={`${styles.controlText} hidden md:block`}
                     data-is-current={isCurrent ? "true" : "false"}
-                  >
-                    {slide.headline}
-                  </p>
+                    dangerouslySetInnerHTML={{ __html: slide.headline }}
+                  />
+                  <p
+                    className={`${styles.controlText} md:hidden`}
+                    data-is-current={isCurrent ? "true" : "false"}
+                    dangerouslySetInnerHTML={{ __html: slide.headlineSp }}
+                  />
                 </button>
               );
             })}
