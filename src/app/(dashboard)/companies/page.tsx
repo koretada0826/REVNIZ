@@ -67,7 +67,7 @@ function logoWidth(size: string): string {
  * reb_a2 = レッド(#e60012)
  */
 function accentColor(title: string): string {
-  if (title === "オフィシャルスポンサー" || title === "アカデミースポンサー") return "#e60012";
+  if (title === "オフィシャルスポンサー" || title === "アカデミースポンサー") return "#C8102E";
   return "#dfb664";
 }
 
@@ -135,6 +135,11 @@ export default function CompaniesPage() {
           ))}
         </div>
       </div>
+
+      {(() => {
+        const total = sponsorSections.reduce((sum, sec) => sum + filterLogos(sec.logos).length, 0);
+        return <p className="text-[13px] text-white/40">{total}件の企業</p>;
+      })()}
 
       {sponsorSections.map((section, si) => {
         // レブナイズ35 → RebniseCard形式
@@ -274,7 +279,7 @@ export default function CompaniesPage() {
                     href={logo.url || undefined}
                     target={logo.url ? "_blank" : undefined}
                     rel={logo.url ? "noopener noreferrer" : undefined}
-                    className={`block transition-opacity hover:opacity-70${logo.url ? " cursor-pointer" : ""}`}
+                    className={`block transition-opacity hover:opacity-80${logo.url ? " cursor-pointer" : ""}`}
                   >
                     <img
                       src={`/images/sponsors/${logo.file}`}
@@ -294,7 +299,7 @@ export default function CompaniesPage() {
       <div className="text-center py-6">
         <button
           onClick={() => setShowMore(!showMore)}
-          className="inline-flex items-center gap-2 px-8 py-3 text-[15px] font-bold rounded-md transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-8 py-3 text-[15px] font-bold rounded-md transition-all cursor-pointer hover:opacity-90"
           style={{
             background: showMore ? "#333" : "#C8102E",
             color: "#fff",

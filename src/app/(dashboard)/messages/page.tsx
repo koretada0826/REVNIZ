@@ -78,7 +78,7 @@ export default function MessagesPage() {
               >
                 <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center shrink-0 p-1">
                   {company ? (
-                    <img src={company.logo} alt="" className="max-w-full max-h-full object-contain" />
+                    <img src={company.logo} alt={`${company.name} ロゴ`} className="max-w-full max-h-full object-contain" />
                   ) : (
                     <span className="text-[11px] font-bold text-black">{n.fromCompanyName.charAt(0)}</span>
                   )}
@@ -118,7 +118,7 @@ export default function MessagesPage() {
                 </button>
                 <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center shrink-0 p-1">
                   {selectedCompany ? (
-                    <img src={selectedCompany.logo} alt="" className="max-w-full max-h-full object-contain" />
+                    <img src={selectedCompany.logo} alt={`${selectedCompany.name} ロゴ`} className="max-w-full max-h-full object-contain" />
                   ) : (
                     <span className="text-[11px] font-bold text-black">{selected.fromCompanyName.charAt(0)}</span>
                   )}
@@ -144,7 +144,7 @@ export default function MessagesPage() {
                 <div className="flex items-start gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%]">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center shrink-0 p-0.5 sm:p-1">
                     {selectedCompany ? (
-                      <img src={selectedCompany.logo} alt="" className="max-w-full max-h-full object-contain" />
+                      <img src={selectedCompany.logo} alt={`${selectedCompany.name} ロゴ`} className="max-w-full max-h-full object-contain" />
                     ) : (
                       <span className="text-[9px] font-bold text-black">{selected.fromCompanyName.charAt(0)}</span>
                     )}

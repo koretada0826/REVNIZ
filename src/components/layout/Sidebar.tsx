@@ -59,6 +59,7 @@ const mainItems: NavItem[] = [
     name: "相談掲示板", href: "/board", icon: MessageSquare, badge: 4,
     sections: [
       { label: "新着相談一覧" },
+      { label: "自社の相談", href: "/board?my=true" },
       { label: "カテゴリ検索" },
     ],
   },

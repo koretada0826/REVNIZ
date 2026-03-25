@@ -144,7 +144,7 @@ export default function DashboardPage() {
                   <div className="overflow-hidden rounded-sm">
                     <img
                       src={c.image}
-                      alt=""
+                      alt={c.title}
                       className="w-full aspect-[16/9] object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>

@@ -57,7 +57,7 @@ export default function RebniseCard({
               {logo && (
                 <img
                   src={logo}
-                  alt=""
+                  alt={`${title} ロゴ`}
                   style={{
                     position: 'absolute',
                     bottom: '12px',
