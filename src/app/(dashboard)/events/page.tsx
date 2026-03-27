@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { Calendar, MapPin, Users, ArrowRight, ChevronDown } from "lucide-react";
+import { Calendar, MapPin, Users, ChevronDown, ArrowRight } from "lucide-react";
 import { events } from "@/data/mock";
 import FadeIn from "@/components/motion/FadeIn";
 
 const TODAY = "2026-03-20";
 const ONE_MONTH_LATER = "2026-04-20";
-const categories = ["すべて", "GAME", "イベント", "スポンサー"];
+const categories = ["すべて", "懇親会", "OFF会", "イベント"];
 
 const monthNames: Record<string, string> = {
   "01": "1月", "02": "2月", "03": "3月", "04": "4月",
@@ -16,45 +17,59 @@ const monthNames: Record<string, string> = {
   "09": "9月", "10": "10月", "11": "11月", "12": "12月",
 };
 
+function catColor(category: string) {
+  return category === "懇親会" ? "#dfb664" : category === "OFF会" ? "#A78BFA" : "#C8102E";
+}
+
 function EventCard({ ev }: { ev: (typeof events)[number] }) {
   const dateLabel = ev.date.slice(0, 7);
+  const pct = Math.round((ev.registered / ev.capacity) * 100);
   return (
-    <div className="group relative cursor-pointer">
-      <a className="block">
-        <div className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
+    <div className="group relative">
+      <Link href={`/events/${ev.id}`} className="block">
+        <span className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
           <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEW</span>
-          <span className="inline-block bg-[#e8ca22] text-white text-[14px] font-bold text-center px-2.5 py-1">{ev.category}</span>
-        </div>
-        <div className="relative overflow-hidden">
-          <div className="aspect-[4/3] overflow-hidden">
+          <span
+            className="inline-block text-white text-[14px] font-bold text-center px-2.5 py-1"
+            style={{ backgroundColor: catColor(ev.category) }}
+          >{ev.category}</span>
+        </span>
+        <span className="relative overflow-hidden block">
+          <span className="aspect-[16/9] sm:aspect-[4/3] overflow-hidden block">
             <Image
               src={ev.image}
               alt={ev.title}
               fill
               className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.15]"
             />
-          </div>
-        </div>
-        <div className="relative bg-[#333] px-5 pt-7 pb-5">
-          <p className="text-[14px] text-white leading-relaxed line-clamp-2 h-[45px] mb-2.5">
+          </span>
+        </span>
+        <span className="relative bg-[#333] px-3 pt-2.5 pb-2.5 sm:px-5 sm:pt-5 sm:pb-4 block">
+          <span className="text-[12px] sm:text-[14px] text-white leading-snug sm:leading-relaxed line-clamp-2 sm:h-[45px] mb-1 sm:mb-2 block">
             {ev.title}
-          </p>
-          <p className="text-[20px] font-bold text-[#a2a2a2] tracking-wide tabular-nums" style={{ fontFamily: '"Space Grotesk", "abolition", sans-serif' }}>
-            {dateLabel}
-          </p>
-        </div>
-      </a>
-      <div className="absolute right-5 bottom-7 flex items-center gap-2">
-        <span className="text-[14px] text-[#686868] hover:text-[#1da1f2] transition-colors cursor-pointer font-medium">X</span>
-        <span className="text-[14px] text-[#686868] hover:text-[#3a5795] transition-colors cursor-pointer font-medium">f</span>
-      </div>
+          </span>
+          <span className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3 text-[10px] sm:text-[12px] text-[#a2a2a2]">
+            <span className="flex items-center gap-1"><Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {ev.date}</span>
+            <span className="flex items-center gap-1"><Users className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {ev.registered}/{ev.capacity}</span>
+          </span>
+          <span
+            className="w-full text-center py-1.5 sm:py-2.5 rounded-md text-[12px] sm:text-[14px] font-bold transition-all block"
+            style={{
+              backgroundColor: pct >= 95 ? "#333" : "#dfb664",
+              color: pct >= 95 ? "#888" : "#000",
+              opacity: pct >= 95 ? 0.6 : 1,
+            }}
+          >
+            {pct >= 95 ? "残りわずか — 参加する" : "参加する"}
+          </span>
+        </span>
+      </Link>
     </div>
   );
 }
 
 export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState("すべて");
-
   const [openMonths, setOpenMonths] = useState<Record<string, boolean>>({});
 
   const sorted = [...events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -65,13 +80,11 @@ export default function EventsPage() {
   const nearest = filtered[0];
   const restAll = filtered.slice(1);
 
-  // 1ヶ月以内のイベント
   const withinMonth = restAll.filter((ev) => ev.date < ONE_MONTH_LATER);
-  // 1ヶ月以降のイベント → 月別にグループ化
   const beyondMonth = restAll.filter((ev) => ev.date >= ONE_MONTH_LATER);
   const monthGroups: Record<string, typeof beyondMonth> = {};
   beyondMonth.forEach((ev) => {
-    const key = ev.date.slice(0, 7); // "2026-05"
+    const key = ev.date.slice(0, 7);
     if (!monthGroups[key]) monthGroups[key] = [];
     monthGroups[key].push(ev);
   });
@@ -105,39 +118,42 @@ export default function EventsPage() {
       {nearest && (
         <div>
           <h2 className="text-[28px] font-black text-white tracking-tight mb-6">Next Event</h2>
-          <div className="group relative cursor-pointer">
-            <a className="block">
-              <div className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
-                <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEXT</span>
-                <span className="inline-block bg-[#e8ca22] text-white text-[14px] font-bold text-center px-2.5 py-1">{nearest.category}</span>
-              </div>
-              <div className="relative overflow-hidden">
-                <div className="aspect-[2/1] overflow-hidden">
-                  <Image
-                    src={nearest.image}
-                    alt={nearest.title}
-                    fill
-                    className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.15]"
-                  />
-                </div>
-              </div>
-              <div className="relative bg-[#333] px-6 pt-6 pb-5">
-                <p className="text-[18px] text-white font-bold leading-relaxed mb-3">
-                  {nearest.title}
-                </p>
-                <p className="text-[14px] text-black-400 mb-4">{nearest.description}</p>
-                <div className="flex flex-wrap items-center gap-5 text-[14px] text-[#a2a2a2]">
-                  <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {nearest.date}</span>
-                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {nearest.location}</span>
-                  <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {nearest.registered}/{nearest.capacity}名</span>
-                </div>
-              </div>
-            </a>
-            <div className="absolute right-5 bottom-6 flex items-center gap-2">
-              <span className="text-[14px] text-[#686868] hover:text-[#1da1f2] transition-colors cursor-pointer font-medium">X</span>
-              <span className="text-[14px] text-[#686868] hover:text-[#3a5795] transition-colors cursor-pointer font-medium">f</span>
-            </div>
-          </div>
+          <Link href={`/events/${nearest.id}`} className="group relative block">
+            <span className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
+              <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEXT</span>
+              <span
+                className="inline-block text-white text-[14px] font-bold text-center px-2.5 py-1"
+                style={{ backgroundColor: catColor(nearest.category) }}
+              >{nearest.category}</span>
+            </span>
+            <span className="relative overflow-hidden block">
+              <span className="aspect-[16/9] sm:aspect-[2/1] overflow-hidden block">
+                <Image
+                  src={nearest.image}
+                  alt={nearest.title}
+                  fill
+                  className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.15]"
+                />
+              </span>
+            </span>
+            <span className="relative bg-[#333] px-4 pt-3 pb-3 sm:px-6 sm:pt-6 sm:pb-5 block">
+              <span className="text-[18px] text-white font-bold leading-relaxed mb-3 block">
+                {nearest.title}
+              </span>
+              <span className="text-[14px] text-black-400 mb-4 block">{nearest.description}</span>
+              <span className="flex flex-wrap items-center gap-5 text-[14px] text-[#a2a2a2] mb-5">
+                <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {nearest.date}</span>
+                <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {nearest.location}</span>
+                <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {nearest.registered}/{nearest.capacity}名</span>
+              </span>
+              <span
+                className="inline-flex items-center gap-2 px-8 py-3 rounded-md text-[15px] font-bold text-black transition-opacity hover:opacity-90"
+                style={{ backgroundColor: "#dfb664" }}
+              >
+                参加する <ArrowRight className="w-4 h-4" />
+              </span>
+            </span>
+          </Link>
         </div>
       )}
 
@@ -165,21 +181,18 @@ export default function EventsPage() {
             const year = key.slice(0, 4);
             const isOpen = openMonths[key] || false;
             const eventsInMonth = monthGroups[key];
-            // カテゴリ別の件数
             const catCounts: Record<string, number> = {};
             eventsInMonth.forEach((ev) => {
               catCounts[ev.category] = (catCounts[ev.category] || 0) + 1;
             });
             return (
               <div key={key} className="rounded-lg overflow-hidden border border-line">
-                {/* アコーディオンヘッダー */}
                 <button
                   onClick={() => toggleMonth(key)}
                   className="w-full flex items-center justify-between px-6 py-5 transition-colors group"
                   style={{ background: isOpen ? "linear-gradient(135deg, #1a1a1a 0%, #222 100%)" : "#1a1a1a" }}
                 >
                   <div className="flex items-center gap-4">
-                    {/* ゴールドのアクセントバー */}
                     <div className="w-1.5 h-12 rounded-full shrink-0" style={{ backgroundColor: "#dfb664" }} />
                     <div className="text-left">
                       <h3 className="text-[22px] font-black text-white leading-tight">
@@ -194,9 +207,7 @@ export default function EventsPage() {
                             <span
                               key={cat}
                               className="text-[11px] font-bold text-white px-2 py-0.5 rounded-full"
-                              style={{
-                                backgroundColor: cat === "GAME" ? "#e8ca22" : cat === "イベント" ? "#C8102E" : "#dfb664",
-                              }}
+                              style={{ backgroundColor: catColor(cat) }}
                             >
                               {cat} {count}
                             </span>
@@ -219,7 +230,6 @@ export default function EventsPage() {
                     </div>
                   </div>
                 </button>
-                {/* アコーディオン中身 */}
                 <div
                   className="overflow-hidden transition-all duration-300"
                   style={{

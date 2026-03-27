@@ -17,8 +17,8 @@ interface SlideData {
 const slides: SlideData[] = [
   {
     category: "試合",
-    headline: '一つになって戦う — <span style="color:#C8102E">レブナイズの熱い試合</span>をスポンサー席で',
-    headlineSp: '<span style="color:#C8102E">熱い試合</span>をスポンサー席で',
+    headline: '一つになって戦う —<br/><span style="color:#C8102E">レブナイズの熱い試合</span>を<wbr/>スポンサー席で',
+    headlineSp: '<span style="color:#C8102E">熱い試合</span>を<wbr/>スポンサー席で',
     description:
       "選手たちの円陣に宿るチームの絆。スポンサー企業の皆様の応援が、選手たちの力になっています。",
     cta: { label: "イベントを見る", href: "/events" },
@@ -31,7 +31,7 @@ const slides: SlideData[] = [
   },
   {
     category: "B2昇格",
-    headline: '鹿児島レブナイズ <span style="color:#C8102E">B2昇格</span> — 新たなステージへ',
+    headline: '鹿児島レブナイズ<br/><span style="color:#C8102E">B2昇格</span> — 新たなステージへ',
     headlineSp: 'レブナイズ<span style="color:#C8102E">B2昇格</span>',
     description:
       "スポンサー企業の皆様とともに掴んだB2昇格。さらなる高みを目指し、鹿児島のスポーツシーンを盛り上げます。",
@@ -45,10 +45,10 @@ const slides: SlideData[] = [
   },
   {
     category: "交流会",
-    headline: 'スポンサー企業同士がつながる<span style="color:#C8102E">Tip offパーティー</span>',
-    headlineSp: '<span style="color:#C8102E">Tip off</span>パーティー',
+    headline: 'スポンサー企業同士がつながる<br/><span style="color:#C8102E">Tip\u00A0offパーティー</span>',
+    headlineSp: '<span style="color:#C8102E">Tip\u00A0off</span>パーティー',
     description:
-      "シーズン開幕を祝うTip offパーティー。スポンサー企業の皆様が一堂に会し、新たなビジネスの出会いが生まれる特別な夜。",
+      "シーズン開幕を祝うTip\u00A0offパーティー。スポンサー企業の皆様が一堂に会し、新たなビジネスの出会いが生まれる特別な夜。",
     cta: { label: "イベントを見る", href: "/events" },
     image: "/images/hero-3.jpg",
     relatedContent: [
@@ -59,7 +59,7 @@ const slides: SlideData[] = [
   },
   {
     category: "ビジネス",
-    headline: '鹿児島から全国へ — スポンサー企業間の<span style="color:#C8102E">協業が加速</span>',
+    headline: '鹿児島から全国へ —<br/>スポンサー企業間の<span style="color:#C8102E">協業が加速</span>',
     headlineSp: '企業間<span style="color:#C8102E">協業</span>が加速',
     description:
       "レブナイズのスポンサーネットワークを通じて、異業種の企業同士が出会い、新たなビジネスチャンスを創出しています。",
@@ -73,7 +73,7 @@ const slides: SlideData[] = [
   },
   {
     category: "スポンサー募集",
-    headline: '<span style="color:#C8102E">レブナイズと一緒に</span>鹿児島を盛り上げませんか',
+    headline: '<span style="color:#C8102E">レブナイズと一緒に</span><br/>鹿児島を盛り上げませんか',
     headlineSp: '<span style="color:#C8102E">一緒に</span>盛り上げよう',
     description:
       "年間12万円から参加可能。チームロゴ使用権、試合会場看板、パートナー通信など充実の特典をご用意しています。",

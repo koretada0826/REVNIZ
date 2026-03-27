@@ -511,36 +511,36 @@ function BoardContent() {
           const company = companies.find((c) => c.id === p.companyId);
           return (
             <Link key={p.id} href={`/board/${p.id}`} className="group relative overflow-hidden rounded-lg border border-line cursor-pointer transition-all duration-200 hover:border-line-dark bg-white block">
-              <div className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
+              <span className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
                 <span className="inline-block text-white text-[10px] sm:text-[13px] font-bold text-center px-1.5 sm:px-2.5 py-0.5 sm:py-1 bg-red">{p.category}</span>
-              </div>
-              <div style={{ fontSize: 0, lineHeight: 0, margin: 0, padding: 0 }}>
+              </span>
+              <span style={{ fontSize: 0, lineHeight: 0, margin: 0, padding: 0, display: "block" }}>
                 {company ? (
                   <img src={company.logo} alt={company.name} className="hidden sm:block" style={{ width: "100%", height: "auto", display: "block", margin: 0, padding: 0, border: "none" }} />
                 ) : (
-                  <div className="hidden sm:flex items-center justify-center bg-white" style={{ height: "120px" }}>
+                  <span className="hidden sm:flex items-center justify-center bg-white" style={{ height: "120px" }}>
                     <span style={{ fontSize: "36px", fontWeight: "bold", color: "#0A0A0A", lineHeight: "normal" }}>{p.companyName.charAt(0)}</span>
-                  </div>
+                  </span>
                 )}
-              </div>
-              <div className="bg-white px-2.5 py-2 sm:px-4 sm:py-3">
+              </span>
+              <span className="bg-white px-2.5 py-2 sm:px-4 sm:py-3 block">
                 {p.keywords && p.keywords.length > 0 ? (
-                  <div className="flex flex-wrap gap-x-1.5 sm:gap-x-3 gap-y-0.5 mb-1 sm:mb-2">
+                  <span className="flex flex-wrap gap-x-1.5 sm:gap-x-3 gap-y-0.5 mb-1 sm:mb-2">
                     {p.keywords.map((kw, ki) => (
                       <span key={ki} className="text-red text-[14px] sm:text-[24px] font-black leading-snug">{kw}</span>
                     ))}
-                  </div>
+                  </span>
                 ) : (
-                  <h3 className="font-black text-red text-[14px] sm:text-[24px] mb-1 sm:mb-2 leading-snug line-clamp-2">{p.title}</h3>
+                  <span className="font-black text-red text-[14px] sm:text-[24px] mb-1 sm:mb-2 leading-snug line-clamp-2 block">{p.title}</span>
                 )}
-                <p className="text-[11px] sm:text-[16px] text-black font-extrabold leading-relaxed line-clamp-2 mb-1 sm:mb-2">{p.content}</p>
-                <div className="flex items-center justify-between mb-1.5 sm:mb-3">
+                <span className="text-[11px] sm:text-[16px] text-black font-extrabold leading-relaxed line-clamp-2 mb-1 sm:mb-2 block">{p.content}</span>
+                <span className="flex items-center justify-between mb-1.5 sm:mb-3">
                   <span className="text-[10px] sm:text-[13px] font-bold text-white">{p.companyName}</span>
-                  <div className="flex items-center gap-1">
+                  <span className="flex items-center gap-1">
                     <span className="text-[13px] sm:text-[18px] font-bold text-white tabular-nums">{p.responses}</span>
                     <span className="text-[8px] sm:text-[10px] text-black-300 uppercase tracking-wide font-bold">反応</span>
-                  </div>
-                </div>
+                  </span>
+                </span>
                 {p.companyId === "1" ? (
                   <button
                     onClick={(e) => {
@@ -566,7 +566,7 @@ function BoardContent() {
                     お問い合わせ
                   </button>
                 )}
-              </div>
+              </span>
             </Link>
           );
         })}

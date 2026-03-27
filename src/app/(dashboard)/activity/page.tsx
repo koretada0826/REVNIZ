@@ -147,18 +147,18 @@ export default function ActivityPage() {
                   border: "1px solid rgba(223,182,100,0.4)",
                 }}
               >
-                <div className="p-3 sm:p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-1.5">
+                <span className="p-3 sm:p-4 block">
+                  <span className="flex items-center justify-between mb-2">
+                    <span className="flex items-center gap-1.5">
                       <Icon className="w-3.5 h-3.5" style={{ color: "#dfb664" }} />
                       <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider" style={{ color: "#dfb664" }}>
                         {card.title}
                       </span>
-                    </div>
+                    </span>
                     <ArrowUpRight className="w-3 h-3 text-white/30 group-hover:text-white/70 transition-colors" />
-                  </div>
+                  </span>
 
-                  <div className="flex items-end gap-1 mb-0.5">
+                  <span className="flex items-end gap-1 mb-0.5">
                     <span
                       className="text-[28px] sm:text-[32px] font-black text-white leading-none tracking-tight"
                       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -168,16 +168,16 @@ export default function ActivityPage() {
                     <span className="text-[12px] sm:text-[14px] font-bold mb-0.5" style={{ color: "rgba(223,182,100,0.7)" }}>
                       {card.unit}
                     </span>
-                  </div>
+                  </span>
 
-                  <span className="text-[11px] sm:text-[12px] font-bold" style={{ color: "#22c55e" }}>
+                  <span className="text-[11px] sm:text-[12px] font-bold block" style={{ color: "#22c55e" }}>
                     {card.change} <span className="text-white/40 font-normal text-[10px]">{card.changePeriod}</span>
                   </span>
 
-                  <div className="mt-2 hidden sm:block">
+                  <span className="mt-2 hidden sm:block">
                     <SparkChart data={card.sparkline} color="#dfb664" />
-                  </div>
-                </div>
+                  </span>
+                </span>
               </Link>
             );
           })}

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard, Building2, MessageSquare, Calendar, Trophy,
-  UserCircle, Megaphone, TrendingUp, Mail, ChevronRight, Gift, BarChart3,
+  LayoutDashboard, Building2, MessageSquare, Calendar,
+  UserCircle, Megaphone, ChevronRight, Gift,
 } from "lucide-react";
 
 interface SubSection {
@@ -25,87 +25,63 @@ const mainItems: NavItem[] = [
   {
     name: "ダッシュボード", href: "/", icon: LayoutDashboard,
     sections: [
-      { label: "アクティビティ", href: "/#activity" },
       { label: "スポンサー企業様", href: "/#sponsors" },
-      { label: "成功事例ピックアップ", href: "/#cases-pickup" },
+      { label: "成功事例", href: "/#cases-pickup" },
       { label: "いま注目の相談", href: "/#hot-consultations" },
-      { label: "今週の注目イベント", href: "/#weekly-events" },
-      { label: "実績", href: "/#results" },
-      { label: "新着相談", href: "/#new-consultations" },
       { label: "近日のイベント", href: "/#upcoming-events" },
       { label: "お知らせ", href: "/#news" },
     ],
   },
   {
-    name: "アクティビティ", href: "/activity", icon: BarChart3,
-    sections: [
-      { label: "統計サマリー" },
-      { label: "内訳グラフ" },
-      { label: "月別推移" },
-      { label: "最近のアクティビティ" },
-    ],
-  },
-  {
     name: "スポンサー一覧", href: "/companies", icon: Building2,
     sections: [
-      { label: "レブナイズ35" },
-      { label: "オフィシャルスポンサー" },
-      { label: "ウェアサプライヤー" },
-      { label: "アカデミースポンサー" },
-      { label: "チケットパートナー" },
+      { label: "レブナイズ35", href: "/companies" },
+      { label: "オフィシャルスポンサー", href: "/companies" },
+      { label: "インタビュー記事", href: "/companies" },
     ],
   },
   {
-    name: "相談掲示板", href: "/board", icon: MessageSquare, badge: 4,
+    name: "レブナイズ情報", href: "/news", icon: Megaphone,
     sections: [
-      { label: "新着相談一覧" },
-      { label: "自社の相談", href: "/board?my=true" },
-      { label: "カテゴリ検索" },
+      { label: "X投稿（ブースター）", href: "/news" },
+      { label: "成功事例", href: "/cases" },
+      { label: "コラム", href: "/news" },
+    ],
+  },
+  {
+    name: "限定プラン", href: "/benefits", icon: Gift,
+    sections: [
+      { label: "スポンサー限定プラン一覧", href: "/benefits" },
     ],
   },
   {
     name: "イベント", href: "/events", icon: Calendar, badge: 2,
     sections: [
-      { label: "Next Event" },
-      { label: "Upcoming Events" },
+      { label: "懇親会・OFF会", href: "/events" },
+      { label: "ホームゲーム", href: "/events" },
     ],
   },
   {
-    name: "スポンサー特典", href: "/benefits", icon: Gift,
+    name: "掲示板", href: "/board", icon: MessageSquare, badge: 4,
     sections: [
-      { label: "プラン一覧" },
-      { label: "プラン比較" },
+      { label: "新着投稿", href: "/board" },
+      { label: "紹介の呼びかけ", href: "/board" },
     ],
   },
 ];
 
 const subItems: NavItem[] = [
   {
-    name: "成功事例", href: "/cases", icon: Trophy,
+    name: "友達紹介", href: "/referral", icon: UserCircle,
     sections: [
-      { label: "ピックアップ事例" },
-      { label: "その他の事例" },
-      { label: "あなたの事例を募集" },
-    ],
-  },
-  {
-    name: "メッセージ", href: "/messages", icon: Mail, badge: 3,
-  },
-  {
-    name: "お知らせ", href: "/news", icon: Megaphone,
-    sections: [
-      { label: "通知" },
-      { label: "運営からのお知らせ" },
+      { label: "紹介フォーム", href: "/referral" },
     ],
   },
   {
     name: "プロフィール", href: "/profile", icon: UserCircle,
     sections: [
-      { label: "基本情報" },
-      { label: "企業紹介" },
-      { label: "提供できること" },
-      { label: "探していること" },
-      { label: "担当者情報" },
+      { label: "基本情報", href: "/profile" },
+      { label: "企業紹介", href: "/profile" },
     ],
   },
 ];
@@ -114,6 +90,25 @@ function NavLink({ item, path }: { item: NavItem; path: string }) {
   const active = item.href === "/" ? path === "/" : path.startsWith(item.href);
   const [open, setOpen] = useState(false);
   const hasSections = item.sections && item.sections.length > 0;
+  const router = useRouter();
+
+  const handleSectionClick = (href: string) => {
+    const hasAnchor = href.includes("#");
+    if (!hasAnchor) {
+      router.push(href);
+      return;
+    }
+
+    const [pagePath, anchor] = href.split("#");
+    const isCurrentPage = pagePath === "" || pagePath === path;
+
+    if (isCurrentPage) {
+      const el = document.getElementById(anchor);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      router.push(href);
+    }
+  };
 
   return (
     <div
@@ -163,32 +158,16 @@ function NavLink({ item, path }: { item: NavItem; path: string }) {
           }}
         >
           <div className="pl-8 pr-2 py-1 space-y-0.5">
-            {item.sections!.map((sec) => {
-              const anchor = sec.href?.includes("#") ? sec.href.split("#")[1] : null;
-              return anchor ? (
-                <button
-                  key={sec.label}
-                  type="button"
-                  onClick={() => {
-                    const el = document.getElementById(anchor);
-                    if (el) {
-                      el.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                  }}
-                  className="block w-full text-left px-2 py-1.5 text-[11px] text-black-400 hover:text-white hover:bg-white/10 rounded transition-colors leading-snug cursor-pointer"
-                >
-                  {sec.label}
-                </button>
-              ) : (
-                <Link
-                  key={sec.label}
-                  href={sec.href || item.href}
-                  className="block px-2 py-1.5 text-[11px] text-black-400 hover:text-white hover:bg-white/10 rounded transition-colors leading-snug"
-                >
-                  {sec.label}
-                </Link>
-              );
-            })}
+            {item.sections!.map((sec) => (
+              <button
+                key={sec.label}
+                type="button"
+                onClick={() => handleSectionClick(sec.href || item.href)}
+                className="block w-full text-left px-2 py-1.5 text-[11px] text-black-400 hover:text-white hover:bg-white/10 rounded transition-colors leading-snug cursor-pointer"
+              >
+                {sec.label}
+              </button>
+            ))}
           </div>
         </div>
       )}
@@ -223,26 +202,6 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Profile completion */}
-      <div className="p-3 border-t border-line">
-        <div className="rounded-md bg-white/5 p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="w-3.5 h-3.5 text-black-400" />
-            <span className="text-[10px] font-bold text-black-400 tracking-[0.1em] uppercase">
-              プロフィール充足率
-            </span>
-          </div>
-          <div className="flex items-end justify-between mb-2">
-            <span className="text-[22px] font-bold text-white leading-none tracking-tight">
-              75<span className="text-[13px] text-black-400">%</span>
-            </span>
-          </div>
-          <div className="progress-bar">
-            <div className="progress-fill bg-black-900 w-3/4" />
-          </div>
-          <p className="text-[10px] text-black-400 mt-2">あと25%で完了</p>
-        </div>
-      </div>
     </aside>
   );
 }

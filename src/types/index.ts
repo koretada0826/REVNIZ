@@ -67,13 +67,16 @@ export interface MeetingRequest {
 export interface SuccessCase {
   id: string;
   title: string;
-  companies: string[];
-  howTheyMet: string;
-  consultation: string;
-  result: string;
-  image?: string;
+  company: string;
+  logo: string;
+  metric: string;
+  metricLabel: string;
+  description: string;
+  detail: string;
   comment: string;
   category: string;
+  date: string;
+  image?: string;
 }
 
 export interface NewsItem {

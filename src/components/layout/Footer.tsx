@@ -33,7 +33,7 @@ export default function Footer() {
 
           {/* SNS */}
           <div className="flex items-center gap-2">
-            <a href="https://x.com/rebnise" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
+            <a href="https://x.com/kg_rebnise" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
               <Twitter className="w-4 h-4 text-white/60" />
             </a>
             <a href="https://www.instagram.com/rebnise_official/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">

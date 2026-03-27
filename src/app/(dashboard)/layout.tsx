@@ -1,6 +1,7 @@
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
+import BottomNav from "@/components/layout/BottomNav";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import { Toaster } from "sonner";
 
@@ -11,10 +12,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex">
         <Sidebar />
         <main className="flex-1 min-h-[calc(100vh-56px)] overflow-x-hidden min-w-0">
-          <div className="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-hidden">{children}</div>
+          <div className="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 xl:pb-8 overflow-x-hidden">{children}</div>
         </main>
       </div>
       <Footer />
+      <BottomNav />
       <ScrollToTop />
       <Toaster position="top-right" toastOptions={{ className: "font-sans text-[14px]" }} />
     </div>

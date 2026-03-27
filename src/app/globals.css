@@ -12,15 +12,28 @@
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
-  body { @apply bg-bg text-white; overflow-x: hidden; }
+  body { @apply bg-bg text-white text-[15px] font-medium; overflow-x: hidden; }
   ::selection { background: rgba(255,255,255,0.15); }
   * { border-color: #333; }
 }
 
+/* ============ REACT-TWEET DARK THEME ============ */
+[data-theme="dark"] {
+  --tweet-font-family: 'Space Grotesk', 'Noto Sans JP', system-ui, sans-serif;
+  --tweet-bg-color: #1e1e1e;
+  --tweet-font-color: #fff;
+  --tweet-font-color-secondary: #8b8b8b;
+  --tweet-border: 1px solid #333;
+  --tweet-color-blue-secondary-hover: rgba(29,155,240,0.1);
+  --tweet-actions-font-weight: 500;
+  --tweet-replies-font-weight: 500;
+}
+[data-theme="dark"] .react-tweet-theme { margin: 0 !important; }
+
 /* ============ CARDS ============ */
 @layer components {
   .card {
-    @apply bg-surface rounded-lg border border-line p-6;
+    @apply bg-surface rounded-lg border border-line p-4 sm:p-6;
   }
   .card-hover {
     @apply transition-all duration-200;
@@ -35,17 +48,17 @@
     @apply bg-black-900 rounded-lg text-white overflow-hidden;
   }
   .card-red {
-    @apply bg-surface rounded-lg border border-red/30 p-6 relative overflow-hidden;
+    @apply bg-surface rounded-lg border border-red/30 p-4 sm:p-6 relative overflow-hidden;
   }
   .card-red::before {
     content: '';
     @apply absolute top-0 left-0 w-full h-[3px] bg-red;
   }
   .card-elevated {
-    @apply bg-surface rounded-lg border border-line p-6;
+    @apply bg-surface rounded-lg border border-line p-4 sm:p-6;
   }
   .card-interactive {
-    @apply bg-surface rounded-lg border border-line p-6 transition-all duration-200 cursor-pointer;
+    @apply bg-surface rounded-lg border border-line p-4 sm:p-6 transition-all duration-200 cursor-pointer;
   }
   .card-interactive:hover {
     @apply border-line-dark;
@@ -58,7 +71,7 @@
 /* ============ BUTTONS ============ */
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center font-semibold transition-colors duration-150
+    @apply inline-flex items-center justify-center font-bold transition-colors duration-150
            select-none cursor-pointer rounded-md
            focus:outline-none focus-visible:ring-2 focus-visible:ring-black-200 focus-visible:ring-offset-2;
   }
@@ -107,12 +120,12 @@
 /* ============ INPUTS ============ */
 @layer components {
   .input {
-    @apply w-full rounded-md px-4 py-3 bg-surface border border-line text-white text-[14px]
+    @apply w-full rounded-md px-4 py-3 bg-surface border border-line text-white text-[15px] font-medium
            placeholder:text-black-400
            focus:outline-none focus:border-line-dark focus:ring-1 focus:ring-black-600
            transition-colors duration-150;
   }
-  .input-lg { @apply input py-4 text-[15px]; }
+  .input-lg { @apply input py-4 text-[16px]; }
 }
 
 /* ============ BADGES ============ */
@@ -139,20 +152,20 @@
 
 /* ============ TYPOGRAPHY ============ */
 @layer components {
-  .h1 { font-size: 2rem; line-height: 1.1; letter-spacing: -0.03em; @apply font-black text-white; }
-  .h2 { font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.02em; @apply font-extrabold text-white; }
-  .h3 { font-size: 1.25rem; line-height: 1.3; letter-spacing: -0.01em; @apply font-bold text-white; }
+  .h1 { font-size: 2.25rem; line-height: 1.1; letter-spacing: -0.03em; @apply font-black text-white; }
+  .h2 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; @apply font-extrabold text-white; }
+  .h3 { font-size: 1.375rem; line-height: 1.3; letter-spacing: -0.01em; @apply font-bold text-white; }
 
   @media (min-width: 640px) {
-    .h1 { font-size: 3.2rem; }
-    .h2 { font-size: 2.2rem; }
-    .h3 { font-size: 1.5rem; }
+    .h1 { font-size: 3.5rem; }
+    .h2 { font-size: 2.5rem; }
+    .h3 { font-size: 1.75rem; }
   }
-  .label { @apply text-[11px] font-bold tracking-[0.12em] uppercase text-black-400 block mb-2; }
-  .label-muted { @apply text-[11px] font-bold tracking-[0.1em] uppercase text-black-400 block mb-2; }
-  .body { @apply text-[15px] text-black-300 leading-relaxed; }
-  .body-sm { @apply text-[14px] text-black-400 leading-relaxed; }
-  .caption { @apply text-[12px] text-black-400; }
+  .label { @apply text-[12px] font-extrabold tracking-[0.12em] uppercase text-black-400 block mb-2; }
+  .label-muted { @apply text-[12px] font-bold tracking-[0.1em] uppercase text-black-400 block mb-2; }
+  .body { @apply text-[16px] font-medium text-black-300 leading-relaxed; }
+  .body-sm { @apply text-[15px] font-medium text-black-400 leading-relaxed; }
+  .caption { @apply text-[13px] font-medium text-black-400; }
 }
 
 /* ============ TAGS ============ */
@@ -170,17 +183,17 @@
 /* ============ SECTION HEADER ============ */
 @layer components {
   .section-header {
-    @apply flex items-end justify-between mb-4 sm:mb-6;
+    @apply flex items-end justify-between mb-3 sm:mb-6;
   }
 }
 
 /* ============ STAT CARD ============ */
 @layer components {
   .stat-value {
-    @apply text-[36px] font-bold text-white tracking-tight leading-none tabular-nums;
+    @apply text-[40px] font-extrabold text-white tracking-tight leading-none tabular-nums;
   }
   .stat-label {
-    @apply text-[13px] text-black-300 font-medium mt-2;
+    @apply text-[14px] text-black-300 font-semibold mt-2;
   }
 }
 

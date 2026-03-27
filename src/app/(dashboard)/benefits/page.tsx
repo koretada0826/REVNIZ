@@ -1,322 +1,218 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { ChevronDown, Gift, Star, ArrowUpDown, Scissors, Clock } from "lucide-react";
 import FadeIn from "@/components/motion/FadeIn";
 
-/* ────────────────────────────────────────
-   Benefit image cards (shared across tiers)
-   Row 1 — common 6 items
-   ──────────────────────────────────────── */
-const row1 = [
-  { img: "/images/benefits/team-logo.jpg",    label: "チームロゴ使用権" },
-  { img: "/images/benefits/naming-rights.jpg", label: "スポンサー呼称権" },
-  { img: "/images/benefits/hp-listing.jpg",    label: "HP法人名記載" },
-  { img: "/images/benefits/venue-signage.jpg", label: "試合会場看板掲出" },
-  { img: "/images/benefits/partner-news.jpg",  label: "パートナー通信" },
-  { img: "/images/benefits/ticket.jpg",        label: "ご優待券" },
-];
+import { limitedPlans } from "@/data/benefits";
 
-/* Row 2 — additional benefits for スタンダード以上 */
-const row2 = [
-  { img: "/images/benefits/naming-rights.jpg", label: "Tip off パーティー" },
-  { img: "/images/benefits/naming-rights.jpg", label: "シーズン報告会" },
-  { img: "/images/benefits/venue-signage.jpg", label: "会場バナーフラッグ掲出" },
-  { img: null as string | null,                label: "山崎主催飲み会参加券＋顧問権",
-    text: { line1: "鹿児島レブナイズオーナー企業", line2: "株式会社Wiz", line3: "代表取締役CEO　山崎 俊" } },
-];
+const allCategories = ["すべて", ...Array.from(new Set(limitedPlans.map((p) => p.category)))];
 
-/* Text-only extra benefits for シルバー */
-const silverExtras = [
-  ["ホームゲームチラシ配布", "コートサイド広告看板掲出"],
-  ["地元放送局 / TVCM※2", "SNSコラボ（年1回）"],
-  ["冠大会開催会場（1試合）", "ウェア広告 / 企業ロゴ"],
-  ["冠大会時配布物※3"],
-];
-
-/* ────────────────────────────────────────
-   Tier definitions
-   ──────────────────────────────────────── */
-interface Tier {
-  id: string;
-  name: string;
-  tabBg: string;
-  tabText: string;
-  headerBg: string;
-  price: string;
-  ticketNote: string;
-  row1Included: boolean[];
-  hasRow2: boolean;
-  hasSilverExtras: boolean;
-  notes: string[];
+function extractDiscountRate(discount: string): number {
+  const match = discount.match(/(\d+)%/);
+  return match ? parseInt(match[1], 10) : 0;
 }
 
-const tiers: Tier[] = [
-  {
-    id: "ticket-p",
-    name: "チケットP",
-    tabBg: "#333",
-    tabText: "#fff",
-    headerBg: "#3D5A80",
-    price: "A ¥120,000 / B ¥240,000 / C ¥360,000※1",
-    ticketNote: "※2",
-    row1Included: [true, true, true, false, true, true],
-    hasRow2: false,
-    hasSilverExtras: false,
-    notes: [
-      "※1 チケットP「C」には「tip off パーティー」「シーズン報告会」にご参加いただけます。",
-      "※2 チケットパートナーのご優待券は「A」チケット15枚、「B」30枚、「C」45枚ご利用可能です。",
-    ],
-  },
-  {
-    id: "light",
-    name: "ライト",
-    tabBg: "#3D5A80",
-    tabText: "#fff",
-    headerBg: "#3D5A80",
-    price: "¥600,000",
-    ticketNote: "",
-    row1Included: [true, true, true, false, true, true],
-    hasRow2: false,
-    hasSilverExtras: false,
-    notes: [],
-  },
-  {
-    id: "standard",
-    name: "スタンダード",
-    tabBg: "#8B0000",
-    tabText: "#fff",
-    headerBg: "#8B0000",
-    price: "¥1,200,000",
-    ticketNote: "(1F 20枚)※1",
-    row1Included: [true, true, true, true, true, true],
-    hasRow2: true,
-    hasSilverExtras: false,
-    notes: [
-      "※1 プラン内容はカスタマイズできるので、枚数増減、もしくは別の特典に変更できます",
-    ],
-  },
-  {
-    id: "bronze",
-    name: "ブロンズ",
-    tabBg: "linear-gradient(135deg, #8B4513 0%, #CD7F32 50%, #8B4513 100%)",
-    tabText: "#fff",
-    headerBg: "linear-gradient(135deg, #8B4513 0%, #CD7F32 50%, #8B4513 100%)",
-    price: "¥3,000,000",
-    ticketNote: "(1F 50枚)※1",
-    row1Included: [true, true, true, true, true, true],
-    hasRow2: true,
-    hasSilverExtras: false,
-    notes: [
-      "※1 プラン内容はカスタマイズできるので、枚数増減、もしくは別の特典に変更できます",
-    ],
-  },
-  {
-    id: "silver",
-    name: "シルバー",
-    tabBg: "linear-gradient(135deg, #888 0%, #ccc 50%, #888 100%)",
-    tabText: "#000",
-    headerBg: "linear-gradient(135deg, #888 0%, #ccc 50%, #888 100%)",
-    price: "¥5,000,000",
-    ticketNote: "(1F 50枚)※1",
-    row1Included: [true, true, true, true, true, true],
-    hasRow2: true,
-    hasSilverExtras: true,
-    notes: [
-      "※1 プラン内容はカスタマイズできるので、枚数増減、もしくは別の特典に変更できます",
-      "※2※3 内容はご相談ください",
-    ],
-  },
-];
+const sortOptions = [
+  { key: "default", label: "おすすめ順" },
+  { key: "discount-desc", label: "割引率が高い順" },
+  { key: "new", label: "新着順" },
+  { key: "expiry", label: "期限が近い順" },
+] as const;
+type SortKey = typeof sortOptions[number]["key"];
 
-/* ────────────────────────────────────────
-   Benefit card component
-   ──────────────────────────────────────── */
-function BenefitCard({
-  img,
-  label,
-  included = true,
-  text,
-}: {
-  img: string | null;
-  label: string;
-  included?: boolean;
-  text?: { line1: string; line2: string; line3: string };
-}) {
+/* ミシン目SVG */
+function CouponDivider() {
   return (
-    <div style={{ opacity: included ? 1 : 0.2 }}>
-      <div
-        className="aspect-[4/3] overflow-hidden"
-        style={{ background: text ? "#f5f5f5" : "#222", border: "1px solid #444" }}
-      >
-        {text ? (
-          <div className="w-full h-full flex flex-col items-center justify-center px-2 text-center">
-            <p className="text-[10px] text-gray-500 mb-1">{text.line1}</p>
-            <p className="text-[18px] font-black text-black leading-tight">{text.line2}</p>
-            <p className="text-[11px] text-gray-600 mt-1">{text.line3}</p>
-          </div>
-        ) : img ? (
-          <img src={img} alt={label} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-white/30 text-[11px]">NO IMAGE</span>
-          </div>
-        )}
-      </div>
-      <div
-        className="text-center py-2 text-[12px] sm:text-[13px] font-bold text-white"
-        style={{ background: "#333" }}
-      >
-        {label}
-      </div>
+    <div className="absolute top-0 bottom-0 flex flex-col items-center justify-center" style={{ right: "100px", width: "20px" }}>
+      {Array.from({ length: 16 }).map((_, i) => (
+        <div key={i} className="w-[2px] rounded-full" style={{ height: "8px", marginBottom: "6px", backgroundColor: "rgba(255,255,255,0.15)" }} />
+      ))}
+      {/* 上下の半円切り抜き */}
+      <div className="absolute -top-[10px] w-5 h-5 rounded-full" style={{ backgroundColor: "#000" }} />
+      <div className="absolute -bottom-[10px] w-5 h-5 rounded-full" style={{ backgroundColor: "#000" }} />
     </div>
   );
 }
 
-/* Text-only benefit block */
-function TextBenefitCard({ label }: { label: string }) {
-  return (
-    <div
-      className="flex items-center justify-center text-center py-4 px-2 text-[12px] sm:text-[13px] font-bold text-white"
-      style={{ background: "#333", border: "1px solid #444", minHeight: "48px" }}
-    >
-      {label}
-    </div>
-  );
-}
-
-/* ────────────────────────────────────────
-   Page
-   ──────────────────────────────────────── */
 export default function BenefitsPage() {
-  const [, setActiveTab] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("すべて");
+  const [sortKey, setSortKey] = useState<SortKey>("default");
+  const [sortOpen, setSortOpen] = useState(false);
+
+  const filtered = selectedCategory === "すべて"
+    ? [...limitedPlans]
+    : limitedPlans.filter((p) => p.category === selectedCategory);
+
+  const sorted = filtered.sort((a, b) => {
+    switch (sortKey) {
+      case "discount-desc":
+        return extractDiscountRate(b.discount) - extractDiscountRate(a.discount);
+      case "new":
+        return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0) || b.id - a.id;
+      case "expiry":
+        return new Date(a.validUntil).getTime() - new Date(b.validUntil).getTime();
+      default:
+        return a.id - b.id;
+    }
+  });
 
   return (
-    <div className="space-y-0">
-      {/* Red accent line */}
-      <div className="h-[4px] -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 mb-6 sm:mb-8" style={{ background: "#c00" }} />
-
-      {/* Header — white background like original */}
-      <FadeIn>
-        <div style={{ background: "#fff", margin: "0 -16px", padding: "24px 16px 20px" }} className="sm:!mx-[-24px] sm:!px-[40px] sm:!py-[40px] sm:!pb-[32px]">
-          <h1>
-            <span
-              className="text-[1.5rem] sm:text-[3.8rem] font-black italic tracking-tight block sm:inline"
-              style={{ fontFamily: "'Space Grotesk', 'Noto Sans JP', sans-serif", color: "#000" }}
-            >
-              SPONSORSHIP
-            </span>
-            <span className="text-[0.85rem] sm:text-[1.3rem] font-bold sm:ml-4 block sm:inline mt-1 sm:mt-0" style={{ color: "#555" }}>
-              スポンサー金額
-            </span>
-          </h1>
+    <FadeIn>
+      <div className="space-y-8">
+        {/* Header */}
+        <div>
+          <p className="label">Exclusive Plans</p>
+          <h1 className="h1">スポンサー限定プラン</h1>
+          <p className="body mt-3">レブナイズスポンサー企業様だけがご利用いただけるお得な限定プランです</p>
         </div>
-      </FadeIn>
 
-      {/* Tab Navigation */}
-      <FadeIn delay={0.05}>
-        <div className="flex gap-[2px] mb-10">
-          {tiers.map((tier, idx) => (
+        {/* サマリー */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#dfb664" }}>{limitedPlans.length}</p>
+            <p className="text-[12px] font-bold text-black-400 mt-1">提供プラン数</p>
+          </div>
+          <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#E63350" }}>50%</p>
+            <p className="text-[12px] font-bold text-black-400 mt-1">最大割引率</p>
+          </div>
+          <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#dfb664" }}>{limitedPlans.filter(p => p.isNew).length}</p>
+            <p className="text-[12px] font-bold text-black-400 mt-1">新着プラン</p>
+          </div>
+        </div>
+
+        {/* フィルター + ソート */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {allCategories.map((cat) => (
             <button
-              key={tier.id}
-              type="button"
-              onClick={() => {
-                setActiveTab(idx);
-                const el = document.getElementById(`plan-${tier.id}`);
-                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              className="flex-1 py-5 text-center font-bold text-[15px] sm:text-[20px] tracking-wide cursor-pointer transition-opacity hover:opacity-90"
-              style={{ background: tier.tabBg, color: tier.tabText }}
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`text-[14px] font-extrabold px-4 py-2 rounded-full transition-colors cursor-pointer ${
+                selectedCategory === cat
+                  ? "bg-white text-black"
+                  : "bg-white/15 text-white hover:bg-white/25"
+              }`}
             >
-              {tier.name}
+              {cat}
             </button>
           ))}
-        </div>
-      </FadeIn>
-
-      {/* All Plans */}
-      {tiers.map((tier, idx) => {
-        const ticketLabel = tier.ticketNote
-          ? `ご優待券 ${tier.ticketNote}`
-          : "ご優待券";
-
-        return (
-          <FadeIn key={tier.id} delay={idx * 0.06}>
-            <section
-              id={`plan-${tier.id}`}
-              className="mb-10 rounded-sm overflow-hidden"
-              style={{ background: "#1a1a1a" }}
+          <div className="relative ml-auto">
+            <button
+              onClick={() => setSortOpen(!sortOpen)}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors cursor-pointer"
             >
-              {/* Plan Header */}
-              <div className="py-8 px-6 text-center" style={{ background: tier.headerBg }}>
-                <span
-                  className="text-[2rem] sm:text-[2.6rem] font-black italic text-white mr-4"
-                  style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-                >
-                  {tier.name}
-                </span>
-                <span
-                  className="text-[1.4rem] sm:text-[2rem] font-bold tracking-wide"
-                  style={{ color: tier.tabText }}
-                >
-                  {tier.price}
-                </span>
+              <ArrowUpDown className="w-3.5 h-3.5" />
+              <span className="text-[14px] font-extrabold">{sortOptions.find((o) => o.key === sortKey)?.label}</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${sortOpen ? "rotate-180" : ""}`} />
+            </button>
+            {sortOpen && (
+              <div className="absolute right-0 top-full mt-2 w-48 rounded-lg border border-line py-1 z-50 shadow-lg" style={{ backgroundColor: "#1e1e1e" }}>
+                {sortOptions.map((opt) => (
+                  <button
+                    key={opt.key}
+                    onClick={() => { setSortKey(opt.key); setSortOpen(false); }}
+                    className={`w-full text-left px-4 py-2.5 text-[13px] font-bold transition-colors cursor-pointer ${
+                      sortKey === opt.key ? "text-white bg-white/10" : "text-black-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
               </div>
+            )}
+          </div>
+        </div>
 
-              {/* Dashed separator */}
-              <div className="mx-6 sm:mx-12 border-t-[3px] border-dashed" style={{ borderColor: "#555" }} />
+        {/* クーポン一覧 */}
+        <div className="space-y-4">
+          {sorted.map((plan) => (
+            <Link
+              href={`/benefits/${plan.id}`}
+              key={plan.id}
+              className="relative rounded-xl overflow-hidden group cursor-pointer hover:scale-[1.01] transition-transform duration-300 block"
+              style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}
+            >
+              {/* ミシン目 */}
+              <CouponDivider />
 
-              {/* Row 1 — common benefits */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 px-6 sm:px-12 py-8">
-                {row1.map((b, i) => {
-                  const isTicket = i === 5;
-                  return (
-                    <BenefitCard
-                      key={b.label}
-                      img={b.img}
-                      label={isTicket ? ticketLabel : b.label}
-                      included={tier.row1Included[i]}
-                    />
-                  );
-                })}
+              <div className="flex">
+                {/* 左側: メイン情報 */}
+                <div className="flex-1 p-3 sm:p-6" style={{ marginRight: "100px" }}>
+                  <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-md overflow-hidden shrink-0 bg-white">
+                      <img src={plan.logo} alt={plan.company} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <p className="text-[12px] sm:text-[15px] font-bold" style={{ color: "#dfb664" }}>{plan.company}</p>
+                        {plan.isNew && (
+                          <span className="text-[8px] sm:text-[10px] font-bold text-white px-1.5 sm:px-2 py-0.5 rounded-full" style={{ backgroundColor: "#C8102E" }}>NEW</span>
+                        )}
+                      </div>
+                      <p className="text-[10px] sm:text-[12px] text-black-500">{plan.category}</p>
+                    </div>
+                  </div>
+
+                  <h3 className="text-[13px] sm:text-[19px] font-black text-white leading-snug mb-1 sm:mb-2 group-hover:text-red transition-colors line-clamp-2">
+                    {plan.title}
+                  </h3>
+                  <p className="hidden sm:block text-[14px] text-black-400 leading-relaxed line-clamp-2 mb-3">
+                    {plan.description}
+                  </p>
+
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[12px] text-black-500">
+                    <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                    <span>{plan.validUntil}</span>
+                  </div>
+                </div>
+
+                {/* 右側: 割引チケット部分 */}
+                <div
+                  className="absolute right-0 top-0 bottom-0 flex flex-col items-center justify-center text-center"
+                  style={{ width: "100px", backgroundColor: "#C8102E" }}
+                >
+                  <Scissors className="w-3 h-3 sm:w-4 sm:h-4 text-white/40 absolute top-2 left-1.5 sm:top-3 sm:left-2 rotate-90" />
+                  <p className="text-[9px] sm:text-[11px] font-bold text-white/60 tracking-wider uppercase mb-0.5 sm:mb-1">COUPON</p>
+                  <p className="text-[18px] sm:text-[32px] font-black text-white leading-none px-1.5 sm:px-2">
+                    {plan.discount}
+                  </p>
+                  <div className="w-6 sm:w-10 h-[2px] bg-white/30 rounded-full my-1 sm:my-2" />
+                  <p className="text-[9px] sm:text-[11px] font-bold text-white/70">限定</p>
+                  <Link
+                    href={`/benefits/${plan.id}`}
+                    className="mt-1.5 sm:mt-3 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[12px] font-bold bg-white text-[#C8102E] hover:bg-white/90 transition-colors inline-block"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    使う
+                  </Link>
+                </div>
               </div>
+            </Link>
+          ))}
+        </div>
 
-              {/* Row 2 — additional benefits (スタンダード以上) */}
-              {tier.hasRow2 && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 px-6 sm:px-12 pb-4">
-                  {row2.map((b) => (
-                    <BenefitCard
-                      key={b.label}
-                      img={b.img}
-                      label={b.label}
-                      text={b.text}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* Silver extras — text-only benefit blocks */}
-              {tier.hasSilverExtras && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 px-6 sm:px-12 pb-4">
-                  {silverExtras.flat().map((label) => (
-                    <TextBenefitCard key={label} label={label} />
-                  ))}
-                </div>
-              )}
-
-              {/* Notes */}
-              {tier.notes.length > 0 && (
-                <div className="px-6 sm:px-12 pb-8 space-y-1">
-                  {tier.notes.map((note) => (
-                    <p key={note} className="text-[12px] font-medium" style={{ color: "#c00" }}>
-                      {note}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </section>
-          </FadeIn>
-        );
-      })}
-    </div>
+        {/* CTA */}
+        <div
+          className="rounded-xl p-8 text-center border"
+          style={{ backgroundColor: "rgba(223,182,100,0.06)", borderColor: "rgba(223,182,100,0.2)" }}
+        >
+          <Star className="w-8 h-8 mx-auto mb-3" style={{ color: "#dfb664" }} />
+          <h3 className="text-[22px] font-bold text-white mb-2">限定プランを掲載しませんか？</h3>
+          <p className="text-[15px] text-black-400 mb-5">
+            スポンサー企業様同士のビジネスを活性化する限定プランを募集しています。<br />
+            お気軽に運営までご相談ください。
+          </p>
+          <button
+            className="btn-primary px-8 py-3"
+            onClick={() => window.open("mailto:sponsor@rebnise.jp?subject=限定プラン掲載希望", "_blank")}
+          >
+            掲載を相談する
+          </button>
+        </div>
+      </div>
+    </FadeIn>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Save, Upload, Plus, X, Check, MessageSquare, Trash2, Edit3, ChevronDown, Eye, Edit2, MapPin, Globe, Briefcase, Calendar, ExternalLink, Send, Users, Handshake, Shield, TrendingUp } from "lucide-react";
+import { Save, Upload, Plus, X as XIcon, Check, MessageSquare, Trash2, Edit3, ChevronDown, Eye, Edit2, MapPin, Globe, Briefcase, Calendar, ExternalLink, Send, Users, Handshake, Shield, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import FadeIn from "@/components/motion/FadeIn";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
@@ -15,7 +15,7 @@ function Accordion({ title, defaultOpen = true, children }: { title: string; def
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-white/5 transition-colors cursor-pointer"
+        className="w-full flex items-center justify-between px-3 sm:px-6 py-2.5 sm:py-4 hover:bg-white/5 transition-colors cursor-pointer"
       >
         <h3 className="h3 !text-[15px] sm:!text-[1.5rem] !mb-0">{title}</h3>
         <ChevronDown className={`w-5 h-5 text-white/40 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
@@ -24,7 +24,7 @@ function Accordion({ title, defaultOpen = true, children }: { title: string; def
         className="transition-all duration-300 ease-in-out overflow-hidden"
         style={{ maxHeight: open ? "1000px" : "0px", opacity: open ? 1 : 0 }}
       >
-        <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+        <div className="px-3 sm:px-6 pb-3 sm:pb-6">
           {children}
         </div>
       </div>
@@ -103,19 +103,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Progress */}
-      <div className="card-red p-0 overflow-hidden">
-        <div className="px-4 py-3 sm:p-6">
-          <div className="flex items-center justify-between mb-2 sm:mb-4">
-            <span className="label mb-0">プロフィール充足率</span>
-            <span className="text-[22px] sm:text-[28px] font-bold text-black-900 leading-none tracking-tight"><AnimatedNumber value={completionRate} suffix="%" /></span>
-          </div>
-          <div className="progress-bar h-1.5 sm:h-2 mb-2 sm:mb-3">
-            <div className="progress-fill bg-red transition-all duration-300" style={{ width: `${completionRate}%` }} />
-          </div>
-          <p className="text-[11px] sm:text-[13px] text-black-400 flex items-center gap-1.5"><Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black-400" /> {completionHint}</p>
-        </div>
-      </div>
 
       {mode === "preview" ? (
         /* ===== プレビューモード ===== */
@@ -234,15 +221,15 @@ export default function ProfilePage() {
       <>
       <form className="space-y-3 sm:space-y-5">
         <Accordion title="基本情報">
-          <div className="flex items-center gap-3 sm:gap-5 mb-3 sm:mb-6">
-            <div className="avatar-md sm:avatar-lg">{`南`}</div>
-            <button type="button" className="btn-outline btn-sm text-[12px] sm:text-[13px]"><Upload className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" /> ロゴをアップロード</button>
+          <div className="flex items-center gap-2 sm:gap-5 mb-2 sm:mb-6">
+            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-md bg-black-700 flex items-center justify-center shrink-0 border border-line font-bold text-white text-[14px] sm:text-[16px]">{`南`}</div>
+            <button type="button" className="btn-outline btn-sm text-[11px] sm:text-[13px] px-2.5 sm:px-4 py-1.5 sm:py-2"><Upload className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> ロゴアップロード</button>
           </div>
-          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-            <div><label className="label-muted mb-1 sm:mb-2">企業名</label><input type="text" className="input py-2.5 sm:py-3.5 text-[14px] sm:text-[15px]" value={companyName} onChange={(e) => setCompanyName(e.target.value)} /></div>
-            <div><label className="label-muted mb-1 sm:mb-2">業種</label><select className="input py-2.5 sm:py-3.5 text-[14px] sm:text-[15px]" value={industry} onChange={(e) => setIndustry(e.target.value)}><option>IT・テクノロジー</option><option>食品・飲料</option><option>広告・クリエイティブ</option><option>建設・不動産</option><option>人材・HR</option><option>マーケティング</option></select></div>
-            <div><label className="label-muted mb-1 sm:mb-2">所在地</label><input type="text" className="input py-2.5 sm:py-3.5 text-[14px] sm:text-[15px]" value={location} onChange={(e) => setLocation(e.target.value)} /></div>
-            <div><label className="label-muted mb-1 sm:mb-2">WebサイトURL</label><input type="url" className="input py-2.5 sm:py-3.5 text-[14px] sm:text-[15px]" value={website} onChange={(e) => setWebsite(e.target.value)} /></div>
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
+            <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">企業名</label><input type="text" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={companyName} onChange={(e) => setCompanyName(e.target.value)} /></div>
+            <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">業種</label><select className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={industry} onChange={(e) => setIndustry(e.target.value)}><option>IT・テクノロジー</option><option>食品・飲料</option><option>広告・クリエイティブ</option><option>建設・不動産</option><option>人材・HR</option><option>マーケティング</option></select></div>
+            <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">所在地</label><input type="text" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={location} onChange={(e) => setLocation(e.target.value)} /></div>
+            <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">WebサイトURL</label><input type="url" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={website} onChange={(e) => setWebsite(e.target.value)} /></div>
           </div>
         </Accordion>
 
@@ -255,7 +242,7 @@ export default function ProfilePage() {
             {canProvide.map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 sm:gap-2 rounded-md bg-black-50 border border-line px-3 sm:px-4 py-1.5 sm:py-2 text-[12px] sm:text-[14px] font-medium text-black-700">
                 {t}
-                <button type="button" onClick={() => setCanProvide(canProvide.filter((x) => x !== t))} className="hover:bg-black-200 rounded-full p-0.5 transition-colors"><X className="w-2.5 sm:w-3 h-2.5 sm:h-3" /></button>
+                <button type="button" onClick={() => setCanProvide(canProvide.filter((x) => x !== t))} className="hover:bg-black-200 rounded-full p-0.5 transition-colors"><XIcon className="w-2.5 sm:w-3 h-2.5 sm:h-3" /></button>
               </span>
             ))}
           </div>
@@ -270,7 +257,7 @@ export default function ProfilePage() {
             {lookingFor.map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 sm:gap-2 rounded-md bg-emerald-50 border border-emerald-100 px-3 sm:px-4 py-1.5 sm:py-2 text-[12px] sm:text-[14px] font-medium text-emerald-700">
                 {t}
-                <button type="button" onClick={() => setLookingFor(lookingFor.filter((x) => x !== t))} className="hover:bg-emerald-200 rounded-full p-0.5 transition-colors"><X className="w-2.5 sm:w-3 h-2.5 sm:h-3" /></button>
+                <button type="button" onClick={() => setLookingFor(lookingFor.filter((x) => x !== t))} className="hover:bg-emerald-200 rounded-full p-0.5 transition-colors"><XIcon className="w-2.5 sm:w-3 h-2.5 sm:h-3" /></button>
               </span>
             ))}
           </div>
