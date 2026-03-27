@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Scissors, Clock, Building2, User, Mail, Phone, CheckCircle, Gift } from "lucide-react";
 import { limitedPlans } from "@/data/benefits";
+import { addApplication } from "@/lib/applicationHistory";
 import { toast } from "sonner";
 import FadeIn from "@/components/motion/FadeIn";
 
@@ -34,6 +35,15 @@ export default function BenefitDetailClient({ id }: { id: string }) {
       toast.error("お名前と企業名は必須です");
       return;
     }
+    addApplication({
+      type: "benefit",
+      planId: plan!.id,
+      planTitle: plan!.title,
+      company: plan!.company,
+      discount: plan!.discount,
+      name,
+      companyName: company,
+    });
     setSubmitted(true);
     toast.success("申し込みを受け付けました！");
   };

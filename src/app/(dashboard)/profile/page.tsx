@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { Save, Upload, Plus, X as XIcon, Check, MessageSquare, Trash2, Edit3, ChevronDown, Eye, Edit2, MapPin, Globe, Briefcase, Calendar, ExternalLink, Send, Users, Handshake, Shield, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
@@ -40,6 +40,7 @@ export default function ProfilePage() {
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [companyName, setCompanyName] = useState("南九州テクノロジーズ");
   const [industry, setIndustry] = useState("IT・テクノロジー");
   const [location, setLocation] = useState("鹿児島市");
@@ -222,8 +223,28 @@ export default function ProfilePage() {
       <form className="space-y-3 sm:space-y-5">
         <Accordion title="基本情報">
           <div className="flex items-center gap-2 sm:gap-5 mb-2 sm:mb-6">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-md bg-black-700 flex items-center justify-center shrink-0 border border-line font-bold text-white text-[14px] sm:text-[16px]">{`南`}</div>
-            <button type="button" className="btn-outline btn-sm text-[11px] sm:text-[13px] px-2.5 sm:px-4 py-1.5 sm:py-2"><Upload className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> ロゴアップロード</button>
+            {logoUrl ? (
+              <img src={logoUrl} alt="ロゴ" className="w-10 h-10 sm:w-14 sm:h-14 rounded-md object-cover shrink-0 border border-line" />
+            ) : (
+              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-md bg-black-700 flex items-center justify-center shrink-0 border border-line font-bold text-white text-[14px] sm:text-[16px]">{companyName.charAt(0)}</div>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="logo-upload"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const url = URL.createObjectURL(file);
+                  setLogoUrl(url);
+                  toast.success("ロゴを設定しました");
+                }
+              }}
+            />
+            <button type="button" onClick={() => document.getElementById("logo-upload")?.click()} className="btn-outline btn-sm text-[11px] sm:text-[13px] px-2.5 sm:px-4 py-1.5 sm:py-2">
+              <Upload className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> {logoUrl ? "ロゴを変更" : "ロゴアップロード"}
+            </button>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">企業名</label><input type="text" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={companyName} onChange={(e) => setCompanyName(e.target.value)} /></div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, Users, ArrowLeft, CheckCircle, User, Building2, Phone, Mail } from "lucide-react";
 import { events } from "@/data/mock";
+import { addApplication } from "@/lib/applicationHistory";
 import { toast } from "sonner";
 import FadeIn from "@/components/motion/FadeIn";
 
@@ -44,6 +45,14 @@ export default function EventDetailClient({ id }: { id: string }) {
       toast.error("お名前と企業名は必須です");
       return;
     }
+    addApplication({
+      type: "event",
+      planId: Number(ev!.id),
+      planTitle: ev!.title,
+      company: ev!.location,
+      name,
+      companyName: company,
+    });
     setSubmitted(true);
     toast.success("参加申込を受け付けました！");
   };

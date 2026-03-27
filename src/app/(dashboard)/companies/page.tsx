@@ -384,10 +384,11 @@ export default function CompaniesPage() {
                   style={{ width: w, margin: "10px 5px" }}
                 >
                   <a
-                    href={logo.url || undefined}
-                    target={logo.url ? "_blank" : undefined}
-                    rel={logo.url ? "noopener noreferrer" : undefined}
-                    className={`block transition-opacity hover:opacity-80${logo.url ? " cursor-pointer" : ""}`}
+                    href={logo.url || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block transition-all hover:opacity-80 hover:scale-105 cursor-pointer"
+                    onClick={(e) => { if (!logo.url) e.preventDefault(); }}
                   >
                     <img
                       src={`/images/sponsors/${logo.file}`}

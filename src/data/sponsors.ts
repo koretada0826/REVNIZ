@@ -101,7 +101,7 @@ export const sponsorSections: SponsorSection[] = [
       { file: "Z101.jpg", name: "しする株式会社", industry: "サービス", url: "https://shisuru.co.jp/" },
       { file: "N066.jpg", name: "城山観光株式会社", industry: "サービス", url: "https://www.shiroyama-g.co.jp/" },
       { file: "M011.jpg", name: "株式会社サティスファーマ", industry: "医療", url: "https://www.satisfpharma.co.jp/" },
-      { file: "Z111.jpg", name: "鹿児島相互信用金庫", industry: "金融", url: "https://www.kasousin.co.jp/" },
+      { file: "Z111.jpg", name: "鹿児島相互信用金庫", industry: "金融", url: "https://www.shinkin.co.jp/kasosin/" },
       { file: "Z007.jpg", name: "南九州ファミリーマート", industry: "飲食", url: "https://www.family.co.jp/" },
       { file: "M120.jpg", name: "株式会社補助金ポータル", industry: "IT", url: "https://hojyokin-portal.jp/" },
       { file: "N051.jpg", name: "日本航空株式会社", industry: "運輸", url: "https://www.jal.co.jp/" },

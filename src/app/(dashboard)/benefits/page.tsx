@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, Gift, Star, ArrowUpDown, Scissors, Clock } from "lucide-react";
+import { ChevronDown, Gift, Star, ArrowUpDown, Scissors, Clock, ClipboardList, Calendar, CheckCircle } from "lucide-react";
 import FadeIn from "@/components/motion/FadeIn";
+import { getApplicationHistory, type ApplicationRecord } from "@/lib/applicationHistory";
 
 import { limitedPlans } from "@/data/benefits";
 
@@ -25,7 +26,7 @@ type SortKey = typeof sortOptions[number]["key"];
 /* ミシン目SVG */
 function CouponDivider() {
   return (
-    <div className="absolute top-0 bottom-0 flex flex-col items-center justify-center" style={{ right: "100px", width: "20px" }}>
+    <div className="absolute top-0 bottom-0 flex flex-col items-center justify-center" style={{ right: "clamp(100px, 15vw, 160px)", width: "20px" }}>
       {Array.from({ length: 16 }).map((_, i) => (
         <div key={i} className="w-[2px] rounded-full" style={{ height: "8px", marginBottom: "6px", backgroundColor: "rgba(255,255,255,0.15)" }} />
       ))}
@@ -40,6 +41,11 @@ export default function BenefitsPage() {
   const [selectedCategory, setSelectedCategory] = useState("すべて");
   const [sortKey, setSortKey] = useState<SortKey>("default");
   const [sortOpen, setSortOpen] = useState(false);
+  const [history, setHistory] = useState<ApplicationRecord[]>([]);
+
+  useEffect(() => {
+    setHistory(getApplicationHistory().filter((r) => r.type === "benefit"));
+  }, []);
 
   const filtered = selectedCategory === "すべて"
     ? [...limitedPlans]
@@ -140,7 +146,7 @@ export default function BenefitsPage() {
 
               <div className="flex">
                 {/* 左側: メイン情報 */}
-                <div className="flex-1 p-3 sm:p-6" style={{ marginRight: "100px" }}>
+                <div className="flex-1 p-3 sm:p-6" style={{ marginRight: "clamp(100px, 15vw, 160px)" }}>
                   <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
                     <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-md overflow-hidden shrink-0 bg-white">
                       <img src={plan.logo} alt={plan.company} className="w-full h-full object-cover" />
@@ -171,12 +177,12 @@ export default function BenefitsPage() {
 
                 {/* 右側: 割引チケット部分 */}
                 <div
-                  className="absolute right-0 top-0 bottom-0 flex flex-col items-center justify-center text-center"
-                  style={{ width: "100px", backgroundColor: "#C8102E" }}
+                  className="absolute right-0 top-0 bottom-0 flex flex-col items-center justify-center text-center overflow-hidden"
+                  style={{ width: "clamp(100px, 15vw, 160px)", backgroundColor: "#C8102E" }}
                 >
                   <Scissors className="w-3 h-3 sm:w-4 sm:h-4 text-white/40 absolute top-2 left-1.5 sm:top-3 sm:left-2 rotate-90" />
                   <p className="text-[9px] sm:text-[11px] font-bold text-white/60 tracking-wider uppercase mb-0.5 sm:mb-1">COUPON</p>
-                  <p className="text-[18px] sm:text-[32px] font-black text-white leading-none px-1.5 sm:px-2">
+                  <p className="text-[16px] sm:text-[24px] font-black text-white leading-none px-1 sm:px-3 break-all">
                     {plan.discount}
                   </p>
                   <div className="w-6 sm:w-10 h-[2px] bg-white/30 rounded-full my-1 sm:my-2" />
@@ -193,6 +199,53 @@ export default function BenefitsPage() {
             </Link>
           ))}
         </div>
+
+        {/* 申込履歴 */}
+        {history.length > 0 && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <ClipboardList className="w-5 h-5" style={{ color: "#dfb664" }} />
+              <h2 className="text-[20px] font-bold text-white">申込履歴</h2>
+              <span className="text-[12px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(223,182,100,0.15)", color: "#dfb664" }}>
+                {history.length}件
+              </span>
+            </div>
+            <div className="space-y-2">
+              {history.map((record) => (
+                <div
+                  key={record.id}
+                  className="rounded-lg border border-line p-4 flex items-center gap-4"
+                  style={{ backgroundColor: "#1e1e1e" }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-md flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: "rgba(34,197,94,0.15)" }}
+                  >
+                    <CheckCircle className="w-5 h-5" style={{ color: "#22c55e" }} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[14px] font-bold text-white">{record.planTitle}</p>
+                    <div className="flex items-center gap-3 mt-0.5">
+                      <span className="text-[12px] text-black-400">{record.company}</span>
+                      {record.discount && (
+                        <span className="text-[11px] font-bold px-1.5 py-0.5 rounded" style={{ backgroundColor: "rgba(200,16,46,0.15)", color: "#E63350" }}>
+                          {record.discount}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <div className="flex items-center gap-1 text-[11px] text-black-500">
+                      <Calendar className="w-3 h-3" />
+                      <span>{record.appliedAt}</span>
+                    </div>
+                    <p className="text-[11px] text-black-500 mt-0.5">{record.name} ({record.companyName})</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* CTA */}
         <div

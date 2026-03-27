@@ -505,67 +505,117 @@ function BoardContent() {
             フィルターをリセット
           </button>
         </div>
+      ) : selectedCategory === "すべて" && !showMyPosts ? (
+        /* カテゴリ別横スクロール表示 */
+        <div className="space-y-8">
+          {["販路拡大", "採用", "DX", "イベント"].map((cat) => {
+            const catPosts = filtered.filter((p) => p.category === cat);
+            if (catPosts.length === 0) return null;
+            return (
+              <div key={cat}>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-[18px] sm:text-[22px] font-black text-white">{cat}</h3>
+                  <button onClick={() => setSelectedCategory(cat)} className="text-[13px] font-bold text-black-400 hover:text-white transition-colors cursor-pointer">
+                    すべて見る →
+                  </button>
+                </div>
+                <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8" style={{ scrollbarWidth: "none" }}>
+                  {catPosts.map((p) => {
+                    const company = companies.find((c) => c.id === p.companyId);
+                    return (
+                      <Link key={p.id} href={`/board/${p.id}`} className="shrink-0 w-[240px] sm:w-[300px] group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.02] block" style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}>
+                        {/* 企業ロゴ背景 */}
+                        <span className="relative block overflow-hidden bg-white" style={{ height: "120px" }}>
+                          {company ? (
+                            <img src={company.logo} alt={company.name} className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" style={{ display: "block" }} />
+                          ) : (
+                            <span className="w-full h-full flex items-center justify-center block">
+                              <span style={{ fontSize: "48px", fontWeight: "900", color: "#ccc", lineHeight: "normal" }}>{p.companyName.charAt(0)}</span>
+                            </span>
+                          )}
+                          {/* カテゴリバッジ */}
+                          <span className="absolute top-2.5 left-2.5 text-[10px] sm:text-[11px] font-bold text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: "#C8102E" }}>{p.category}</span>
+                        </span>
+                        {/* テキスト部分 */}
+                        <span className="p-3 sm:p-4 block">
+                          {p.keywords && p.keywords.length > 0 ? (
+                            <span className="flex flex-wrap gap-x-1.5 gap-y-0.5 mb-1.5">
+                              {p.keywords.slice(0, 3).map((kw, ki) => (
+                                <span key={ki} className="text-[13px] sm:text-[16px] font-black" style={{ color: "#E63350" }}>{kw}</span>
+                              ))}
+                            </span>
+                          ) : (
+                            <span className="text-[13px] sm:text-[16px] font-black mb-1.5 leading-snug line-clamp-1 block" style={{ color: "#E63350" }}>{p.title}</span>
+                          )}
+                          <span className="text-[11px] sm:text-[13px] text-black-300 font-medium leading-relaxed line-clamp-2 mb-2 block">{p.content}</span>
+                          <span className="text-[10px] sm:text-[12px] font-bold text-black-400 block">{p.companyName}</span>
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       ) : (
-      <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4">
+      /* カテゴリ選択時：グリッド表示 */
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {filtered.map((p) => {
           const company = companies.find((c) => c.id === p.companyId);
           return (
-            <Link key={p.id} href={`/board/${p.id}`} className="group relative overflow-hidden rounded-lg border border-line cursor-pointer transition-all duration-200 hover:border-line-dark bg-white block">
-              <span className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
-                <span className="inline-block text-white text-[10px] sm:text-[13px] font-bold text-center px-1.5 sm:px-2.5 py-0.5 sm:py-1 bg-red">{p.category}</span>
-              </span>
-              <span style={{ fontSize: 0, lineHeight: 0, margin: 0, padding: 0, display: "block" }}>
+            <Link key={p.id} href={`/board/${p.id}`} className="group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.02] block" style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}>
+              {/* 企業ロゴ背景 */}
+              <span className="relative block overflow-hidden bg-white" style={{ height: "130px" }}>
                 {company ? (
-                  <img src={company.logo} alt={company.name} className="hidden sm:block" style={{ width: "100%", height: "auto", display: "block", margin: 0, padding: 0, border: "none" }} />
+                  <img src={company.logo} alt={company.name} className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" style={{ display: "block" }} />
                 ) : (
-                  <span className="hidden sm:flex items-center justify-center bg-white" style={{ height: "120px" }}>
-                    <span style={{ fontSize: "36px", fontWeight: "bold", color: "#0A0A0A", lineHeight: "normal" }}>{p.companyName.charAt(0)}</span>
+                  <span className="w-full h-full flex items-center justify-center block">
+                    <span style={{ fontSize: "48px", fontWeight: "900", color: "#ccc", lineHeight: "normal" }}>{p.companyName.charAt(0)}</span>
                   </span>
                 )}
+                {/* カテゴリバッジ */}
+                <span className="absolute top-2.5 left-2.5 text-[10px] sm:text-[11px] font-bold text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: "#C8102E" }}>{p.category}</span>
               </span>
-              <span className="bg-white px-2.5 py-2 sm:px-4 sm:py-3 block">
+              {/* テキスト部分 */}
+              <span className="p-3 sm:p-4 block">
                 {p.keywords && p.keywords.length > 0 ? (
-                  <span className="flex flex-wrap gap-x-1.5 sm:gap-x-3 gap-y-0.5 mb-1 sm:mb-2">
-                    {p.keywords.map((kw, ki) => (
-                      <span key={ki} className="text-red text-[14px] sm:text-[24px] font-black leading-snug">{kw}</span>
+                  <span className="flex flex-wrap gap-x-1.5 gap-y-0.5 mb-1.5">
+                    {p.keywords.slice(0, 3).map((kw, ki) => (
+                      <span key={ki} className="text-[14px] sm:text-[18px] font-black" style={{ color: "#E63350" }}>{kw}</span>
                     ))}
                   </span>
                 ) : (
-                  <span className="font-black text-red text-[14px] sm:text-[24px] mb-1 sm:mb-2 leading-snug line-clamp-2 block">{p.title}</span>
+                  <span className="text-[14px] sm:text-[18px] font-black mb-1.5 leading-snug line-clamp-1 block" style={{ color: "#E63350" }}>{p.title}</span>
                 )}
-                <span className="text-[11px] sm:text-[16px] text-black font-extrabold leading-relaxed line-clamp-2 mb-1 sm:mb-2 block">{p.content}</span>
-                <span className="flex items-center justify-between mb-1.5 sm:mb-3">
-                  <span className="text-[10px] sm:text-[13px] font-bold text-white">{p.companyName}</span>
-                  <span className="flex items-center gap-1">
-                    <span className="text-[13px] sm:text-[18px] font-bold text-white tabular-nums">{p.responses}</span>
-                    <span className="text-[8px] sm:text-[10px] text-black-300 uppercase tracking-wide font-bold">反応</span>
-                  </span>
+                <span className="text-[11px] sm:text-[13px] text-black-300 font-medium leading-relaxed line-clamp-2 mb-2 block">{p.content}</span>
+                <span className="flex items-center justify-between">
+                  <span className="text-[10px] sm:text-[12px] font-bold text-black-400">{p.companyName}</span>
+                  {p.companyId === "1" ? (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (confirm("この相談を削除しますか？")) {
+                          setPosts((prev) => prev.filter((x) => x.id !== p.id));
+                          toast.success("相談を削除しました");
+                        }
+                      }}
+                      className="text-[11px] font-bold px-3 py-1.5 rounded-md cursor-pointer hover:opacity-80"
+                      style={{ backgroundColor: "#333", color: "#ff6b6b" }}
+                    >
+                      削除
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); e.preventDefault(); toast("お問い合わせフォームを準備中です"); }}
+                      className="text-[11px] font-bold text-black px-3 py-1.5 rounded-md cursor-pointer hover:opacity-80"
+                      style={{ backgroundColor: "#dfb664" }}
+                    >
+                      問い合わせ
+                    </button>
+                  )}
                 </span>
-                {p.companyId === "1" ? (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      if (confirm("この相談を削除しますか？")) {
-                        setPosts((prev) => prev.filter((x) => x.id !== p.id));
-                        toast.success("相談を削除しました");
-                      }
-                    }}
-                    className="w-full py-2 text-[14px] font-bold rounded-md transition-colors inline-flex items-center justify-center cursor-pointer gap-2 hover:opacity-80"
-                    style={{ backgroundColor: "#333", color: "#ff6b6b" }}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    削除する
-                  </button>
-                ) : (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); e.preventDefault(); toast("お問い合わせフォームを準備中です"); }}
-                    className="w-full py-2 text-[14px] font-bold text-white rounded-md transition-colors inline-flex items-center justify-center cursor-pointer hover:opacity-80"
-                    style={{ backgroundColor: "#dfb664" }}
-                  >
-                    お問い合わせ
-                  </button>
-                )}
               </span>
             </Link>
           );

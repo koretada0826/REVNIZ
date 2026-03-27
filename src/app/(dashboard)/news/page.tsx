@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-
+import Link from "next/link";
 import { ChevronLeft, ChevronRight, Trophy, Newspaper, Twitter, Quote } from "lucide-react";
 import { Tweet } from "react-tweet";
 
@@ -405,9 +405,71 @@ export default function NewsPage() {
               <TweetCarousel tweetIds={officialTweetIds} moreHref="https://x.com/kg_rebnise" moreLabel="@kg_rebnise をフォロー" />
             </div>
 
-            <p className="text-[12px] text-black-500">
+            <p className="text-[12px] text-black-500 mb-6">
               ※ @kg_rebnise 公式アカウントの最新投稿を表示しています。
             </p>
+
+            {/* 公式SNSカード */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* YouTube */}
+              <a
+                href="https://www.youtube.com/@rebnisetv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl overflow-hidden group block"
+                style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}
+              >
+                <div className="relative h-[120px] sm:h-[140px] overflow-hidden">
+                  <img src="/images/youtube-banner.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ backgroundColor: "#FF0000" }}>
+                      <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ml-1"><polygon points="9.5,7.5 16.5,12 9.5,16.5" /></svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-[16px] font-bold text-white group-hover:text-red transition-colors">レブナイズちゃんねる【公式】</p>
+                    <p className="text-[13px] text-black-400">試合ハイライト・選手インタビューなど</p>
+                  </div>
+                  <span className="text-[13px] font-bold px-4 py-2 rounded-full shrink-0" style={{ backgroundColor: "#FF0000", color: "#fff" }}>
+                    チャンネルを見る
+                  </span>
+                </div>
+              </a>
+
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/kagoshima_rebnise_official/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl overflow-hidden group block"
+                style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}
+              >
+                <div className="relative h-[120px] sm:h-[140px] overflow-hidden" style={{ background: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)" }}>
+                  <img src="/images/instagram-profile.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white/20 group-hover:scale-110 transition-transform">
+                      <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8">
+                        <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="white" strokeWidth="2"/>
+                        <circle cx="12" cy="12" r="5" fill="none" stroke="white" strokeWidth="2"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-[16px] font-bold text-white group-hover:text-red transition-colors">鹿児島レブナイズ 公式</p>
+                    <p className="text-[13px] text-black-400">@kagoshima_rebnise_official</p>
+                  </div>
+                  <span className="text-[13px] font-bold px-4 py-2 rounded-full shrink-0" style={{ background: "linear-gradient(45deg, #f09433, #dc2743)", color: "#fff" }}>
+                    フォローする
+                  </span>
+                </div>
+              </a>
+            </div>
           </section>
         )}
 
@@ -421,6 +483,11 @@ export default function NewsPage() {
               </div>
             </div>
             <SuccessCarousel />
+            <div className="text-center mt-6">
+              <Link href="/cases" className="btn-primary px-12 py-4 text-[18px] font-black tracking-wide">
+                すべての成功事例を見る →
+              </Link>
+            </div>
           </section>
         )}
 

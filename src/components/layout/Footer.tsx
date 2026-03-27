@@ -36,10 +36,10 @@ export default function Footer() {
             <a href="https://x.com/kg_rebnise" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
               <Twitter className="w-4 h-4 text-white/60" />
             </a>
-            <a href="https://www.instagram.com/rebnise_official/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
+            <a href="https://www.instagram.com/kagoshima_rebnise_official/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
               <Instagram className="w-4 h-4 text-white/60" />
             </a>
-            <a href="https://www.youtube.com/@rebnise" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
+            <a href="https://www.youtube.com/@rebnisetv" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
               <Youtube className="w-4 h-4 text-white/60" />
             </a>
           </div>
@@ -64,8 +64,8 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-[11px] text-white/25">&copy; 2026 REVNIZE Inc. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-3">
-            <Link href="#" className="text-[11px] text-white/25 hover:text-white/50 transition-colors">利用規約</Link>
-            <Link href="#" className="text-[11px] text-white/25 hover:text-white/50 transition-colors">プライバシーポリシー</Link>
+            <Link href="/terms" className="text-[11px] text-white/25 hover:text-white/50 transition-colors">利用規約</Link>
+            <Link href="/privacy" className="text-[11px] text-white/25 hover:text-white/50 transition-colors">プライバシーポリシー</Link>
           </div>
         </div>
       </div>

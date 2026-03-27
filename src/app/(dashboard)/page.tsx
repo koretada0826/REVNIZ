@@ -52,7 +52,7 @@ export default function DashboardPage() {
           <div className="mt-10 -mx-4 sm:-mx-6 lg:-mx-8">
             <InfiniteScroll interval={2500} cardWidth={332}>
               {successCases.slice(0, 6).map((sc) => (
-                <Link key={sc.id} href="/cases" className="group block">
+                <Link key={sc.id} href={`/cases/${sc.id}`} className="group block">
                   <B className="rounded-lg overflow-hidden" style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}>
                     <B className="relative overflow-hidden" style={{ height: "180px" }}>
                       <img
@@ -109,16 +109,16 @@ export default function DashboardPage() {
             style={{ scrollbarWidth: "none" }}
           >
             {[
-              { company: "MAYA GROUP", logo: "/images/sponsors/Z135.jpg", title: "天文館飲食店 スポンサー企業様限定", discount: "10%OFF", description: "天文館エリアの全飲食店舗で社員証提示で割引" },
-              { company: "城山ホテル鹿児島", logo: "/images/sponsors/N066.jpg", title: "宿泊特別料金プラン", discount: "最大20%OFF", description: "来鹿されるお客様のおもてなしにも最適" },
-              { company: "南九州テクノロジーズ", logo: "/images/sponsors/M029.jpg", title: "DX無料診断 & 初期導入費", discount: "50%OFF", description: "業務効率化をお得にスタートできます" },
-              { company: "福山黒酢株式会社", logo: "/images/sponsors/N105.jpg", title: "壺造り黒酢ギフトセット", discount: "15%OFF", description: "お中元・お歳暮にぴったりの黒酢ギフト" },
-              { company: "アミュプラザ鹿児島", logo: "/images/sponsors/M013.jpg", title: "催事スペース出展料", discount: "30%OFF", description: "商品販売・PR活動の場としてご活用ください" },
-              { company: "株式会社メディアサービス", logo: "/images/sponsors/N011.jpg", title: "Web広告・動画制作", discount: "20%OFF", description: "Web広告の運用代行・企業PR動画を限定価格で" },
-            ].map((plan, i) => (
+              { id: 1, company: "MAYA GROUP", logo: "/images/sponsors/Z135.jpg", title: "天文館飲食店 スポンサー企業様限定", discount: "10%OFF", description: "天文館エリアの全飲食店舗で社員証提示で割引" },
+              { id: 2, company: "城山ホテル鹿児島", logo: "/images/sponsors/N066.jpg", title: "宿泊特別料金プラン", discount: "最大20%OFF", description: "来鹿されるお客様のおもてなしにも最適" },
+              { id: 3, company: "南九州テクノロジーズ", logo: "/images/sponsors/M029.jpg", title: "DX無料診断 & 初期導入費", discount: "50%OFF", description: "業務効率化をお得にスタートできます" },
+              { id: 4, company: "福山黒酢株式会社", logo: "/images/sponsors/N105.jpg", title: "壺造り黒酢ギフトセット", discount: "15%OFF", description: "お中元・お歳暮にぴったりの黒酢ギフト" },
+              { id: 8, company: "アミュプラザ鹿児島", logo: "/images/sponsors/M013.jpg", title: "催事スペース出展料", discount: "30%OFF", description: "商品販売・PR活動の場としてご活用ください" },
+              { id: 7, company: "株式会社メディアサービス", logo: "/images/sponsors/N011.jpg", title: "Web広告・動画制作", discount: "20%OFF", description: "Web広告の運用代行・企業PR動画を限定価格で" },
+            ].map((plan) => (
               <Link
-                key={i}
-                href="/benefits"
+                key={plan.id}
+                href={`/benefits/${plan.id}`}
                 className="shrink-0 w-[280px] rounded-lg border border-line overflow-hidden hover:border-line-dark transition-all group"
                 style={{ backgroundColor: "#1e1e1e" }}
               >
@@ -221,9 +221,9 @@ export default function DashboardPage() {
                 const catColor = ev.category === "懇親会" ? "#dfb664" : ev.category === "OFF会" ? "#A78BFA" : "#C8102E";
                 const pct = Math.round((ev.registered / ev.capacity) * 100);
                 return (
-                  <Link key={ev.id} href="/events" className="block">
+                  <Link key={ev.id} href={`/events/${ev.id}`} className="block">
                     <RebniseCard
-                      href="/events"
+                      href={`/events/${ev.id}`}
                       image={ev.image}
                       title={ev.title}
                       date={ev.date}

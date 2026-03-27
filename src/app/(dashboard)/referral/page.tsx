@@ -91,17 +91,17 @@ export default function ReferralPage() {
         <div className="relative">
 
           {/* ゴールドのライン（横に走る） */}
-          <div className="absolute top-1/2 left-[10%] right-[10%] hidden sm:block" style={{ height: "2px", background: "linear-gradient(90deg, transparent 0%, #dfb664 20%, #dfb664 80%, transparent 100%)", transform: "translateY(-16px)" }} />
+          <div className="absolute left-[10%] right-[10%] hidden sm:block" style={{ height: "2px", top: "calc(48px + 24px)", background: "linear-gradient(90deg, transparent 0%, #dfb664 20%, #dfb664 80%, transparent 100%)" }} />
 
-          <div className="relative z-10 py-3 sm:py-8 px-4 sm:px-6">
-            <div className="flex flex-row items-start justify-between sm:gap-0 max-w-3xl mx-auto">
+          <div className="relative z-10 py-3 sm:py-12 px-4 sm:px-6">
+            <div className="flex flex-row items-start justify-between sm:gap-0 max-w-4xl mx-auto">
               {steps.map((step, i) => (
                 <div key={i} className="flex flex-col items-center text-center flex-1 relative">
                   {/* ステップの円 */}
-                  <div className="relative mb-2 sm:mb-3">
+                  <div className="relative mb-2 sm:mb-5">
                     {/* 外側のリング（アニメーション） */}
                     <div
-                      className="absolute inset-[-4px] sm:inset-[-6px] rounded-full"
+                      className="absolute inset-[-4px] sm:inset-[-8px] rounded-full"
                       style={{
                         background: i === 2
                           ? "conic-gradient(#C8102E 0%, #ff4466 50%, #C8102E 100%)"
@@ -110,10 +110,10 @@ export default function ReferralPage() {
                         opacity: 0.6,
                       }}
                     />
-                    <div className="absolute inset-[-2px] sm:inset-[-4px] rounded-full bg-[#0a0a0a]" />
+                    <div className="absolute inset-[-2px] sm:inset-[-5px] rounded-full bg-[#0a0a0a]" />
                     {/* メインの円 */}
                     <div
-                      className="relative w-11 h-11 sm:w-16 sm:h-16 rounded-full flex items-center justify-center"
+                      className="relative w-11 h-11 sm:w-24 sm:h-24 rounded-full flex items-center justify-center"
                       style={{
                         background: i === 2
                           ? "linear-gradient(135deg, #C8102E 0%, #8B0000 100%)"
@@ -125,7 +125,7 @@ export default function ReferralPage() {
                       }}
                     >
                       <span
-                        className="text-[16px] sm:text-[24px] font-black"
+                        className="text-[16px] sm:text-[32px] font-black"
                         style={{
                           color: i === 2 ? "#fff" : "#dfb664",
                           textShadow: i === 2 ? "0 0 10px rgba(255,255,255,0.3)" : "none",
@@ -138,12 +138,12 @@ export default function ReferralPage() {
 
                   {/* テキスト */}
                   <h3
-                    className="text-[13px] sm:text-[18px] font-black mb-0.5 sm:mb-1"
+                    className="text-[13px] sm:text-[22px] font-black mb-0.5 sm:mb-2"
                     style={{ color: i === 2 ? "#E63350" : "#fff" }}
                   >
                     {step.title}
                   </h3>
-                  <p className="text-[10px] sm:text-[14px] text-black-400 leading-snug sm:leading-relaxed max-w-[100px] sm:max-w-[180px]">
+                  <p className="text-[10px] sm:text-[16px] text-black-400 leading-snug sm:leading-relaxed max-w-[100px] sm:max-w-[220px]">
                     {step.desc}
                   </p>
                 </div>
