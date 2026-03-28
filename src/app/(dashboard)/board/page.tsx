@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Plus, MessageSquare, Clock, TrendingUp, ChevronRight, MapPin, Search, SlidersHorizontal, X, Trash2, User, ArrowUpDown, Tag, Ban } from "lucide-react";
+import { Plus, MessageSquare, Clock, TrendingUp, ChevronRight, ChevronLeft, MapPin, Search, SlidersHorizontal, X, Trash2, User, ArrowUpDown, Tag, Ban } from "lucide-react";
 import { toast } from "sonner";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { consultations, companies } from "@/data/mock";
 import FadeIn from "@/components/motion/FadeIn";
@@ -16,6 +16,106 @@ export default function BoardPage() {
     <Suspense fallback={null}>
       <BoardContent />
     </Suspense>
+  );
+}
+
+function CategoryRow({ cat, catPosts, companies, onSelectCategory }: {
+  cat: string;
+  catPosts: typeof consultations;
+  companies: { id: string; name: string; logo: string; industry: string }[];
+  onSelectCategory: () => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 0);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [checkScroll, catPosts]);
+
+  const scroll = (dir: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "left" ? -320 : 320, behavior: "smooth" });
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-[18px] sm:text-[22px] font-black text-white">{cat}</h3>
+        <button onClick={onSelectCategory} className="text-[13px] font-bold text-black-400 hover:text-white transition-colors cursor-pointer">
+          すべて見る →
+        </button>
+      </div>
+      <div className="relative group/scroll">
+        {canScrollLeft && (
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/80 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-opacity cursor-pointer shadow-lg"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+        )}
+        {canScrollRight && (
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/80 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-opacity cursor-pointer shadow-lg"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        )}
+        <div ref={scrollRef} className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8" style={{ scrollbarWidth: "none" }}>
+          {catPosts.map((p) => {
+            const company = companies.find((c) => c.id === p.companyId);
+            return (
+              <Link key={p.id} href={`/board/${p.id}`} className="shrink-0 w-[240px] sm:w-[300px] group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.02] block" style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}>
+                {/* 企業ロゴ背景 */}
+                <span className="relative block overflow-hidden bg-white" style={{ height: "120px" }}>
+                  {company ? (
+                    <img src={company.logo} alt={company.name} className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" style={{ display: "block" }} />
+                  ) : (
+                    <span className="w-full h-full flex items-center justify-center block">
+                      <span style={{ fontSize: "48px", fontWeight: "900", color: "#ccc", lineHeight: "normal" }}>{p.companyName.charAt(0)}</span>
+                    </span>
+                  )}
+                  {/* カテゴリバッジ */}
+                  <span className="absolute top-2.5 left-2.5 text-[10px] sm:text-[11px] font-bold text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: "#C8102E" }}>{p.category}</span>
+                </span>
+                {/* テキスト部分 */}
+                <span className="p-3 sm:p-4 block">
+                  {p.keywords && p.keywords.length > 0 ? (
+                    <span className="flex flex-wrap gap-x-1.5 gap-y-0.5 mb-1.5">
+                      {p.keywords.slice(0, 3).map((kw, ki) => (
+                        <span key={ki} className="text-[13px] sm:text-[16px] font-black" style={{ color: "#E63350" }}>{kw}</span>
+                      ))}
+                    </span>
+                  ) : (
+                    <span className="text-[13px] sm:text-[16px] font-black mb-1.5 leading-snug line-clamp-1 block" style={{ color: "#E63350" }}>{p.title}</span>
+                  )}
+                  <span className="text-[11px] sm:text-[13px] text-black-300 font-medium leading-relaxed line-clamp-2 mb-2 block">{p.content}</span>
+                  <span className="text-[10px] sm:text-[12px] font-bold text-black-400 block">{p.companyName}</span>
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -512,49 +612,13 @@ function BoardContent() {
             const catPosts = filtered.filter((p) => p.category === cat);
             if (catPosts.length === 0) return null;
             return (
-              <div key={cat}>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-[18px] sm:text-[22px] font-black text-white">{cat}</h3>
-                  <button onClick={() => setSelectedCategory(cat)} className="text-[13px] font-bold text-black-400 hover:text-white transition-colors cursor-pointer">
-                    すべて見る →
-                  </button>
-                </div>
-                <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8" style={{ scrollbarWidth: "none" }}>
-                  {catPosts.map((p) => {
-                    const company = companies.find((c) => c.id === p.companyId);
-                    return (
-                      <Link key={p.id} href={`/board/${p.id}`} className="shrink-0 w-[240px] sm:w-[300px] group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.02] block" style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}>
-                        {/* 企業ロゴ背景 */}
-                        <span className="relative block overflow-hidden bg-white" style={{ height: "120px" }}>
-                          {company ? (
-                            <img src={company.logo} alt={company.name} className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" style={{ display: "block" }} />
-                          ) : (
-                            <span className="w-full h-full flex items-center justify-center block">
-                              <span style={{ fontSize: "48px", fontWeight: "900", color: "#ccc", lineHeight: "normal" }}>{p.companyName.charAt(0)}</span>
-                            </span>
-                          )}
-                          {/* カテゴリバッジ */}
-                          <span className="absolute top-2.5 left-2.5 text-[10px] sm:text-[11px] font-bold text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: "#C8102E" }}>{p.category}</span>
-                        </span>
-                        {/* テキスト部分 */}
-                        <span className="p-3 sm:p-4 block">
-                          {p.keywords && p.keywords.length > 0 ? (
-                            <span className="flex flex-wrap gap-x-1.5 gap-y-0.5 mb-1.5">
-                              {p.keywords.slice(0, 3).map((kw, ki) => (
-                                <span key={ki} className="text-[13px] sm:text-[16px] font-black" style={{ color: "#E63350" }}>{kw}</span>
-                              ))}
-                            </span>
-                          ) : (
-                            <span className="text-[13px] sm:text-[16px] font-black mb-1.5 leading-snug line-clamp-1 block" style={{ color: "#E63350" }}>{p.title}</span>
-                          )}
-                          <span className="text-[11px] sm:text-[13px] text-black-300 font-medium leading-relaxed line-clamp-2 mb-2 block">{p.content}</span>
-                          <span className="text-[10px] sm:text-[12px] font-bold text-black-400 block">{p.companyName}</span>
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
+              <CategoryRow
+                key={cat}
+                cat={cat}
+                catPosts={catPosts}
+                companies={companies}
+                onSelectCategory={() => setSelectedCategory(cat)}
+              />
             );
           })}
         </div>

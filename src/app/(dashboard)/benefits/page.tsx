@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, Gift, Star, ArrowUpDown, Scissors, Clock, ClipboardList, Calendar, CheckCircle } from "lucide-react";
+import { ChevronDown, Gift, Star, ArrowUpDown, Scissors, Clock, ClipboardList, Calendar, CheckCircle, TicketCheck, History } from "lucide-react";
 import FadeIn from "@/components/motion/FadeIn";
 import { getApplicationHistory, type ApplicationRecord } from "@/lib/applicationHistory";
+import { getUsageHistory, addUsage, isUsed, type UsageRecord } from "@/lib/usageHistory";
+import { toast } from "sonner";
 
 import { limitedPlans } from "@/data/benefits";
 
@@ -42,10 +44,30 @@ export default function BenefitsPage() {
   const [sortKey, setSortKey] = useState<SortKey>("default");
   const [sortOpen, setSortOpen] = useState(false);
   const [history, setHistory] = useState<ApplicationRecord[]>([]);
+  const [usageHistory, setUsageHistory] = useState<UsageRecord[]>([]);
+
+  const refreshData = () => {
+    setHistory(getApplicationHistory().filter((r) => r.type === "benefit"));
+    setUsageHistory(getUsageHistory());
+  };
 
   useEffect(() => {
-    setHistory(getApplicationHistory().filter((r) => r.type === "benefit"));
+    refreshData();
   }, []);
+
+  const handleMarkUsed = (record: ApplicationRecord) => {
+    addUsage({
+      applicationId: record.id,
+      planId: record.planId,
+      planTitle: record.planTitle,
+      company: record.company,
+      discount: record.discount,
+      usedBy: record.name,
+      companyName: record.companyName,
+    });
+    toast.success("チケットを使用済みにしました");
+    refreshData();
+  };
 
   const filtered = selectedCategory === "すべて"
     ? [...limitedPlans]
@@ -144,58 +166,56 @@ export default function BenefitsPage() {
               {/* ミシン目 */}
               <CouponDivider />
 
-              <div className="flex">
+              <span className="flex">
                 {/* 左側: メイン情報 */}
-                <div className="flex-1 p-3 sm:p-6" style={{ marginRight: "clamp(100px, 15vw, 160px)" }}>
-                  <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
-                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-md overflow-hidden shrink-0 bg-white">
+                <span className="flex-1 p-3 sm:p-6 block" style={{ marginRight: "clamp(100px, 15vw, 160px)" }}>
+                  <span className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3">
+                    <span className="w-8 h-8 sm:w-12 sm:h-12 rounded-md overflow-hidden shrink-0 bg-white block">
                       <img src={plan.logo} alt={plan.company} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 sm:gap-2">
-                        <p className="text-[12px] sm:text-[15px] font-bold" style={{ color: "#dfb664" }}>{plan.company}</p>
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="text-[12px] sm:text-[15px] font-bold" style={{ color: "#dfb664" }}>{plan.company}</span>
                         {plan.isNew && (
                           <span className="text-[8px] sm:text-[10px] font-bold text-white px-1.5 sm:px-2 py-0.5 rounded-full" style={{ backgroundColor: "#C8102E" }}>NEW</span>
                         )}
-                      </div>
-                      <p className="text-[10px] sm:text-[12px] text-black-500">{plan.category}</p>
-                    </div>
-                  </div>
+                      </span>
+                      <span className="text-[10px] sm:text-[12px] text-black-500 block">{plan.category}</span>
+                    </span>
+                  </span>
 
-                  <h3 className="text-[13px] sm:text-[19px] font-black text-white leading-snug mb-1 sm:mb-2 group-hover:text-red transition-colors line-clamp-2">
+                  <span className="text-[13px] sm:text-[19px] font-black text-white leading-snug mb-1 sm:mb-2 group-hover:text-red transition-colors line-clamp-2 block">
                     {plan.title}
-                  </h3>
-                  <p className="hidden sm:block text-[14px] text-black-400 leading-relaxed line-clamp-2 mb-3">
+                  </span>
+                  <span className="hidden sm:block text-[14px] text-black-400 leading-relaxed line-clamp-2 mb-3">
                     {plan.description}
-                  </p>
+                  </span>
 
-                  <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[12px] text-black-500">
+                  <span className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[12px] text-black-500">
                     <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                     <span>{plan.validUntil}</span>
-                  </div>
-                </div>
+                  </span>
+                </span>
 
                 {/* 右側: 割引チケット部分 */}
-                <div
+                <span
                   className="absolute right-0 top-0 bottom-0 flex flex-col items-center justify-center text-center overflow-hidden"
                   style={{ width: "clamp(100px, 15vw, 160px)", backgroundColor: "#C8102E" }}
                 >
                   <Scissors className="w-3 h-3 sm:w-4 sm:h-4 text-white/40 absolute top-2 left-1.5 sm:top-3 sm:left-2 rotate-90" />
-                  <p className="text-[9px] sm:text-[11px] font-bold text-white/60 tracking-wider uppercase mb-0.5 sm:mb-1">COUPON</p>
-                  <p className="text-[16px] sm:text-[24px] font-black text-white leading-none px-1 sm:px-3 break-all">
+                  <span className="text-[9px] sm:text-[11px] font-bold text-white/60 tracking-wider uppercase mb-0.5 sm:mb-1 block">COUPON</span>
+                  <span className="text-[16px] sm:text-[24px] font-black text-white leading-none px-1 sm:px-3 break-all block">
                     {plan.discount}
-                  </p>
-                  <div className="w-6 sm:w-10 h-[2px] bg-white/30 rounded-full my-1 sm:my-2" />
-                  <p className="text-[9px] sm:text-[11px] font-bold text-white/70">限定</p>
-                  <Link
-                    href={`/benefits/${plan.id}`}
+                  </span>
+                  <span className="w-6 sm:w-10 h-[2px] bg-white/30 rounded-full my-1 sm:my-2 block" />
+                  <span className="text-[9px] sm:text-[11px] font-bold text-white/70 block">限定</span>
+                  <span
                     className="mt-1.5 sm:mt-3 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[12px] font-bold bg-white text-[#C8102E] hover:bg-white/90 transition-colors inline-block"
-                    onClick={(e) => e.stopPropagation()}
                   >
                     使う
-                  </Link>
-                </div>
-              </div>
+                  </span>
+                </span>
+              </span>
             </Link>
           ))}
         </div>
@@ -211,7 +231,77 @@ export default function BenefitsPage() {
               </span>
             </div>
             <div className="space-y-2">
-              {history.map((record) => (
+              {history.map((record) => {
+                const used = isUsed(record.id);
+                return (
+                  <div
+                    key={record.id}
+                    className="rounded-lg border border-line p-4 flex items-center gap-4"
+                    style={{ backgroundColor: "#1e1e1e" }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-md flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: used ? "rgba(255,255,255,0.06)" : "rgba(34,197,94,0.15)" }}
+                    >
+                      {used ? (
+                        <TicketCheck className="w-5 h-5 text-black-500" />
+                      ) : (
+                        <CheckCircle className="w-5 h-5" style={{ color: "#22c55e" }} />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className={`text-[14px] font-bold ${used ? "text-black-500 line-through" : "text-white"}`}>{record.planTitle}</p>
+                        {used && (
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-white/10 text-black-500">使用済み</span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 mt-0.5">
+                        <span className="text-[12px] text-black-400">{record.company}</span>
+                        {record.discount && (
+                          <span className="text-[11px] font-bold px-1.5 py-0.5 rounded" style={{ backgroundColor: "rgba(200,16,46,0.15)", color: "#E63350" }}>
+                            {record.discount}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      {!used && (
+                        <button
+                          onClick={() => handleMarkUsed(record)}
+                          className="text-[12px] font-bold px-3 py-1.5 rounded-md cursor-pointer hover:opacity-80 transition-opacity"
+                          style={{ backgroundColor: "#dfb664", color: "#000" }}
+                        >
+                          使用済みにする
+                        </button>
+                      )}
+                      <div className="text-right">
+                        <div className="flex items-center gap-1 text-[11px] text-black-500">
+                          <Calendar className="w-3 h-3" />
+                          <span>{record.appliedAt}</span>
+                        </div>
+                        <p className="text-[11px] text-black-500 mt-0.5">{record.name} ({record.companyName})</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* 使用履歴 */}
+        {usageHistory.length > 0 && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <History className="w-5 h-5" style={{ color: "#22c55e" }} />
+              <h2 className="text-[20px] font-bold text-white">使用履歴</h2>
+              <span className="text-[12px] font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(34,197,94,0.15)", color: "#22c55e" }}>
+                {usageHistory.length}件
+              </span>
+            </div>
+            <div className="space-y-2">
+              {usageHistory.map((record) => (
                 <div
                   key={record.id}
                   className="rounded-lg border border-line p-4 flex items-center gap-4"
@@ -221,7 +311,7 @@ export default function BenefitsPage() {
                     className="w-10 h-10 rounded-md flex items-center justify-center shrink-0"
                     style={{ backgroundColor: "rgba(34,197,94,0.15)" }}
                   >
-                    <CheckCircle className="w-5 h-5" style={{ color: "#22c55e" }} />
+                    <TicketCheck className="w-5 h-5" style={{ color: "#22c55e" }} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[14px] font-bold text-white">{record.planTitle}</p>
@@ -237,9 +327,9 @@ export default function BenefitsPage() {
                   <div className="text-right shrink-0">
                     <div className="flex items-center gap-1 text-[11px] text-black-500">
                       <Calendar className="w-3 h-3" />
-                      <span>{record.appliedAt}</span>
+                      <span>{record.usedAt}</span>
                     </div>
-                    <p className="text-[11px] text-black-500 mt-0.5">{record.name} ({record.companyName})</p>
+                    <p className="text-[11px] text-black-500 mt-0.5">{record.usedBy} ({record.companyName})</p>
                   </div>
                 </div>
               ))}

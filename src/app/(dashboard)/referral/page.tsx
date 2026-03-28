@@ -11,7 +11,7 @@ const rewards = [
     title: "VIP席ペア招待券",
     description: "ホームゲーム1試合分のVIP席ペアチケットをプレゼント。",
     badge: "1件紹介ごと",
-    image: "/images/hero-game1.jpg",
+    image: "/images/vip-seat.png",
   },
   {
     icon: <PartyPopper className="w-7 h-7" />,
@@ -25,7 +25,7 @@ const rewards = [
     title: "限定グッズセット",
     description: "選手サイン入りユニフォームや非売品グッズをお届け。",
     badge: "累計3件達成",
-    image: "/images/hero-fanfest.jpg",
+    image: "/images/goods-uniform.png",
   },
   {
     icon: <Heart className="w-7 h-7" />,
