@@ -224,6 +224,7 @@ export default function ReferralPage() {
         ) : (
           <form onSubmit={handleSubmit}>
             <div
+              id="referral-form"
               className="rounded-xl border border-line p-6 sm:p-8 space-y-5"
               style={{ backgroundColor: "#1e1e1e" }}
             >

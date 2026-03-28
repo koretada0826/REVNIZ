@@ -264,7 +264,7 @@ export default function DashboardPage() {
               仲間が増えれば、ビジネスの幅も広がる。<br className="hidden sm:block" />
               「ちょっと興味あるかも」という段階でもOK。運営から丁寧にご案内します。
             </p>
-            <Link href="/referral" className="btn-primary px-8 py-3.5 text-[15px]">
+            <Link href="/referral#referral-form" className="btn-primary px-8 py-3.5 text-[15px]">
               <UserPlus className="w-5 h-5 mr-2" />
               友達を紹介する
             </Link>

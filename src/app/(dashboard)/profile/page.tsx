@@ -43,6 +43,7 @@ export default function ProfilePage() {
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [companyName, setCompanyName] = useState("南九州テクノロジーズ");
   const [industry, setIndustry] = useState("IT・テクノロジー");
+  const [customIndustry, setCustomIndustry] = useState("");
   const [location, setLocation] = useState("鹿児島市");
   const [website, setWebsite] = useState("https://example.com");
   const [description, setDescription] = useState("中小企業のDX推進を支援するIT企業。クラウドシステム構築からデータ活用まで、一気通貫でサポートします。");
@@ -55,7 +56,7 @@ export default function ProfilePage() {
   const completionRate = (() => {
     const fields = [
       companyName.trim().length > 0,
-      industry.trim().length > 0,
+      industry === "その他" ? customIndustry.trim().length > 0 : industry.trim().length > 0,
       location.trim().length > 0,
       website.trim().length > 0,
       description.trim().length > 0,
@@ -116,7 +117,7 @@ export default function ProfilePage() {
                 <h2 className="h1">{companyName || "（企業名未設定）"}</h2>
                 <p className="text-[16px] text-black-400 mt-2">{description ? description.slice(0, 60) + (description.length > 60 ? "..." : "") : "（企業紹介未設定）"}</p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5">
-                  <span className="flex items-center gap-2 text-[14px] text-black-400"><Briefcase className="w-4 h-4 text-black-300" /> {industry}</span>
+                  <span className="flex items-center gap-2 text-[14px] text-black-400"><Briefcase className="w-4 h-4 text-black-300" /> {industry === "その他" && customIndustry ? customIndustry : industry}</span>
                   <span className="flex items-center gap-2 text-[14px] text-black-400"><MapPin className="w-4 h-4 text-black-300" /> {location || "未設定"}</span>
                   <span className="flex items-center gap-2 text-[14px] text-black-400"><Calendar className="w-4 h-4 text-black-300" /> 2024〜</span>
                   {website && (
@@ -248,7 +249,21 @@ export default function ProfilePage() {
           </div>
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">企業名</label><input type="text" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={companyName} onChange={(e) => setCompanyName(e.target.value)} /></div>
-            <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">業種</label><select className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={industry} onChange={(e) => setIndustry(e.target.value)}><option>IT・テクノロジー</option><option>食品・飲料</option><option>広告・クリエイティブ</option><option>建設・不動産</option><option>人材・HR</option><option>マーケティング</option></select></div>
+            <div>
+              <label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">業種</label>
+              <select className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={industry} onChange={(e) => { setIndustry(e.target.value); if (e.target.value !== "その他") setCustomIndustry(""); }}>
+                <option>IT・テクノロジー</option><option>食品・飲料</option><option>広告・クリエイティブ</option><option>建設・不動産</option><option>人材・HR</option><option>マーケティング</option><option>その他</option>
+              </select>
+              {industry === "その他" && (
+                <input
+                  type="text"
+                  className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px] mt-2"
+                  placeholder="業種を入力してください"
+                  value={customIndustry}
+                  onChange={(e) => setCustomIndustry(e.target.value)}
+                />
+              )}
+            </div>
             <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">所在地</label><input type="text" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={location} onChange={(e) => setLocation(e.target.value)} /></div>
             <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">WebサイトURL</label><input type="url" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={website} onChange={(e) => setWebsite(e.target.value)} /></div>
           </div>
