@@ -103,7 +103,7 @@ export default function BenefitsPage() {
             <p className="text-[12px] font-bold text-black-400 mt-1">提供プラン数</p>
           </div>
           <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
-            <p className="text-[28px] font-black leading-none" style={{ color: "#dfb664" }}>50%</p>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#E63350" }}>50%</p>
             <p className="text-[12px] font-bold text-black-400 mt-1">最大割引率</p>
           </div>
           <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
@@ -203,14 +203,14 @@ export default function BenefitsPage() {
                   style={{ width: "clamp(100px, 15vw, 160px)", backgroundColor: "#C8102E" }}
                 >
                   <Scissors className="w-3 h-3 sm:w-4 sm:h-4 text-white/40 absolute top-2 left-1.5 sm:top-3 sm:left-2 rotate-90" />
-                  <span className="text-[10px] sm:text-[12px] font-bold text-white/60 tracking-wider uppercase mb-0.5 sm:mb-1 block">COUPON</span>
-                  <span className="text-[14px] sm:text-[22px] font-black text-white leading-tight px-1 sm:px-2 whitespace-pre-line block">
+                  <span className="text-[9px] sm:text-[11px] font-bold text-white/60 tracking-wider uppercase mb-0.5 sm:mb-1 block">COUPON</span>
+                  <span className="text-[16px] sm:text-[24px] font-black text-white leading-none px-1 sm:px-3 break-all block">
                     {plan.discount}
                   </span>
                   <span className="w-6 sm:w-10 h-[2px] bg-white/30 rounded-full my-1 sm:my-2 block" />
-                  <span className="text-[10px] sm:text-[12px] font-bold text-white/70 block">限定</span>
+                  <span className="text-[9px] sm:text-[11px] font-bold text-white/70 block">限定</span>
                   <span
-                    className="mt-1.5 sm:mt-3 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-bold bg-white text-[#C8102E] hover:bg-white/90 transition-colors inline-block animate-pulse-scale"
+                    className="mt-1.5 sm:mt-3 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[12px] font-bold bg-white text-[#C8102E] hover:bg-white/90 transition-colors inline-block"
                   >
                     使う
                   </span>
@@ -349,7 +349,7 @@ export default function BenefitsPage() {
             お気軽に運営までご相談ください。
           </p>
           <button
-            className="btn-primary px-8 py-3 animate-pulse-scale"
+            className="btn-primary px-8 py-3"
             onClick={() => window.open("mailto:sponsor@rebnise.jp?subject=限定プラン掲載希望", "_blank")}
           >
             掲載を相談する

@@ -157,15 +157,15 @@ function InterviewCarousel() {
                         />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-black/30" />
-                      <div className="absolute bottom-4 left-4 flex items-center gap-3 px-3 py-2 rounded-lg" style={{ backgroundColor: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}>
+                      <div className="absolute bottom-4 left-4 flex items-center gap-3">
                         <img
                           src={iv.logo}
                           alt={iv.company}
                           className="w-12 h-12 rounded-md object-cover bg-white border-2 border-white"
                         />
                         <div>
-                          <p className="text-[15px] font-bold text-white">{iv.company}</p>
-                          <p className="text-[13px] text-white/80">{iv.person} {iv.personName}</p>
+                          <p className="text-[15px] font-bold text-white drop-shadow-md">{iv.company}</p>
+                          <p className="text-[13px] text-white/70 drop-shadow-md">{iv.person} {iv.personName}</p>
                         </div>
                       </div>
                     </div>
@@ -173,7 +173,7 @@ function InterviewCarousel() {
                     {/* テキスト */}
                     <div className="flex-1 p-4 sm:p-8 flex flex-col justify-center">
                       {/* 見出しラベル */}
-                      <p className="text-[13px] sm:text-[15px] font-black tracking-[0.15em] uppercase mb-1 sm:mb-2" style={{ color: "#dfb664" }}>
+                      <p className="text-[10px] sm:text-[11px] font-black tracking-[0.15em] uppercase mb-1 sm:mb-2" style={{ color: "#dfb664" }}>
                         SPONSOR INTERVIEW
                       </p>
                       {/* 質問 */}
@@ -186,7 +186,7 @@ function InterviewCarousel() {
                           <span key={pi}>
                             {part}
                             {pi < arr.length - 1 && (
-                              <span>
+                              <span className="font-black text-white text-[18px] sm:text-[20px]" style={{ color: "#E63350" }}>
                                 {iv.highlight}
                               </span>
                             )}
@@ -280,7 +280,7 @@ export default function CompaniesPage() {
       <FadeIn delay={0.1}>
         <section className="py-6">
           <div
-            className="mb-6 pb-1.5 font-black text-[22px] sm:text-[26px]"
+            className="mb-6 pb-1.5 font-bold text-[20px] sm:text-[24px]"
             style={{ borderBottom: "3px solid #3e3e3e", color: "#fff" }}
           >
             <span

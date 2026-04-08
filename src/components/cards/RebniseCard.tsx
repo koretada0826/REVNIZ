@@ -33,13 +33,7 @@ export default function RebniseCard({
                 <span
                   key={i}
                   className={cat.isNew ? styles.catNew : undefined}
-                  style={{
-                    ...(cat.isNew ? {} : { backgroundColor: cat.color }),
-                    padding: "4px 10px",
-                    color: "#fff",
-                    fontSize: "11px",
-                    fontWeight: 700,
-                  }}
+                  style={cat.isNew ? undefined : { backgroundColor: cat.color }}
                 >
                   {cat.label}
                 </span>

@@ -28,7 +28,7 @@ export const limitedPlans = [
     title: "DX無料診断 & 初期導入費50%OFF",
     description: "スポンサー企業様向けに、DX導入の無料診断を実施。導入を決定された場合、初期費用を50%割引。業務効率化をお得にスタートできます。",
     category: "IT",
-    discount: "初期費\n50%OFF",
+    discount: "初期費50%OFF",
     validUntil: "2026-12-31",
     isNew: true,
   },
