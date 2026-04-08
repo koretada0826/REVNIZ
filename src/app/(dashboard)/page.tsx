@@ -261,8 +261,9 @@ export default function DashboardPage() {
               スポンサーに興味ありそうな<br className="sm:hidden" />お友達をご紹介ください！
             </h2>
             <p className="text-[18px] sm:text-[20px] text-white/60 leading-relaxed max-w-2xl mx-auto mb-8">
-              仲間が増えれば、ビジネスの幅も広がる。<br className="hidden sm:block" />
-              「ちょっと興味あるかも」という段階でもOK。運営から丁寧にご案内します。
+              仲間が増えれば、ビジネスの幅も広がる。<br />
+              「ちょっと興味あるかも」という段階でもOK。<br />
+              運営から丁寧にご案内します。
             </p>
             <Link href="/referral#referral-form" className="btn-primary px-8 py-3.5 text-[15px]">
               <UserPlus className="w-5 h-5 mr-2" />

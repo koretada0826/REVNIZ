@@ -502,9 +502,10 @@ export default function NewsPage() {
             </div>
             <div className="space-y-3">
               {columns.map((col) => (
-                <div
+                <Link
                   key={col.id}
-                  className="rounded-lg border border-line p-5 hover:border-line-dark transition-colors cursor-pointer group"
+                  href={`/news/columns/${col.id}`}
+                  className="block rounded-lg border border-line p-5 hover:border-line-dark transition-colors cursor-pointer group"
                   style={{ backgroundColor: "#1e1e1e" }}
                 >
                   <div className="flex items-start gap-4">
@@ -524,7 +525,7 @@ export default function NewsPage() {
                     </div>
                     <ChevronRight className="w-5 h-5 text-black-500 group-hover:text-white transition-colors shrink-0 mt-1" />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </section>
