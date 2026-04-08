@@ -478,7 +478,7 @@ export const matchingPairs: MatchingPair[] = [
 export const events: Event[] = [
   {
     id: "1",
-    title: "スポンサー企業 懇親会 〜天文館で語る夜〜",
+    title: "懇親会 〜天文館で語る夜〜",
     date: "2026-03-28",
     location: "天文館 城山ホテル別館",
     description: "スポンサー企業経営者・担当者の親睦を深める懇親会。立食形式で気軽にビジネストークを楽しめます。",
@@ -489,7 +489,7 @@ export const events: Event[] = [
   },
   {
     id: "2",
-    title: "レブナイズスポンサー OFF会 〜観戦後にもう一杯〜",
+    title: "OFF会 〜観戦後にもう一杯〜",
     date: "2026-04-05",
     location: "天文館エリア居酒屋",
     description: "ホームゲーム観戦後のカジュアルな飲み会。試合の感想を肴にスポンサー仲間と盛り上がろう！",
@@ -500,7 +500,7 @@ export const events: Event[] = [
   },
   {
     id: "3",
-    title: "スポンサー懇親会 Vol.2 〜桜島を眺めながら〜",
+    title: "懇親会 Vol.2 〜桜島を眺めながら〜",
     date: "2026-04-12",
     location: "城山ホテル鹿児島 展望レストラン",
     description: "桜島の絶景を眺めながらの懇親ディナー。着席形式でじっくりとビジネスの話ができる特別な夜です。",
@@ -544,7 +544,7 @@ export const events: Event[] = [
   },
   {
     id: "7",
-    title: "スポンサーOFF会 〜焼肉を囲んで〜",
+    title: "OFF会 〜焼肉を囲んで〜",
     date: "2026-05-03",
     location: "天文館 黒毛和牛一頭買い焼肉店",
     description: "GW特別企画！鹿児島黒牛の焼肉を囲みながら、ざっくばらんに交流。ご家族の参加も歓迎です。",
@@ -555,7 +555,7 @@ export const events: Event[] = [
   },
   {
     id: "8",
-    title: "スポンサー企業限定 シーズン報告会 & 懇親会",
+    title: "シーズン報告会 & 懇親会",
     date: "2026-05-10",
     location: "鹿児島市内ホテル",
     description: "2025-26シーズンの振り返りと来季に向けた展望を共有。懇親会ではスポンサー企業間のネットワーキングも。",
@@ -610,7 +610,7 @@ export const events: Event[] = [
   },
   {
     id: "13",
-    title: "スポンサーOFF会 〜温泉で語る経営〜",
+    title: "OFF会 〜温泉で語る経営〜",
     date: "2026-06-14",
     location: "妙見石原荘",
     description: "日帰り温泉とお食事を楽しみながらの贅沢OFF会。温泉に浸かりながら経営談義で盛り上がりましょう。",

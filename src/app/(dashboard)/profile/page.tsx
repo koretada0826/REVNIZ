@@ -86,7 +86,7 @@ export default function ProfilePage() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <p className="label">Profile</p>
-          <h1 className="h1">自社プロフィール{mode === "edit" ? "編集" : "プレビュー"}</h1>
+          <h1 className="h1 whitespace-nowrap">自社プロフィール{mode === "edit" ? "編集" : "プレビュー"}</h1>
           <p className="body mt-3 hidden sm:block">{mode === "edit" ? "情報を充実させるほど、マッチング精度が上がります" : "他社から見たプロフィールの表示です"}</p>
         </div>
         <div className="flex gap-2 shrink-0">

@@ -17,7 +17,7 @@ interface SlideData {
 const slides: SlideData[] = [
   {
     category: "試合",
-    headline: '一つになって戦う —<br/><span style="color:#C8102E">レブナイズの熱い試合</span>を<wbr/>スポンサー席で',
+    headline: '<span style="color:#C8102E">熱い試合</span>を<br/>スポンサー席で',
     headlineSp: '<span style="color:#C8102E">熱い試合</span>を<wbr/>スポンサー席で',
     description:
       "選手たちの円陣に宿るチームの絆。スポンサー企業の皆様の応援が、選手たちの力になっています。",
@@ -31,7 +31,7 @@ const slides: SlideData[] = [
   },
   {
     category: "B2昇格",
-    headline: '鹿児島レブナイズ<br/><span style="color:#C8102E">B2昇格</span> — 新たなステージへ',
+    headline: '鹿児島レブナイズ<br/><span style="color:#C8102E">B2昇格</span> — 新たなステージ',
     headlineSp: 'レブナイズ<span style="color:#C8102E">B2昇格</span>',
     description:
       "スポンサー企業の皆様とともに掴んだB2昇格。さらなる高みを目指し、鹿児島のスポーツシーンを盛り上げます。",
@@ -45,7 +45,7 @@ const slides: SlideData[] = [
   },
   {
     category: "交流会",
-    headline: 'スポンサー企業同士がつながる<br/><span style="color:#C8102E">Tip\u00A0offパーティー</span>',
+    headline: '企業同士がつながる<br/><span style="color:#C8102E">Tip\u00A0offパーティー</span>',
     headlineSp: '<span style="color:#C8102E">Tip\u00A0off</span>パーティー',
     description:
       "シーズン開幕を祝うTip\u00A0offパーティー。スポンサー企業の皆様が一堂に会し、新たなビジネスの出会いが生まれる特別な夜。",
@@ -59,7 +59,7 @@ const slides: SlideData[] = [
   },
   {
     category: "ビジネス",
-    headline: '鹿児島から全国へ —<br/>スポンサー企業間の<span style="color:#C8102E">協業が加速</span>',
+    headline: '鹿児島から全国へ —<br/>企業間<span style="color:#C8102E">協業が加速中</span>',
     headlineSp: '企業間<span style="color:#C8102E">協業</span>が加速',
     description:
       "レブナイズのスポンサーネットワークを通じて、異業種の企業同士が出会い、新たなビジネスチャンスを創出しています。",

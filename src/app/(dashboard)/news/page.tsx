@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Trophy, Newspaper, Twitter, Quote } from "lu
 import { Tweet } from "react-tweet";
 
 import FadeIn from "@/components/motion/FadeIn";
+import { columns } from "@/data/columns";
 
 /* ── 成功事例データ ── */
 const successStories = [
@@ -63,33 +64,7 @@ const successStories = [
   },
 ];
 
-/* ── コラムデータ ── */
-const columns = [
-  {
-    id: 1,
-    title: "地方スポーツとビジネスの新しい関係性",
-    publication: "鹿児島経済ジャーナル 2026年3月号",
-    excerpt: "スポーツスポンサーシップが単なる広告枠から、企業間マッチングプラットフォームへと進化している。レブナイズの取り組みから見える地方スポーツの可能性を探る。",
-    date: "2026-03-01",
-    author: "運営",
-  },
-  {
-    id: 2,
-    title: "鹿児島経済の現在地 — スポンサー企業から見た地域の強み",
-    publication: "鹿児島経済ジャーナル 2026年2月号",
-    excerpt: "レブナイズスポンサー企業へのヒアリングを通じて見えてきた、鹿児島経済のポテンシャルとスポーツがもたらすビジネスチャンス。",
-    date: "2026-02-01",
-    author: "運営",
-  },
-  {
-    id: 3,
-    title: "スポーツで繋がるB2Bネットワーク — 実践レポート",
-    publication: "鹿児島経済ジャーナル 2026年1月号",
-    excerpt: "スポンサー企業同士がスポーツを介して信頼関係を構築し、実ビジネスに発展させていくプロセスを具体事例とともに紹介。",
-    date: "2026-01-01",
-    author: "運営",
-  },
-];
+/* コラムデータは @/data/columns から import */
 
 /* ── @kg_rebnise 公式アカウント投稿 ── */
 const officialTweetIds = [
@@ -187,9 +162,9 @@ function SuccessCarousel() {
                         </div>
                       </div>
                       {/* メトリクスバッジ */}
-                      <div className="absolute top-4 right-4 text-right">
-                        <p className="text-[32px] font-black leading-none text-white drop-shadow-lg">{story.metric}</p>
-                        <p className="text-[11px] font-bold text-white/70">{story.metricLabel}</p>
+                      <div className="absolute top-4 right-4 text-right px-3 py-2 rounded-lg" style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+                        <p className="text-[32px] font-black leading-none drop-shadow-lg whitespace-nowrap" style={{ color: "#C4A35A" }}>{story.metric}</p>
+                        <p className="text-[11px] font-bold text-white/80">{story.metricLabel}</p>
                       </div>
                     </div>
 
@@ -206,7 +181,7 @@ function SuccessCarousel() {
                           <span key={pi}>
                             {part}
                             {pi < arr.length - 1 && (
-                              <span className="font-black text-white text-[18px] sm:text-[20px]" style={{ color: "#E63350" }}>
+                              <span className="font-black">
                                 {story.highlight}
                               </span>
                             )}
@@ -286,14 +261,14 @@ function TweetCarousel({ tweetIds, moreHref, moreLabel }: { tweetIds: string[]; 
       {/* スクロールコンテナ */}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        className="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         data-theme="dark"
       >
         {tweetIds.map((id) => (
           <div
             key={id}
-            className="shrink-0 w-[260px] h-[350px] sm:w-[320px] sm:h-[500px] rounded-lg border border-line overflow-y-auto"
+            className="shrink-0 w-[220px] h-[280px] sm:w-[260px] sm:h-[340px] rounded-lg border border-line overflow-y-auto"
             style={{ backgroundColor: "#1e1e1e", scrollbarWidth: "none" }}
           >
             <Tweet id={id} />
@@ -304,7 +279,7 @@ function TweetCarousel({ tweetIds, moreHref, moreLabel }: { tweetIds: string[]; 
           href={moreHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 w-[260px] h-[350px] sm:w-[320px] sm:h-[500px] rounded-lg border border-line flex flex-col items-center justify-center gap-4 hover:border-white/30 transition-colors group"
+          className="shrink-0 w-[220px] h-[280px] sm:w-[260px] sm:h-[340px] rounded-lg border border-line flex flex-col items-center justify-center gap-4 hover:border-white/30 transition-colors group"
           style={{ backgroundColor: "#1e1e1e" }}
         >
           <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
@@ -423,8 +398,8 @@ export default function NewsPage() {
                   <img src="/images/youtube-banner.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/40" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ backgroundColor: "#FF0000" }}>
-                      <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ml-1"><polygon points="9.5,7.5 16.5,12 9.5,16.5" /></svg>
+                    <div className="flex items-center justify-center group-hover:scale-110 transition-transform" style={{ width: "68px", height: "48px", backgroundColor: "#FF0000", borderRadius: "12px" }}>
+                      <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 ml-0.5"><polygon points="9.5,7 17,12 9.5,17" /></svg>
                     </div>
                   </div>
                 </div>
@@ -493,7 +468,7 @@ export default function NewsPage() {
 
         {/* ③ コラム — 地元経済誌の記事 */}
         {(activeTab === "すべて" || activeTab === "コラム") && (
-          <section>
+          <section id="columns">
             <div className="section-header">
               <div className="flex items-center gap-2">
                 <Newspaper className="w-5 h-5" style={{ color: "#dfb664" }} />
@@ -502,9 +477,10 @@ export default function NewsPage() {
             </div>
             <div className="space-y-3">
               {columns.map((col) => (
-                <div
+                <Link
                   key={col.id}
-                  className="rounded-lg border border-line p-5 hover:border-line-dark transition-colors cursor-pointer group"
+                  href={`/news/columns/${col.id}`}
+                  className="block rounded-lg border border-line p-5 hover:border-line-dark transition-colors cursor-pointer group"
                   style={{ backgroundColor: "#1e1e1e" }}
                 >
                   <div className="flex items-start gap-4">
@@ -524,7 +500,7 @@ export default function NewsPage() {
                     </div>
                     <ChevronRight className="w-5 h-5 text-black-500 group-hover:text-white transition-colors shrink-0 mt-1" />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </section>

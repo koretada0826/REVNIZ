@@ -37,9 +37,9 @@ const rewards = [
 ];
 
 const steps = [
-  { num: "01", title: "フォームで紹介", desc: "下記フォームに紹介先の情報を入力するだけ" },
-  { num: "02", title: "運営がご連絡", desc: "運営チームから紹介先に丁寧にご案内" },
-  { num: "03", title: "特典GET!", desc: "スポンサー決定で紹介特典をプレゼント" },
+  { num: "01", title: "フォームで紹介", desc: "紹介先の情報を入力するだけ" },
+  { num: "02", title: "運営がご連絡", desc: "紹介先に丁寧にご案内します" },
+  { num: "03", title: "特典GET!", desc: "決定で紹介特典プレゼント" },
 ];
 
 export default function ReferralPage() {
@@ -143,7 +143,7 @@ export default function ReferralPage() {
                   >
                     {step.title}
                   </h3>
-                  <p className="text-[10px] sm:text-[16px] text-black-400 leading-snug sm:leading-relaxed max-w-[100px] sm:max-w-[220px]">
+                  <p className="text-[11px] sm:text-[16px] text-black-400 leading-snug sm:leading-relaxed whitespace-nowrap">
                     {step.desc}
                   </p>
                 </div>
@@ -158,16 +158,16 @@ export default function ReferralPage() {
           <div className="flex items-center gap-2 mb-5">
             <Gift className="w-6 h-6" style={{ color: "#dfb664" }} />
             <h2 className="text-[22px] font-black text-white">紹介特典</h2>
-            <span className="text-[12px] font-bold px-3 py-1 rounded-full" style={{ backgroundColor: "rgba(200,16,46,0.15)", color: "#E63350" }}>
+            <span className="text-[12px] font-bold px-3 py-1 rounded-full animate-pulse-scale" style={{ backgroundColor: "rgba(200,16,46,0.15)", color: "#E63350" }}>
               紹介が成立した方全員に
             </span>
           </div>
-          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0" style={{ scrollbarWidth: "none" }}>
-            <div className="flex sm:grid sm:grid-cols-2 gap-4" style={{ minWidth: "max-content" }}>
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {rewards.map((item, i) => (
                 <div
                   key={i}
-                  className="shrink-0 w-[280px] sm:w-auto rounded-xl overflow-hidden group"
+                  className="rounded-xl overflow-hidden group"
                   style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}
                 >
                   {/* 写真 */}
@@ -241,7 +241,7 @@ export default function ReferralPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-4">
                 <div>
                   <label className="text-[13px] font-bold text-black-300 mb-1.5 flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5" />
@@ -270,9 +270,6 @@ export default function ReferralPage() {
                     required
                   />
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-[13px] font-bold text-black-300 mb-1.5 flex items-center gap-1.5">
                     <Phone className="w-3.5 h-3.5" />

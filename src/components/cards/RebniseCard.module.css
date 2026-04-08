@@ -5,6 +5,9 @@
   overflow: hidden;
   display: inline-block;
   width: 100%;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1e1e1e;
 }
 
 .listCard a {
@@ -22,13 +25,14 @@
 
 /* Category Label */
 .categoryLabel {
-  font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: 0.1em;
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  letter-spacing: 0.08em;
   z-index: 1;
   position: absolute;
   right: 0;
   top: 0;
-  font-size: 18px;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .categoryLabel ul {
@@ -45,7 +49,7 @@
   color: #FFF;
   background: #CCC;
   padding: 4px 10px;
-  font-size: 14px;
+  font-size: 11px;
   margin-left: 2px;
 }
 
@@ -98,13 +102,16 @@
 
 /* Detail */
 .detail {
-  padding: 30px 20px 20px;
-  background: #333;
+  padding: 16px;
+  background: #1e1e1e;
+  border-top: 1px solid #333;
 }
 
 .title {
-  margin-bottom: 10px;
-  font-size: 14px;
+  font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 700;
   color: #FFF;
   height: 45px;
   overflow: hidden;
@@ -112,14 +119,14 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .update {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 20px;
-  color: #a2a2a2;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  color: #888;
+  letter-spacing: 0.03em;
 }
 
 /* SNS icons */

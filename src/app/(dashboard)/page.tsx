@@ -49,7 +49,7 @@ export default function DashboardPage() {
           <p className="text-center text-[28px] sm:text-[34px] lg:text-[40px] font-black text-white leading-tight tracking-[0.08em] mb-0">
             今シーズンのスポンサー成功事例
           </p>
-          <div className="mt-10 -mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="mt-10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
             <InfiniteScroll interval={2500} cardWidth={332}>
               {successCases.slice(0, 6).map((sc) => (
                 <Link key={sc.id} href={`/cases/${sc.id}`} className="group block">
@@ -64,11 +64,11 @@ export default function DashboardPage() {
                       <BI className="absolute bottom-0 left-0 right-0 p-4 items-end justify-between">
                         <BI className="items-center gap-2">
                           <img src={sc.logo} alt={sc.company} className="w-8 h-8 rounded object-cover bg-white border-2 border-white" />
-                          <span className="text-[12px] font-bold text-white">{sc.company}</span>
+                          <span className="text-[13px] font-bold text-white">{sc.company}</span>
                         </BI>
-                        <span className="text-right">
-                          <span className="text-[28px] font-black leading-none text-white drop-shadow-lg block">{sc.metric}</span>
-                          <span className="text-[10px] font-bold text-white/70 block">{sc.metricLabel}</span>
+                        <span className="text-right px-3 py-2 rounded-lg" style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+                          <span className="text-[32px] font-black leading-none drop-shadow-lg block whitespace-nowrap" style={{ color: "#C4A35A" }}>{sc.metric}</span>
+                          <span className="text-[11px] font-bold text-white/80 block mt-0.5">{sc.metricLabel}</span>
                         </span>
                       </BI>
                       <span className="absolute top-2 left-2 text-[10px] font-bold text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(200,16,46,0.85)" }}>{sc.category}</span>
@@ -186,7 +186,7 @@ export default function DashboardPage() {
                       {p.keywords && p.keywords.length > 0 ? (
                         <BI className="flex-wrap gap-x-2 gap-y-0.5 mb-2">
                           {p.keywords.map((kw, ki) => (
-                            <span key={ki} className="text-red text-[16px] font-black">{kw}</span>
+                            <span key={ki} className="text-white group-hover:text-red text-[16px] font-black transition-colors">{kw}</span>
                           ))}
                         </BI>
                       ) : (
@@ -215,13 +215,13 @@ export default function DashboardPage() {
               すべて見る →
             </Link>
           </div>
-          <div className="-mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
             <InfiniteScroll interval={3000} cardWidth={260}>
               {events.slice(0, 8).map((ev) => {
                 const catColor = ev.category === "懇親会" ? "#dfb664" : ev.category === "OFF会" ? "#A78BFA" : "#C8102E";
                 const pct = Math.round((ev.registered / ev.capacity) * 100);
                 return (
-                  <Link key={ev.id} href={`/events/${ev.id}`} className="block">
+                  <div key={ev.id}>
                     <RebniseCard
                       href={`/events/${ev.id}`}
                       image={ev.image}
@@ -232,7 +232,7 @@ export default function DashboardPage() {
                         { label: ev.category, color: catColor },
                       ]}
                     />
-                  </Link>
+                  </div>
                 );
               })}
             </InfiniteScroll>
@@ -257,14 +257,15 @@ export default function DashboardPage() {
           <div className="absolute inset-0 bg-black/70" />
           <div className="relative z-10">
             <UserPlus className="w-10 h-10 mx-auto mb-4" style={{ color: "#dfb664" }} />
-            <h2 className="text-[30px] sm:text-[40px] font-black text-white leading-tight mb-4">
-              スポンサーに興味ありそうな<br className="sm:hidden" />お友達をご紹介ください！
+            <h2 className="text-[24px] sm:text-[32px] font-black text-white leading-snug mb-4 max-w-2xl mx-auto">
+              スポンサーに興味ありそうな<br />お友達をご紹介ください！
             </h2>
-            <p className="text-[18px] sm:text-[20px] text-white/60 leading-relaxed max-w-2xl mx-auto mb-8">
-              仲間が増えれば、ビジネスの幅も広がる。<br className="hidden sm:block" />
-              「ちょっと興味あるかも」という段階でもOK。運営から丁寧にご案内します。
+            <p className="text-[16px] sm:text-[18px] text-white/80 leading-relaxed max-w-xl mx-auto mb-8">
+              仲間が増えれば、ビジネスの幅も広がる。<br />
+              「ちょっと興味あるかも」という段階でもOK。<br />
+              運営から丁寧にご案内します。
             </p>
-            <Link href="/referral#referral-form" className="btn-primary px-8 py-3.5 text-[15px]">
+            <Link href="/referral#referral-form" className="btn-primary px-8 py-3.5 text-[15px] animate-pulse-scale">
               <UserPlus className="w-5 h-5 mr-2" />
               友達を紹介する
             </Link>
@@ -286,13 +287,13 @@ export default function DashboardPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { title: "地方スポーツとビジネスの新しい関係性", publication: "鹿児島経済ジャーナル 2026年3月号", date: "2026-03-01" },
-              { title: "鹿児島経済の現在地 — スポンサー企業から見た地域の強み", publication: "鹿児島経済ジャーナル 2026年2月号", date: "2026-02-01" },
-              { title: "スポーツで繋がるB2Bネットワーク — 実践レポート", publication: "鹿児島経済ジャーナル 2026年1月号", date: "2026-01-01" },
-            ].map((col, i) => (
+              { id: 1, title: "地方スポーツとビジネスの新しい関係性", publication: "鹿児島経済ジャーナル 2026年3月号", date: "2026-03-01" },
+              { id: 2, title: "鹿児島経済の現在地 — スポンサー企業から見た地域の強み", publication: "鹿児島経済ジャーナル 2026年2月号", date: "2026-02-01" },
+              { id: 3, title: "スポーツで繋がるB2Bネットワーク — 実践レポート", publication: "鹿児島経済ジャーナル 2026年1月号", date: "2026-01-01" },
+            ].map((col) => (
               <Link
-                key={i}
-                href="/news"
+                key={col.id}
+                href={`/news/columns/${col.id}`}
                 className="rounded-lg border border-line p-5 hover:border-line-dark transition-colors group"
                 style={{ backgroundColor: "#1e1e1e" }}
               >

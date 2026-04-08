@@ -28,7 +28,7 @@ export default function CasesPage() {
           { value: "85%", label: "最高回収率" },
         ].map((s) => (
           <div key={s.label} className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
-            <p className="text-[28px] font-black leading-none" style={{ color: "#E63350" }}>{s.value}</p>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#C4A35A" }}>{s.value}</p>
             <p className="text-[12px] font-bold text-black-400 mt-1.5">{s.label}</p>
           </div>
         ))}
@@ -61,9 +61,9 @@ export default function CasesPage() {
                     <h2 className="text-[16px] sm:text-[32px] font-black text-white leading-snug mb-1 sm:mb-2">{first.title}</h2>
                     <p className="hidden sm:block text-[16px] text-white/70 leading-relaxed line-clamp-2">{first.description}</p>
                   </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-[32px] sm:text-[56px] font-black leading-none text-white drop-shadow-lg">{first.metric}</p>
-                    <p className="text-[10px] sm:text-[14px] font-bold text-white/60 mt-0.5 sm:mt-1">{first.metricLabel}</p>
+                  <div className="text-right shrink-0 px-4 py-3 rounded-lg" style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+                    <p className="text-[32px] sm:text-[56px] font-black leading-none drop-shadow-lg whitespace-nowrap" style={{ color: "#C4A35A" }}>{first.metric}</p>
+                    <p className="text-[10px] sm:text-[14px] font-bold text-white/80 mt-0.5 sm:mt-1">{first.metricLabel}</p>
                   </div>
                 </div>
               </div>
@@ -110,9 +110,9 @@ export default function CasesPage() {
                           <p className="text-[9px] sm:text-[12px] text-white/50">{sc.date}</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-[24px] sm:text-[36px] font-black leading-none text-white drop-shadow-lg">{sc.metric}</p>
-                        <p className="text-[9px] sm:text-[12px] font-bold text-white/60">{sc.metricLabel}</p>
+                      <div className="text-right px-3 py-2 rounded-lg" style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+                        <p className="text-[24px] sm:text-[36px] font-black leading-none drop-shadow-lg whitespace-nowrap" style={{ color: "#C4A35A" }}>{sc.metric}</p>
+                        <p className="text-[9px] sm:text-[12px] font-bold text-white/80 mt-0.5">{sc.metricLabel}</p>
                       </div>
                     </div>
                     <span className="absolute top-2 left-2 sm:top-3 sm:left-3 text-[9px] sm:text-[11px] font-bold text-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full" style={{ backgroundColor: "rgba(200,16,46,0.85)" }}>
@@ -154,8 +154,8 @@ export default function CasesPage() {
                   {/* メトリクス（ホバー時表示） */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="bg-black/70 backdrop-blur-sm rounded-lg px-5 py-3 text-center">
-                      <p className="text-[40px] font-black leading-none text-white">{sc.metric}</p>
-                      <p className="text-[13px] font-bold text-white/70 mt-1">{sc.metricLabel}</p>
+                      <p className="text-[40px] font-black leading-none whitespace-nowrap" style={{ color: "#C4A35A" }}>{sc.metric}</p>
+                      <p className="text-[13px] font-bold text-white/80 mt-1">{sc.metricLabel}</p>
                     </div>
                   </div>
                   {/* 企業ロゴ */}
@@ -172,12 +172,12 @@ export default function CasesPage() {
                 <div className="p-3 sm:p-4">
                   <div className="flex items-center justify-between mb-1 sm:mb-2">
                     <h3 className="text-[13px] sm:text-[16px] font-bold text-white leading-snug flex-1 mr-2 sm:mr-3">{sc.title}</h3>
-                    <div className="text-right shrink-0">
-                      <p className="text-[18px] sm:text-[24px] font-black leading-none" style={{ color: "#E63350" }}>{sc.metric}</p>
-                      <p className="text-[10px] font-bold text-black-500">{sc.metricLabel}</p>
+                    <div className="text-right shrink-0 px-2.5 py-1.5 rounded-lg" style={{ backgroundColor: "rgba(0,0,0,0.4)" }}>
+                      <p className="text-[18px] sm:text-[24px] font-black leading-none whitespace-nowrap" style={{ color: "#C4A35A" }}>{sc.metric}</p>
+                      <p className="text-[10px] font-bold text-white/80 mt-0.5">{sc.metricLabel}</p>
                     </div>
                   </div>
-                  <p className="text-[14px] text-black-400 leading-relaxed line-clamp-2">{sc.description}</p>
+                  <p className="text-[13px] text-white/50 leading-relaxed line-clamp-2">{sc.description}</p>
                 </div>
               </div>
             ))}

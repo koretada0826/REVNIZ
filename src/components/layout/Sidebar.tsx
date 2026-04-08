@@ -34,18 +34,13 @@ const mainItems: NavItem[] = [
   },
   {
     name: "スポンサー一覧", href: "/companies", icon: Building2,
-    sections: [
-      { label: "レブナイズ35", href: "/companies" },
-      { label: "オフィシャルスポンサー", href: "/companies" },
-      { label: "インタビュー記事", href: "/companies" },
-    ],
   },
   {
     name: "レブナイズ情報", href: "/news", icon: Megaphone,
     sections: [
       { label: "X投稿（ブースター）", href: "/news" },
       { label: "成功事例", href: "/cases" },
-      { label: "コラム", href: "/news" },
+      { label: "コラム", href: "/news#columns" },
     ],
   },
   {
@@ -63,10 +58,6 @@ const mainItems: NavItem[] = [
   },
   {
     name: "掲示板", href: "/board", icon: MessageSquare, badge: 4,
-    sections: [
-      { label: "新着投稿", href: "/board" },
-      { label: "紹介の呼びかけ", href: "/board" },
-    ],
   },
 ];
 
@@ -74,7 +65,7 @@ const subItems: NavItem[] = [
   {
     name: "友達紹介", href: "/referral", icon: UserCircle,
     sections: [
-      { label: "紹介フォーム", href: "/referral" },
+      { label: "紹介フォーム", href: "/referral#referral-form" },
     ],
   },
   {
@@ -135,17 +126,19 @@ function NavLink({ item, path }: { item: NavItem; path: string }) {
         />
         <span className="flex-1">{item.name}</span>
         {item.badge && !active && (
-          <span className="min-w-[18px] h-[18px] rounded-full bg-red-50 text-red text-[10px] font-bold flex items-center justify-center">
+          <span className="min-w-[18px] h-[18px] rounded-full bg-red-50 text-red text-[10px] font-bold flex items-center justify-center shrink-0">
             {item.badge}
           </span>
         )}
-        {hasSections && (
-          <ChevronRight
-            className={`w-3 h-3 shrink-0 transition-transform duration-200 ${
-              open ? "rotate-90 text-white" : "text-black-500"
-            }`}
-          />
-        )}
+        <span className="w-3 shrink-0 flex justify-center">
+          {hasSections ? (
+            <ChevronRight
+              className={`w-3 h-3 transition-transform duration-200 ${
+                open ? "rotate-90 text-white" : "text-black-500"
+              }`}
+            />
+          ) : null}
+        </span>
       </Link>
 
       {/* Inline section list */}
@@ -163,7 +156,7 @@ function NavLink({ item, path }: { item: NavItem; path: string }) {
                 key={sec.label}
                 type="button"
                 onClick={() => handleSectionClick(sec.href || item.href)}
-                className="block w-full text-left px-2 py-1.5 text-[11px] text-black-400 hover:text-white hover:bg-white/10 rounded transition-colors leading-snug cursor-pointer"
+                className="block w-full text-left px-2 py-1.5 text-[11px] text-black-400 hover:text-white hover:bg-white/10 rounded transition-colors leading-snug cursor-pointer outline-none focus:outline-none"
               >
                 {sec.label}
               </button>

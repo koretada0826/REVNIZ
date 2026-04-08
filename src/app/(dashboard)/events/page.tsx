@@ -55,12 +55,11 @@ function EventCard({ ev }: { ev: (typeof events)[number] }) {
           <span
             className="w-full text-center py-1.5 sm:py-2.5 rounded-md text-[12px] sm:text-[14px] font-bold transition-all block"
             style={{
-              backgroundColor: pct >= 95 ? "#333" : "#dfb664",
-              color: pct >= 95 ? "#888" : "#000",
-              opacity: pct >= 95 ? 0.6 : 1,
+              backgroundColor: "#dfb664",
+              color: "#000",
             }}
           >
-            {pct >= 95 ? "残りわずか — 参加する" : "参加する"}
+            参加する
           </span>
         </span>
       </Link>

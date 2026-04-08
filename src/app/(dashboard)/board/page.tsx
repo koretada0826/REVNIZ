@@ -123,6 +123,7 @@ function BoardContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("すべて");
+  const [sortTab, setSortTab] = useState<"新着" | "人気" | "締切間近">("新着");
   const [showForm, setShowForm] = useState(false);
   const [showMyPosts, setShowMyPosts] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
@@ -568,23 +569,25 @@ function BoardContent() {
             )}
           </div>
         )}
-        <div className="flex items-center gap-2 mt-3 flex-wrap">
-          <span className="text-[13px] text-white font-bold shrink-0">人気ワード:</span>
-          {["販路拡大", "DX", "コラボ", "採用", "鹿児島", "東京", "イベント", "業務提携", "人材", "マーケティング", "IT導入", "地方創生"].map((word) => (
-            <button
-              key={word}
-              onClick={() => setSearchQuery(word)}
-              className="text-[14px] text-white font-extrabold bg-white/15 hover:bg-white/25 px-4 py-2 rounded-full transition-colors cursor-pointer"
-            >
-              {word}
-            </button>
-          ))}
+        <div className="mt-3">
+          <span className="text-[14px] text-white font-bold block mb-2">人気ワード:</span>
+          <div className="flex gap-2 flex-wrap">
+            {["販路拡大", "DX", "コラボ", "採用", "鹿児島", "東京", "イベント", "業務提携", "人材", "マーケティング", "IT導入", "地方創生"].map((word) => (
+              <button
+                key={word}
+                onClick={() => setSearchQuery(word)}
+                className="text-[15px] text-white font-extrabold bg-white/15 hover:bg-white/25 px-5 py-2.5 rounded-full transition-colors cursor-pointer"
+              >
+                {word}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       <div className="flex gap-0 border-b border-line">
-        {[{ l: "新着", i: MessageSquare }, { l: "人気", i: TrendingUp }, { l: "締切間近", i: Clock }].map((t, idx) => (
-          <button key={t.l} className={`flex items-center gap-2 px-5 py-3.5 text-[14px] font-medium border-b-2 transition-colors ${idx === 0 ? "border-white text-white" : "border-transparent text-muted hover:text-white"}`}>
+        {[{ l: "新着" as const, i: MessageSquare }, { l: "人気" as const, i: TrendingUp }, { l: "締切間近" as const, i: Clock }].map((t) => (
+          <button key={t.l} onClick={() => { setSortTab(t.l); setSortBy(t.l === "新着" ? "新着順" : t.l === "人気" ? "反応数順" : "締切が近い順"); }} className={`flex items-center gap-2 px-5 py-3.5 text-[14px] font-medium border-b-2 transition-colors cursor-pointer ${sortTab === t.l ? "border-white text-white" : "border-transparent text-muted hover:text-white"}`}>
             <t.i className="w-4 h-4" /> {t.l}
           </button>
         ))}
