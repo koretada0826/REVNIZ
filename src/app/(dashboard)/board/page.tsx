@@ -583,8 +583,8 @@ function BoardContent() {
       </div>
 
       <div className="flex gap-0 border-b border-line">
-        {[{ l: "新着", i: MessageSquare }, { l: "人気", i: TrendingUp }, { l: "締切間近", i: Clock }].map((t, idx) => (
-          <button key={t.l} className={`flex items-center gap-2 px-5 py-3.5 text-[14px] font-medium border-b-2 transition-colors ${idx === 0 ? "border-white text-white" : "border-transparent text-muted hover:text-white"}`}>
+        {[{ l: "新着", i: MessageSquare, sort: "新着順" }, { l: "人気", i: TrendingUp, sort: "反応数順" }, { l: "締切間近", i: Clock, sort: "締切が近い順" }].map((t) => (
+          <button key={t.l} onClick={() => setSortBy(t.sort)} className={`flex items-center gap-2 px-5 py-3.5 text-[14px] font-medium border-b-2 transition-colors cursor-pointer ${sortBy === t.sort ? "border-white text-white" : "border-transparent text-muted hover:text-white"}`}>
             <t.i className="w-4 h-4" /> {t.l}
           </button>
         ))}

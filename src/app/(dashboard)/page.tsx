@@ -221,18 +221,17 @@ export default function DashboardPage() {
                 const catColor = ev.category === "懇親会" ? "#dfb664" : ev.category === "OFF会" ? "#A78BFA" : "#C8102E";
                 const pct = Math.round((ev.registered / ev.capacity) * 100);
                 return (
-                  <Link key={ev.id} href={`/events/${ev.id}`} className="block">
-                    <RebniseCard
-                      href={`/events/${ev.id}`}
-                      image={ev.image}
-                      title={ev.title}
-                      date={ev.date}
-                      categories={[
-                        ...(pct >= 90 ? [{ label: "残りわずか", color: "red", isNew: true }] : []),
-                        { label: ev.category, color: catColor },
-                      ]}
-                    />
-                  </Link>
+                  <RebniseCard
+                    key={ev.id}
+                    href={`/events/${ev.id}`}
+                    image={ev.image}
+                    title={ev.title}
+                    date={ev.date}
+                    categories={[
+                      ...(pct >= 90 ? [{ label: "残りわずか", color: "red", isNew: true }] : []),
+                      { label: ev.category, color: catColor },
+                    ]}
+                  />
                 );
               })}
             </InfiniteScroll>

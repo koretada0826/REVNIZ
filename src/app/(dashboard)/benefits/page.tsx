@@ -98,16 +98,16 @@ export default function BenefitsPage() {
 
         {/* サマリー */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
-            <p className="text-[28px] font-black leading-none" style={{ color: "#dfb664" }}>{limitedPlans.length}</p>
+          <div className="border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#C8102E" }}>{limitedPlans.length}</p>
             <p className="text-[12px] font-bold text-black-400 mt-1">提供プラン数</p>
           </div>
-          <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
-            <p className="text-[28px] font-black leading-none" style={{ color: "#dfb664" }}>50%</p>
+          <div className="border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#C8102E" }}>50%</p>
             <p className="text-[12px] font-bold text-black-400 mt-1">最大割引率</p>
           </div>
-          <div className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
-            <p className="text-[28px] font-black leading-none" style={{ color: "#dfb664" }}>{limitedPlans.filter(p => p.isNew).length}</p>
+          <div className="border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+            <p className="text-[28px] font-black leading-none" style={{ color: "#C8102E" }}>{limitedPlans.filter(p => p.isNew).length}</p>
             <p className="text-[12px] font-bold text-black-400 mt-1">新着プラン</p>
           </div>
         </div>

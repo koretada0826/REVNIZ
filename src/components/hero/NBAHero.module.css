@@ -425,6 +425,25 @@
   color: #545454 !important;
 }
 
+/* Character-by-character reveal animation */
+.charAnim {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.15em);
+  animation: charReveal 0.4s ease-out forwards;
+}
+
+@keyframes charReveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.15em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Margin bottom for hero in page context */
 .heroMargin {
   margin-bottom: 1.5rem;

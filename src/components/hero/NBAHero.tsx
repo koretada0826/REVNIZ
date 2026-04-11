@@ -1,8 +1,69 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import styles from "./NBAHero.module.css";
+
+interface CharSegment {
+  char: string;
+  color?: string;
+  isBreak?: boolean;
+}
+
+function parseHeadlineToChars(html: string): CharSegment[] {
+  const segments: CharSegment[] = [];
+  let i = 0;
+  while (i < html.length) {
+    if (html.startsWith("<br", i)) {
+      const end = html.indexOf(">", i);
+      segments.push({ char: "", isBreak: true });
+      i = end + 1;
+    } else if (html.startsWith("<span", i)) {
+      const colorMatch = html.slice(i).match(/color:\s*([^"']+)/);
+      const color = colorMatch ? colorMatch[1] : undefined;
+      const closeTag = html.indexOf(">", i);
+      const endSpan = html.indexOf("</span>", closeTag);
+      const text = html.slice(closeTag + 1, endSpan);
+      for (const ch of text) {
+        segments.push({ char: ch, color });
+      }
+      i = endSpan + 7;
+    } else if (html[i] === "<") {
+      const end = html.indexOf(">", i);
+      i = end + 1;
+    } else {
+      segments.push({ char: html[i] });
+      i++;
+    }
+  }
+  return segments;
+}
+
+function AnimatedHeadline({ html, animKey }: { html: string; animKey: number }) {
+  const chars = useMemo(() => parseHeadlineToChars(html), [html]);
+  let charIndex = 0;
+  return (
+    <>
+      {chars.map((seg, i) => {
+        if (seg.isBreak) return <br key={`${animKey}-br-${i}`} />;
+        const delay = charIndex * 0.05;
+        charIndex++;
+        return (
+          <span
+            key={`${animKey}-${i}`}
+            className={styles.charAnim}
+            style={{
+              color: seg.color || undefined,
+              animationDelay: `${delay}s`,
+            }}
+          >
+            {seg.char}
+          </span>
+        );
+      })}
+    </>
+  );
+}
 
 interface SlideData {
   category: string;
@@ -139,7 +200,9 @@ export default function NBAHero() {
           >
             <div>
               <Link href={slide.cta.href}>
-                <h2 className={styles.headline} dangerouslySetInnerHTML={{ __html: slide.headline }} />
+                <h2 className={styles.headline}>
+                  {i === current && <AnimatedHeadline html={slide.headline} animKey={animKey} />}
+                </h2>
               </Link>
 
               <p className={styles.description}>{slide.description}</p>

@@ -143,7 +143,7 @@ function InterviewCarousel() {
                 }}
               >
                 <div
-                  className="rounded-xl overflow-hidden group"
+                  className="overflow-hidden group"
                   style={{ backgroundColor: "#1e1e1e", border: isActive ? "1px solid #555" : "1px solid #333" }}
                 >
                   <div className="flex flex-col sm:flex-row">
@@ -156,16 +156,16 @@ function InterviewCarousel() {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-black/30" />
-                      <div className="absolute bottom-4 left-4 flex items-center gap-3">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent sm:bg-gradient-to-r sm:from-transparent sm:via-transparent sm:to-black/30" />
+                      <div className="absolute bottom-0 left-0 right-0 px-4 py-4 flex items-center gap-3" style={{ backgroundColor: "rgba(0,0,0,0.7)" }}>
                         <img
                           src={iv.logo}
                           alt={iv.company}
-                          className="w-12 h-12 rounded-md object-cover bg-white border-2 border-white"
+                          className="w-12 h-12 object-cover bg-white border-2 border-white"
                         />
                         <div>
-                          <p className="text-[15px] font-bold text-white drop-shadow-md">{iv.company}</p>
-                          <p className="text-[13px] text-white/70 drop-shadow-md">{iv.person} {iv.personName}</p>
+                          <p className="text-[16px] font-black text-white">{iv.company}</p>
+                          <p className="text-[13px] font-bold text-white/80">{iv.person} {iv.personName}</p>
                         </div>
                       </div>
                     </div>

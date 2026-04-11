@@ -131,6 +131,7 @@ const config: Config = {
         "fade-up-sm": "fadeUpSm 0.5s cubic-bezier(0.16,1,0.3,1) both",
         "bounce-sm": "bounceSm 0.5s cubic-bezier(0.34,1.56,0.64,1) both",
         "width-expand": "widthExpand 0.6s cubic-bezier(0.16,1,0.3,1) both",
+        "pulse-subtle": "pulseSubtle 2.5s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -173,6 +174,10 @@ const config: Config = {
         widthExpand: {
           "0%": { width: "0%" },
           "100%": { width: "var(--target-width)" },
+        },
+        pulseSubtle: {
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(223, 182, 100, 0.4)" },
+          "50%": { boxShadow: "0 0 0 10px rgba(223, 182, 100, 0)" },
         },
       },
     },

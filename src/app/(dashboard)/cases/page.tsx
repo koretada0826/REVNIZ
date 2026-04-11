@@ -27,7 +27,7 @@ export default function CasesPage() {
           { value: "130%", label: "最高売上比" },
           { value: "85%", label: "最高回収率" },
         ].map((s) => (
-          <div key={s.label} className="rounded-lg border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
+          <div key={s.label} className="border border-line p-4 text-center" style={{ backgroundColor: "#1e1e1e" }}>
             <p className="text-[28px] font-black leading-none" style={{ color: "#E63350" }}>{s.value}</p>
             <p className="text-[12px] font-bold text-black-400 mt-1.5">{s.label}</p>
           </div>
@@ -38,7 +38,7 @@ export default function CasesPage() {
       {first && (
         <section>
           <div
-            className="rounded-xl overflow-hidden group"
+            className="overflow-hidden group"
             style={{ border: `2px solid ${rankColors[0]}40` }}
           >
             <div className="relative overflow-hidden" style={{ height: "clamp(200px, 40vw, 320px)" }}>
@@ -95,7 +95,7 @@ export default function CasesPage() {
               return (
                 <div
                   key={sc.id}
-                  className="rounded-xl overflow-hidden group"
+                  className="overflow-hidden group"
                   style={{ backgroundColor: "#1e1e1e", border: `2px solid ${rankColors[rank]}40` }}
                 >
                   {/* 画像 */}
@@ -144,7 +144,7 @@ export default function CasesPage() {
             {rest.map((sc) => (
               <div
                 key={sc.id}
-                className="rounded-xl overflow-hidden group cursor-pointer"
+                className="overflow-hidden group cursor-pointer"
                 style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}
               >
                 {/* 画像 */}
@@ -186,7 +186,7 @@ export default function CasesPage() {
       )}
 
       {/* CTA */}
-      <div className="rounded-xl overflow-hidden" style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #111 100%)", border: "1px solid #333" }}>
+      <div className="overflow-hidden" style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #111 100%)", border: "1px solid #333" }}>
         <div className="px-6 py-3" style={{ background: "linear-gradient(135deg, #dfb664 0%, #c4a35a 100%)" }}>
           <span className="text-[12px] font-black text-black tracking-wider uppercase">Share Your Success</span>
         </div>
