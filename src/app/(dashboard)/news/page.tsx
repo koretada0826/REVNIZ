@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Trophy, Newspaper, Twitter, Quote } from "lu
 import { Tweet } from "react-tweet";
 
 import FadeIn from "@/components/motion/FadeIn";
+import { columns } from "@/data/columns";
 
 /* ── 成功事例データ ── */
 const successStories = [
@@ -63,33 +64,7 @@ const successStories = [
   },
 ];
 
-/* ── コラムデータ ── */
-const columns = [
-  {
-    id: 1,
-    title: "地方スポーツとビジネスの新しい関係性",
-    publication: "鹿児島経済ジャーナル 2026年3月号",
-    excerpt: "スポーツスポンサーシップが単なる広告枠から、企業間マッチングプラットフォームへと進化している。レブナイズの取り組みから見える地方スポーツの可能性を探る。",
-    date: "2026-03-01",
-    author: "運営",
-  },
-  {
-    id: 2,
-    title: "鹿児島経済の現在地 — スポンサー企業から見た地域の強み",
-    publication: "鹿児島経済ジャーナル 2026年2月号",
-    excerpt: "レブナイズスポンサー企業へのヒアリングを通じて見えてきた、鹿児島経済のポテンシャルとスポーツがもたらすビジネスチャンス。",
-    date: "2026-02-01",
-    author: "運営",
-  },
-  {
-    id: 3,
-    title: "スポーツで繋がるB2Bネットワーク — 実践レポート",
-    publication: "鹿児島経済ジャーナル 2026年1月号",
-    excerpt: "スポンサー企業同士がスポーツを介して信頼関係を構築し、実ビジネスに発展させていくプロセスを具体事例とともに紹介。",
-    date: "2026-01-01",
-    author: "運営",
-  },
-];
+/* ── コラムデータは @/data/columns から共有 ── */
 
 /* ── @kg_rebnise 公式アカウント投稿 ── */
 const officialTweetIds = [
