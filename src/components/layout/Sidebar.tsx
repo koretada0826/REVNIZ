@@ -50,9 +50,6 @@ const mainItems: NavItem[] = [
   },
   {
     name: "限定プラン", href: "/benefits", icon: Gift,
-    sections: [
-      { label: "スポンサー限定プラン一覧", href: "/benefits" },
-    ],
   },
   {
     name: "イベント", href: "/events", icon: Calendar, badge: 2,
