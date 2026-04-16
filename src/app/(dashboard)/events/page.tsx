@@ -19,7 +19,7 @@ const monthNames: Record<string, string> = {
 };
 
 function catColor(category: string) {
-  return category === "懇親会" ? "#dfb664" : category === "OFF会" ? "#A78BFA" : "#C8102E";
+  return category === "懇親会" ? "#dfb664" : category === "OFF会" ? "#5D4FBF" : "#C8102E";
 }
 
 function EventCard({ ev }: { ev: (typeof events)[number] }) {
@@ -28,10 +28,10 @@ function EventCard({ ev }: { ev: (typeof events)[number] }) {
   return (
     <div className="group relative">
       <Link href={`/events/${ev.id}`} className="block">
-        <span className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
-          <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEW</span>
+        <span className="absolute top-0 right-0 z-10 flex shadow-lg" style={{ fontSize: 0 }}>
+          <span className="inline-block bg-[#C8102E] text-white text-[10px] font-black tracking-[0.2em] text-center px-2.5 py-[5px] uppercase">NEW</span>
           <span
-            className="inline-block text-white text-[14px] font-bold text-center px-2.5 py-1"
+            className="inline-block text-white text-[11px] font-black tracking-[0.12em] text-center px-2.5 py-[5px]"
             style={{ backgroundColor: catColor(ev.category) }}
           >{ev.category}</span>
         </span>
@@ -126,10 +126,10 @@ function EventsPageContent() {
         <div>
           <h2 className="text-[28px] font-black text-white tracking-tight mb-6">Next Event</h2>
           <Link href={`/events/${nearest.id}`} className="group relative block">
-            <span className="absolute top-0 right-0 z-10 flex" style={{ fontSize: 0 }}>
-              <span className="inline-block bg-[#ff0000] text-white text-[14px] font-bold text-center px-2.5 py-1">NEXT</span>
+            <span className="absolute top-0 right-0 z-10 flex shadow-lg" style={{ fontSize: 0 }}>
+              <span className="inline-block bg-[#C8102E] text-white text-[11px] font-black tracking-[0.2em] text-center px-3 py-[7px] uppercase">NEXT</span>
               <span
-                className="inline-block text-white text-[14px] font-bold text-center px-2.5 py-1"
+                className="inline-block text-white text-[12px] font-black tracking-[0.12em] text-center px-3 py-[7px]"
                 style={{ backgroundColor: catColor(nearest.category) }}
               >{nearest.category}</span>
             </span>

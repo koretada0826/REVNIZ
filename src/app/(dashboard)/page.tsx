@@ -218,7 +218,7 @@ export default function DashboardPage() {
           <div className="-mx-4 sm:-mx-6 lg:-mx-8">
             <InfiniteScroll interval={3000} cardWidth={260}>
               {events.slice(0, 8).map((ev) => {
-                const catColor = ev.category === "懇親会" ? "#dfb664" : ev.category === "OFF会" ? "#A78BFA" : "#C8102E";
+                const catColor = ev.category === "懇親会" ? "#dfb664" : ev.category === "OFF会" ? "#5D4FBF" : "#C8102E";
                 const pct = Math.round((ev.registered / ev.capacity) * 100);
                 return (
                   <RebniseCard
