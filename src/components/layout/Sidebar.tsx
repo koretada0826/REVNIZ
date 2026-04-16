@@ -35,9 +35,9 @@ const mainItems: NavItem[] = [
   {
     name: "スポンサー一覧", href: "/companies", icon: Building2,
     sections: [
+      { label: "インタビュー記事", href: "/companies#interview" },
       { label: "レブナイズ35", href: "/companies#rebnize35" },
       { label: "オフィシャルスポンサー", href: "/companies#official-sponsor" },
-      { label: "インタビュー記事", href: "/companies#interview" },
     ],
   },
   {
