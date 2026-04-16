@@ -266,6 +266,50 @@ export default function CompaniesPage() {
   const firstSection = sections[0];
   const restSections = sections.slice(1);
 
+  // restSections 内にあるアンカー（showMore 展開が必要なもの）
+  const hiddenAnchors = ["official-sponsor"];
+
+  // URL ハッシュを検知して、必要に応じて showMore を展開＋スクロール
+  useEffect(() => {
+    let pendingId: string | null = null;
+
+    const handleHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return;
+      pendingId = id;
+      if (hiddenAnchors.includes(id)) {
+        setShowMore(true);
+      }
+      // 次フレームでスクロール（DOM 更新後）
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (!pendingId) return;
+          const el = document.getElementById(pendingId);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            pendingId = null;
+          }
+        });
+      });
+    };
+
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
+
+  // showMore が true になった直後、保留中のアンカーがあればスクロール
+  useEffect(() => {
+    if (!showMore) return;
+    const id = window.location.hash.slice(1);
+    if (id && hiddenAnchors.includes(id)) {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [showMore]);
+
   return (
     <div className="space-y-0">
       <FadeIn>
@@ -278,7 +322,7 @@ export default function CompaniesPage() {
 
       {/* ===== ピックアップインタビュー ===== */}
       <FadeIn delay={0.1}>
-        <section className="py-6">
+        <section id="interview" className="py-6 scroll-mt-20">
           <div
             className="mb-6 pb-1.5 font-bold text-[20px] sm:text-[24px]"
             style={{ borderBottom: "3px solid #3e3e3e", color: "#fff" }}
@@ -296,7 +340,7 @@ export default function CompaniesPage() {
 
       {/* レブナイズ35 — カード形式 */}
       {firstSection && (
-        <section className="py-6">
+        <section id="rebnize35" className="py-6 scroll-mt-20">
           <div
             className="mb-6 pb-1.5 font-bold text-[20px] sm:text-[24px]"
             style={{ borderBottom: "3px solid #3e3e3e", color: "#fff" }}
@@ -363,9 +407,11 @@ export default function CompaniesPage() {
       {showMore && restSections.map((section, si) => {
         const w = logoWidth(section.size);
         const accent = accentColor(section.title);
+        // 最初のオフィシャルスポンサーセクションにアンカーを付与
+        const sectionId = si === 0 ? "official-sponsor" : undefined;
 
         return (
-          <section key={si} className="py-6">
+          <section key={si} id={sectionId} className="py-6 scroll-mt-20">
             <div
               className="mb-6 pb-1.5 font-bold text-[20px] sm:text-[24px]"
               style={{ borderBottom: "3px solid #3e3e3e", color: "#fff" }}

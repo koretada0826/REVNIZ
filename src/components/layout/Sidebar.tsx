@@ -35,9 +35,9 @@ const mainItems: NavItem[] = [
   {
     name: "スポンサー一覧", href: "/companies", icon: Building2,
     sections: [
-      { label: "レブナイズ35", href: "/companies" },
-      { label: "オフィシャルスポンサー", href: "/companies" },
-      { label: "インタビュー記事", href: "/companies" },
+      { label: "レブナイズ35", href: "/companies#rebnize35" },
+      { label: "オフィシャルスポンサー", href: "/companies#official-sponsor" },
+      { label: "インタビュー記事", href: "/companies#interview" },
     ],
   },
   {
@@ -104,7 +104,16 @@ function NavLink({ item, path }: { item: NavItem; path: string }) {
 
     if (isCurrentPage) {
       const el = document.getElementById(anchor);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        // Element not yet rendered (e.g. behind a toggle). Update hash so the page can react.
+        if (window.location.hash === `#${anchor}`) {
+          window.dispatchEvent(new HashChangeEvent("hashchange"));
+        } else {
+          window.location.hash = anchor;
+        }
+      }
     } else {
       router.push(href);
     }
