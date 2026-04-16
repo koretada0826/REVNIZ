@@ -162,9 +162,19 @@ function SuccessCarousel() {
                         </div>
                       </div>
                       {/* メトリクスバッジ */}
-                      <div className="absolute top-4 right-4 text-right">
-                        <p className="text-[32px] font-black leading-none text-white drop-shadow-lg">{story.metric}</p>
-                        <p className="text-[11px] font-bold text-white/70">{story.metricLabel}</p>
+                      <div
+                        className="absolute top-4 right-4 text-right rounded-lg px-3.5 py-2.5 backdrop-blur-md shadow-xl"
+                        style={{
+                          background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+                          border: "1px solid rgba(223,182,100,0.45)",
+                        }}
+                      >
+                        <p className="text-[30px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>
+                          {story.metric}
+                        </p>
+                        <p className="text-[10px] font-bold text-white mt-1.5 tracking-[0.12em] uppercase whitespace-nowrap">
+                          {story.metricLabel}
+                        </p>
                       </div>
                     </div>
 
