@@ -28,8 +28,8 @@ export default function CasesV2Page() {
                 <p className="text-[12px] text-white/40">{sc.company}</p>
               </div>
               <div className="text-right">
-                <p className="text-[28px] font-black leading-none text-red-400">{sc.metric}</p>
-                <p className="text-[10px] text-white/40">{sc.metricLabel}</p>
+                <p className="text-[28px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>{sc.metric}</p>
+                <p className="text-[10px] font-bold text-white/70 mt-0.5 tracking-[0.1em] uppercase">{sc.metricLabel}</p>
               </div>
             </div>
 

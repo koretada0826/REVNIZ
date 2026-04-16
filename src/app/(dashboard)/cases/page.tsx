@@ -165,9 +165,15 @@ export default function CasesPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                   {/* メトリクス（ホバー時表示） */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-black/70 backdrop-blur-sm rounded-lg px-5 py-3 text-center">
-                      <p className="text-[40px] font-black leading-none text-white">{sc.metric}</p>
-                      <p className="text-[13px] font-bold text-white/70 mt-1">{sc.metricLabel}</p>
+                    <div
+                      className="rounded-lg px-5 py-3 text-center backdrop-blur-md shadow-xl"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+                        border: "1px solid rgba(223,182,100,0.45)",
+                      }}
+                    >
+                      <p className="text-[36px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>{sc.metric}</p>
+                      <p className="text-[10px] font-bold text-white mt-1.5 tracking-[0.12em] uppercase">{sc.metricLabel}</p>
                     </div>
                   </div>
                   {/* 企業ロゴ */}
@@ -185,8 +191,8 @@ export default function CasesPage() {
                   <div className="flex items-center justify-between mb-1 sm:mb-2">
                     <h3 className="text-[13px] sm:text-[16px] font-bold text-white leading-snug flex-1 mr-2 sm:mr-3">{sc.title}</h3>
                     <div className="text-right shrink-0">
-                      <p className="text-[18px] sm:text-[24px] font-black leading-none" style={{ color: "#E63350" }}>{sc.metric}</p>
-                      <p className="text-[10px] font-bold text-black-500">{sc.metricLabel}</p>
+                      <p className="text-[18px] sm:text-[24px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>{sc.metric}</p>
+                      <p className="text-[9px] sm:text-[10px] font-bold text-white/70 mt-0.5 tracking-[0.1em] uppercase">{sc.metricLabel}</p>
                     </div>
                   </div>
                   <p className="text-[14px] text-black-400 leading-relaxed line-clamp-2">{sc.description}</p>
