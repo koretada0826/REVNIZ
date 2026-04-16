@@ -67,9 +67,15 @@ export default function DashboardPage() {
                           <img src={sc.logo} alt={sc.company} className="w-8 h-8 rounded object-cover bg-white border-2 border-white" />
                           <span className="text-[12px] font-bold text-white">{sc.company}</span>
                         </BI>
-                        <span className="text-right">
-                          <span className="text-[28px] font-black leading-none text-white drop-shadow-lg block whitespace-nowrap">{sc.metric}</span>
-                          <span className="text-[10px] font-bold text-white/70 block">{sc.metricLabel}</span>
+                        <span
+                          className="text-right rounded-lg px-3 py-2 backdrop-blur-md shadow-xl block"
+                          style={{
+                            background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+                            border: "1px solid rgba(223,182,100,0.45)",
+                          }}
+                        >
+                          <span className="text-[24px] font-black leading-none tracking-tight block whitespace-nowrap" style={{ color: "#dfb664" }}>{sc.metric}</span>
+                          <span className="text-[9px] font-bold text-white mt-1 tracking-[0.12em] uppercase block whitespace-nowrap">{sc.metricLabel}</span>
                         </span>
                       </BI>
                       <span className="absolute top-2 left-2 text-[10px] font-bold text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(200,16,46,0.85)" }}>{sc.category}</span>

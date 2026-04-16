@@ -58,9 +58,15 @@ export default function CaseDetailClient({ id }: { id: string }) {
                   {sc.title}
                 </h1>
               </div>
-              <div className="text-right shrink-0">
-                <p className="text-[40px] sm:text-[56px] font-black leading-none text-white drop-shadow-lg">{sc.metric}</p>
-                <p className="text-[12px] sm:text-[14px] font-bold text-white/60 mt-1">{sc.metricLabel}</p>
+              <div
+                className="text-right shrink-0 rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 backdrop-blur-md shadow-xl"
+                style={{
+                  background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+                  border: "1px solid rgba(223,182,100,0.45)",
+                }}
+              >
+                <p className="text-[36px] sm:text-[48px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>{sc.metric}</p>
+                <p className="text-[10px] sm:text-[12px] font-bold text-white mt-1 sm:mt-1.5 tracking-[0.12em] uppercase">{sc.metricLabel}</p>
               </div>
             </div>
           </div>

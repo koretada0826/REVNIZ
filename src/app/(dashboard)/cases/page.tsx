@@ -61,9 +61,15 @@ export default function CasesPage() {
                     <h2 className="text-[16px] sm:text-[32px] font-black text-white leading-snug mb-1 sm:mb-2">{first.title}</h2>
                     <p className="hidden sm:block text-[16px] text-white/70 leading-relaxed line-clamp-2">{first.description}</p>
                   </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-[32px] sm:text-[56px] font-black leading-none text-white drop-shadow-lg">{first.metric}</p>
-                    <p className="text-[10px] sm:text-[14px] font-bold text-white/60 mt-0.5 sm:mt-1">{first.metricLabel}</p>
+                  <div
+                    className="text-right shrink-0 rounded-lg px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-md shadow-xl"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+                      border: "1px solid rgba(223,182,100,0.45)",
+                    }}
+                  >
+                    <p className="text-[28px] sm:text-[48px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>{first.metric}</p>
+                    <p className="text-[9px] sm:text-[12px] font-bold text-white mt-1 sm:mt-1.5 tracking-[0.12em] uppercase">{first.metricLabel}</p>
                   </div>
                 </div>
               </div>
@@ -110,9 +116,15 @@ export default function CasesPage() {
                           <p className="text-[9px] sm:text-[12px] text-white/50">{sc.date}</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-[24px] sm:text-[36px] font-black leading-none text-white drop-shadow-lg">{sc.metric}</p>
-                        <p className="text-[9px] sm:text-[12px] font-bold text-white/60">{sc.metricLabel}</p>
+                      <div
+                        className="text-right rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 backdrop-blur-md shadow-xl"
+                        style={{
+                          background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%)",
+                          border: "1px solid rgba(223,182,100,0.45)",
+                        }}
+                      >
+                        <p className="text-[20px] sm:text-[30px] font-black leading-none tracking-tight" style={{ color: "#dfb664" }}>{sc.metric}</p>
+                        <p className="text-[8px] sm:text-[10px] font-bold text-white mt-0.5 sm:mt-1 tracking-[0.1em] uppercase">{sc.metricLabel}</p>
                       </div>
                     </div>
                     <span className="absolute top-2 left-2 sm:top-3 sm:left-3 text-[9px] sm:text-[11px] font-bold text-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full" style={{ backgroundColor: "rgba(200,16,46,0.85)" }}>
