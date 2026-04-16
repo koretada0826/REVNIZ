@@ -162,12 +162,12 @@ export default function ReferralPage() {
               紹介が成立した方全員に
             </span>
           </div>
-          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0" style={{ scrollbarWidth: "none" }}>
-            <div className="flex sm:grid sm:grid-cols-2 gap-4" style={{ minWidth: "max-content" }}>
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {rewards.map((item, i) => (
                 <div
                   key={i}
-                  className="shrink-0 w-[280px] sm:w-auto rounded-xl overflow-hidden group"
+                  className="rounded-xl overflow-hidden group"
                   style={{ backgroundColor: "#1e1e1e", border: "1px solid #333" }}
                 >
                   {/* 写真 */}
@@ -241,7 +241,7 @@ export default function ReferralPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label className="text-[13px] font-bold text-black-300 mb-1.5 flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5" />
@@ -270,9 +270,6 @@ export default function ReferralPage() {
                     required
                   />
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-[13px] font-bold text-black-300 mb-1.5 flex items-center gap-1.5">
                     <Phone className="w-3.5 h-3.5" />

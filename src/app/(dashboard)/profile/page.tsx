@@ -8,10 +8,10 @@ import FadeIn from "@/components/motion/FadeIn";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
 import { consultations } from "@/data/mock";
 
-function Accordion({ title, defaultOpen = true, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
+function Accordion({ title, defaultOpen = true, children, id }: { title: string; defaultOpen?: boolean; children: React.ReactNode; id?: string }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="card !p-0 overflow-hidden">
+    <div id={id} className="card !p-0 overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -86,7 +86,7 @@ export default function ProfilePage() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <p className="label">Profile</p>
-          <h1 className="h1">自社プロフィール{mode === "edit" ? "編集" : "プレビュー"}</h1>
+          <h1 className="h1 whitespace-nowrap">自社プロフィール{mode === "edit" ? "編集" : "プレビュー"}</h1>
           <p className="body mt-3 hidden sm:block">{mode === "edit" ? "情報を充実させるほど、マッチング精度が上がります" : "他社から見たプロフィールの表示です"}</p>
         </div>
         <div className="flex gap-2 shrink-0">
@@ -222,7 +222,7 @@ export default function ProfilePage() {
       /* ===== 編集モード ===== */
       <>
       <form className="space-y-3 sm:space-y-5">
-        <Accordion title="基本情報">
+        <Accordion title="基本情報" id="basic-info">
           <div className="flex items-center gap-2 sm:gap-5 mb-2 sm:mb-6">
             {logoUrl ? (
               <img src={logoUrl} alt="ロゴ" className="w-10 h-10 sm:w-14 sm:h-14 rounded-md object-cover shrink-0 border border-line" />
@@ -247,7 +247,7 @@ export default function ProfilePage() {
               <Upload className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> {logoUrl ? "ロゴを変更" : "ロゴアップロード"}
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:gap-4">
+          <div className="grid grid-cols-1 gap-2 sm:gap-4">
             <div><label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">企業名</label><input type="text" className="input py-2 sm:py-3.5 text-[13px] sm:text-[15px]" value={companyName} onChange={(e) => setCompanyName(e.target.value)} /></div>
             <div>
               <label className="text-[10px] sm:text-[11px] font-bold text-black-400 block mb-0.5 sm:mb-2">業種</label>
@@ -269,7 +269,7 @@ export default function ProfilePage() {
           </div>
         </Accordion>
 
-        <Accordion title="企業紹介">
+        <Accordion title="企業紹介" id="company-intro">
           <textarea className="input min-h-[80px] sm:min-h-[130px] resize-y text-[14px] sm:text-[15px]" value={description} onChange={(e) => setDescription(e.target.value)} />
         </Accordion>
 

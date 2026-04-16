@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { Calendar, MapPin, Users, ChevronDown, ArrowRight } from "lucide-react";
 import { events } from "@/data/mock";
 import FadeIn from "@/components/motion/FadeIn";
@@ -45,7 +46,7 @@ function EventCard({ ev }: { ev: (typeof events)[number] }) {
           </span>
         </span>
         <span className="relative bg-[#333] px-3 pt-2.5 pb-2.5 sm:px-5 sm:pt-5 sm:pb-4 block">
-          <span className="text-[12px] sm:text-[14px] text-white leading-snug sm:leading-relaxed line-clamp-2 sm:h-[45px] mb-1 sm:mb-2 block">
+          <span className="text-[12px] sm:text-[14px] text-white leading-snug sm:leading-relaxed sm:h-[45px] mb-1 sm:mb-2 block" style={{ whiteSpace: "pre-line" }}>
             {ev.title}
           </span>
           <span className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-3 text-[10px] sm:text-[12px] text-[#a2a2a2]">
@@ -69,8 +70,14 @@ function EventCard({ ev }: { ev: (typeof events)[number] }) {
 }
 
 export default function EventsPage() {
+  const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState("すべて");
   const [openMonths, setOpenMonths] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const cat = searchParams.get("cat");
+    if (cat) setSelectedCategory(cat);
+  }, [searchParams]);
 
   const sorted = [...events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   const upcoming = sorted.filter((ev) => ev.date >= TODAY);
@@ -137,7 +144,7 @@ export default function EventsPage() {
               </span>
             </span>
             <span className="relative bg-[#333] px-4 pt-3 pb-3 sm:px-6 sm:pt-6 sm:pb-5 block">
-              <span className="text-[18px] text-white font-bold leading-relaxed mb-3 block">
+              <span className="text-[18px] text-white font-bold leading-relaxed mb-3 block" style={{ whiteSpace: "pre-line" }}>
                 {nearest.title}
               </span>
               <span className="text-[14px] text-black-400 mb-4 block">{nearest.description}</span>

@@ -57,15 +57,15 @@ const mainItems: NavItem[] = [
   {
     name: "イベント", href: "/events", icon: Calendar, badge: 2,
     sections: [
-      { label: "懇親会・OFF会", href: "/events" },
-      { label: "ホームゲーム", href: "/events" },
+      { label: "懇親会・OFF会", href: "/events?cat=懇親会" },
+      { label: "ホームゲーム", href: "/events?cat=イベント" },
     ],
   },
   {
     name: "掲示板", href: "/board", icon: MessageSquare, badge: 4,
     sections: [
       { label: "新着投稿", href: "/board" },
-      { label: "紹介の呼びかけ", href: "/board" },
+      { label: "紹介の呼びかけ", href: "/board?action=post" },
     ],
   },
 ];
@@ -80,8 +80,8 @@ const subItems: NavItem[] = [
   {
     name: "プロフィール", href: "/profile", icon: UserCircle,
     sections: [
-      { label: "基本情報", href: "/profile" },
-      { label: "企業紹介", href: "/profile" },
+      { label: "基本情報", href: "/profile#basic-info" },
+      { label: "企業紹介", href: "/profile#company-intro" },
     ],
   },
 ];

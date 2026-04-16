@@ -136,6 +136,12 @@ function BoardContent() {
   const [excludeQuery, setExcludeQuery] = useState("");
   const [posts, setPosts] = useState(consultations);
 
+  useEffect(() => {
+    if (searchParams.get("action") === "post") {
+      setShowForm(true);
+    }
+  }, [searchParams]);
+
   const allAreas = Array.from(new Set(consultations.map((c) => c.targetArea)));
   const allIndustries = ["すべて", ...Array.from(new Set(companies.map((c) => c.industry)))];
   const allTags = Array.from(new Set(consultations.flatMap((c) => c.tags || [])));

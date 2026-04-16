@@ -18,7 +18,7 @@ export default function ProfileV2Page() {
     <div className="max-w-2xl mx-auto space-y-6 animate-in">
       <div>
         <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-red block mb-1.5">Profile</span>
-        <h1 className="text-[2rem] font-bold text-white tracking-tight leading-[1.1]">自社プロフィール編集</h1>
+        <h1 className="text-[2rem] font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">自社プロフィール編集</h1>
         <p className="text-[13px] text-white/40 leading-relaxed mt-1.5">情報を充実させるほど、マッチング精度が上がります</p>
       </div>
 
@@ -40,7 +40,7 @@ export default function ProfileV2Page() {
             <div className="w-16 h-16 rounded bg-white/[0.06] flex items-center justify-center border border-white/[0.08]"><span className="text-xl font-bold text-white">南</span></div>
             <button type="button" className="text-[12px] font-medium text-white/40 hover:text-white px-3 py-1.5 rounded border border-white/[0.08] hover:border-white/20 transition-all flex items-center"><Upload className="w-4 h-4 mr-1.5" /> ロゴをアップロード</button>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div><label className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/30 block mb-2">企業名</label><input type="text" className={inputClass} defaultValue="南九州テクノロジーズ" /></div>
             <div><label className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/30 block mb-2">業種</label><select className={inputClass} defaultValue="IT・テクノロジー"><option>IT・テクノロジー</option><option>食品・飲料</option><option>広告・クリエイティブ</option><option>建設・不動産</option><option>人材・HR</option><option>マーケティング</option></select></div>
             <div><label className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/30 block mb-2">所在地</label><input type="text" className={inputClass} defaultValue="鹿児島市" /></div>
@@ -71,7 +71,7 @@ export default function ProfileV2Page() {
 
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-6">
           <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/30 block mb-4">担当者情報</span>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div><label className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/30 block mb-2">担当者名</label><input type="text" className={inputClass} defaultValue="田中 太郎" /></div>
             <div><label className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/30 block mb-2">公開範囲</label><select className={inputClass} defaultValue="members"><option value="members">会員のみ</option><option value="admin">運営のみ</option></select></div>
           </div>

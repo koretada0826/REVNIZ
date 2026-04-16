@@ -110,11 +110,8 @@
   color: #FFF;
   height: 45px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
   line-height: 1.6;
+  white-space: pre-line;
 }
 
 .update {

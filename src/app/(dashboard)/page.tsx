@@ -67,7 +67,7 @@ export default function DashboardPage() {
                           <span className="text-[12px] font-bold text-white">{sc.company}</span>
                         </BI>
                         <span className="text-right">
-                          <span className="text-[28px] font-black leading-none text-white drop-shadow-lg block">{sc.metric}</span>
+                          <span className="text-[28px] font-black leading-none text-white drop-shadow-lg block whitespace-nowrap">{sc.metric}</span>
                           <span className="text-[10px] font-bold text-white/70 block">{sc.metricLabel}</span>
                         </span>
                       </BI>
@@ -256,8 +256,8 @@ export default function DashboardPage() {
           <div className="absolute inset-0 bg-black/70" />
           <div className="relative z-10">
             <UserPlus className="w-10 h-10 mx-auto mb-4" style={{ color: "#dfb664" }} />
-            <h2 className="text-[30px] sm:text-[40px] font-black text-white leading-tight mb-4">
-              スポンサーに興味ありそうな<br className="sm:hidden" />お友達をご紹介ください！
+            <h2 className="text-[30px] sm:text-[32px] font-black text-white leading-tight mb-4 whitespace-nowrap">
+              スポンサーに興味ありそうなお友達をご紹介ください！
             </h2>
             <p className="text-[18px] sm:text-[20px] text-white/60 leading-relaxed max-w-2xl mx-auto mb-8">
               仲間が増えれば、ビジネスの幅も広がる。<br />
