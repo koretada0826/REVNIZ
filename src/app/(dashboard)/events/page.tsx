@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -69,7 +69,7 @@ function EventCard({ ev }: { ev: (typeof events)[number] }) {
   );
 }
 
-export default function EventsPage() {
+function EventsPageContent() {
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState("すべて");
   const [openMonths, setOpenMonths] = useState<Record<string, boolean>>({});
@@ -258,5 +258,13 @@ export default function EventsPage() {
         </div>
       )}
     </div></FadeIn>
+  );
+}
+
+export default function EventsPage() {
+  return (
+    <Suspense fallback={null}>
+      <EventsPageContent />
+    </Suspense>
   );
 }
