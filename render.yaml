@@ -1,0 +1,17 @@
+services:
+  - type: web
+    runtime: static
+    name: revniz
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./out
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
