@@ -54,7 +54,8 @@ const mainItems: NavItem[] = [
   {
     name: "イベント", href: "/events", icon: Calendar, badge: 2,
     sections: [
-      { label: "懇親会・OFF会", href: "/events?cat=懇親会" },
+      { label: "懇親会", href: "/events?cat=懇親会" },
+      { label: "OFF会", href: "/events?cat=OFF会" },
       { label: "ホームゲーム", href: "/events?cat=イベント" },
     ],
   },
