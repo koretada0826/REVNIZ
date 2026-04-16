@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Building2, MessageSquare, Calendar, ChevronRight, Trophy, Gift, UserPlus, Newspaper } from "lucide-react";
 import { companies, consultations, events, newsItems, successCases } from "@/data/mock";
+import { columns } from "@/data/columns";
 import FadeIn from "@/components/motion/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/motion/StaggerContainer";
 import NBAHero from "@/components/hero/NBAHero";
@@ -285,14 +286,10 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { title: "地方スポーツとビジネスの新しい関係性", publication: "鹿児島経済ジャーナル 2026年3月号", date: "2026-03-01" },
-              { title: "鹿児島経済の現在地 — スポンサー企業から見た地域の強み", publication: "鹿児島経済ジャーナル 2026年2月号", date: "2026-02-01" },
-              { title: "スポーツで繋がるB2Bネットワーク — 実践レポート", publication: "鹿児島経済ジャーナル 2026年1月号", date: "2026-01-01" },
-            ].map((col, i) => (
+            {columns.slice(0, 3).map((col) => (
               <Link
-                key={i}
-                href="/news"
+                key={col.id}
+                href={`/news/columns/${col.id}`}
                 className="rounded-lg border border-line p-5 hover:border-line-dark transition-colors group"
                 style={{ backgroundColor: "#1e1e1e" }}
               >
