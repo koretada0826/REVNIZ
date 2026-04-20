@@ -246,7 +246,7 @@ export default function DashboardPage() {
         </section>
       </FadeIn>
 
-      {/* ★ 友達紹介CTA */}
+      {/* ★ 仲間を増やそうCTA */}
       <FadeIn delay={0.1}>
         <section
           className="relative overflow-hidden rounded-lg py-20 sm:py-28 px-8 text-center"
@@ -273,7 +273,7 @@ export default function DashboardPage() {
             </p>
             <Link href="/referral#referral-form" className="btn-primary px-8 py-3.5 text-[15px]">
               <UserPlus className="w-5 h-5 mr-2" />
-              友達を紹介する
+              仲間を紹介する
             </Link>
           </div>
         </section>

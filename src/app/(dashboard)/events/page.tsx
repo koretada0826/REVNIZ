@@ -69,6 +69,14 @@ function EventCard({ ev }: { ev: (typeof events)[number] }) {
   );
 }
 
+export default function EventsPage() {
+  return (
+    <Suspense fallback={null}>
+      <EventsPageContent />
+    </Suspense>
+  );
+}
+
 function EventsPageContent() {
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState("すべて");
@@ -258,13 +266,5 @@ function EventsPageContent() {
         </div>
       )}
     </div></FadeIn>
-  );
-}
-
-export default function EventsPage() {
-  return (
-    <Suspense fallback={null}>
-      <EventsPageContent />
-    </Suspense>
   );
 }

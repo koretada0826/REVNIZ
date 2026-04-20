@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, Building2, MessageSquare, Calendar,
-  UserCircle, Megaphone, ChevronRight, Gift,
+  UserCircle, Megaphone, ChevronRight, Gift, Users,
 } from "lucide-react";
 
 interface SubSection {
@@ -27,8 +27,10 @@ const mainItems: NavItem[] = [
     sections: [
       { label: "スポンサー企業様", href: "/#sponsors" },
       { label: "成功事例", href: "/#cases-pickup" },
+      { label: "限定プラン", href: "/#limited-plans" },
       { label: "いま注目の相談", href: "/#hot-consultations" },
       { label: "近日のイベント", href: "/#upcoming-events" },
+      { label: "コラム", href: "/#columns" },
       { label: "お知らせ", href: "/#news" },
     ],
   },
@@ -52,17 +54,12 @@ const mainItems: NavItem[] = [
     name: "限定プラン", href: "/benefits", icon: Gift,
   },
   {
-    name: "イベント", href: "/events", icon: Calendar, badge: 2,
+    name: "イベント・掲示板", href: "/events", icon: Calendar, badge: 2,
     sections: [
       { label: "懇親会", href: "/events?cat=懇親会" },
       { label: "OFF会", href: "/events?cat=OFF会" },
       { label: "ホームゲーム", href: "/events?cat=イベント" },
-    ],
-  },
-  {
-    name: "掲示板", href: "/board", icon: MessageSquare, badge: 4,
-    sections: [
-      { label: "新着投稿", href: "/board" },
+      { label: "掲示板", href: "/board" },
       { label: "紹介の呼びかけ", href: "/board?action=post" },
     ],
   },
@@ -70,7 +67,7 @@ const mainItems: NavItem[] = [
 
 const subItems: NavItem[] = [
   {
-    name: "友達紹介", href: "/referral", icon: UserCircle,
+    name: "仲間を増やそう", href: "/referral", icon: Users,
     sections: [
       { label: "紹介フォーム", href: "/referral" },
     ],
