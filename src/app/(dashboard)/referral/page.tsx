@@ -76,7 +76,7 @@ export default function ReferralPage() {
         <div className="text-center">
           <p className="label">Referral Program</p>
           <h1 className="text-[32px] sm:text-[40px] font-black text-white leading-tight">
-            仲間を増やそう
+            お友達をご紹介ください
           </h1>
           <p className="text-[16px] sm:text-[18px] text-black-300 mt-3 leading-relaxed">
             「ちょっと興味あるかも」という段階でもOK。<br className="hidden sm:block" />
